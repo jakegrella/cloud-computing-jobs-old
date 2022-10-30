@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "ui:dev": "next dev ./ui",
-    "ui:build": "next build",
+    "ui:build": "next build ./ui",
     "ui:start": "next start",
     "ui:lint": "next lint",
     "test": "echo \"Error: no test specified\" && exit 1"
