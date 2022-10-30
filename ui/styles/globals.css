@@ -15,12 +15,25 @@ a {
   box-sizing: border-box;
 }
 
+h1 {
+  font-size: 1rem;
+}
+
+h2 {
+  font-size: 0.875rem;
+}
+
+h3 {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
   body {
     color: white;
-    background: black;
+    background: #0a0909;
   }
 }
