@@ -1,0 +1,37 @@
+.list-item {
+  width: 100%;
+  padding: 0.75rem 0.75rem 0 0.75rem;
+  border-radius: 10px;
+}
+
+.list-item hr {
+  margin: 0.5rem 0 0 0;
+  border: 0;
+  height: 1px;
+  background: #333336;
+}
+
+.list-item:hover {
+  background: #3d3d41;
+}
+
+.list-item_company-logo {
+  border-radius: 5px;
+}
+
+.list-item_job-list {
+  margin: 0.5rem 0 0 1.5rem;
+}
+
+.list-item_job-list h2 {
+  padding: 0.25rem 0;
+}
+
+.top {
+  display: flex;
+  margin: 0 0 0.5rem 0;
+}
+
+.top div {
+  margin: 0 0 0 0.5rem;
+}
