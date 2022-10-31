@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id            Int       @id @default(autoincrement())
+  title         String
+  posting       String
+  open          Boolean   @default(true)
+  published     Boolean   @default(false)
+  datePublished DateTime?
+  Company       Company?  @relation(fields: [companyId], references: [id])
+  companyId     Int?
+}
+
+model Company {
+  id      Int    @id @default(autoincrement())
+  name    String
+  logo    String
+  mission String
+  jobs    Job[]
+}

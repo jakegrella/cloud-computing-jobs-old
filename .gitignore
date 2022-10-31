@@ -20,8 +20,9 @@ ui/build
 # debug
 npm-debug.log*
 
-# local env files
+# env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -32,3 +33,6 @@ next-env.d.ts
 
 # notes file
 notes.md
+
+# api build directory
+build

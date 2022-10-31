@@ -3,8 +3,24 @@ import List from "../components/list";
 import Card from "../components/card";
 import Header from "../components/header";
 import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const basePath = "http://localhost:8080";
+  const [jobs, setJobs] = useState();
+
+  useEffect(() => {
+    async function fetchJobs() {
+      const response = await fetch(`${basePath}/api/jobs`);
+      console.log("response", response);
+      const data = await response.json();
+      console.log("data", data);
+      setJobs(data);
+      console.log("jobs", jobs);
+    }
+    fetchJobs();
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,9 +34,7 @@ export default function Home() {
 
       <Header />
       <main className={styles.main}>
-        <Card>
-          <List />
-        </Card>
+        <Card>{jobs && <List data={jobs} />}</Card>
       </main>
     </div>
   );

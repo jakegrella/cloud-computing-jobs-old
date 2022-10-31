@@ -5,7 +5,8 @@ import styles from "./list-item.module.css";
 export default function ListItem({ job = undefined, company = undefined }) {
   // format depending on whether data is job or company
   let c;
-  if (job) c = job.company;
+  // if (job) c = job.company; // work to get back here
+  if (job) c = job.Company;
   else c = company;
 
   return (
@@ -35,7 +36,7 @@ export default function ListItem({ job = undefined, company = undefined }) {
         {company && (
           <div className={styles["list-item_job-list"]}>
             {company.jobs.map((job) => (
-              // <Link href="/sdsad">
+              // <Link href="/"> // nested Links causing errors
               <h2 key={job.id}>{job.title}</h2>
               // </Link>
             ))}
