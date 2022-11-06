@@ -4,42 +4,40 @@ import styles from "./list-item.module.css";
 
 export default function ListItem({ job = undefined, company = undefined }) {
   // format depending on whether data is job or company
-  let c;
-  // if (job) c = job.company; // work to get back here
-  if (job) c = job.Company;
-  else c = company;
+  if (job) company = job.company;
 
   return (
-    <Link href="/">
+    <Link href={job ? `/jobs/${job.id}` : `/companies/${company.username}`}>
       <div className={styles["list-item"]}>
         <div className={styles["top"]}>
           <Image
-            src={c.logo}
+            src={company.logo}
             className={styles["list-item_company-logo"]}
-            alt={`logo of ${c.name}`}
+            alt={`logo of ${company.name}`}
             width={36}
             height={36}
           />
-          {company ? (
+          {job ? (
             <div>
-              <h2>{c.name}</h2>
-              <h3>{company.jobs.length} Open Jobs</h3>
+              <h3>{company.name}</h3>
+              <h2>{job.title}</h2>
             </div>
           ) : (
             <div>
-              <h3>{c.name}</h3>
-              <h2>{job.title}</h2>
+              <h2>{company.name}</h2>
+              <h3>{company.jobs.length ?? "0"} Open Jobs</h3>{" "}
             </div>
           )}
         </div>
-        <h3>{c.mission}</h3>
+        <h3>{company.mission}</h3>
         {company && (
           <div className={styles["list-item_job-list"]}>
-            {company.jobs.map((job) => (
-              // <Link href="/"> // nested Links causing errors
-              <h2 key={job.id}>{job.title}</h2>
-              // </Link>
-            ))}
+            {company.jobs &&
+              company.jobs.map((job) => (
+                // <Link href="/"> // nested Links causing errors
+                <h2 key={job.id}>{job.title}</h2>
+                // </Link>
+              ))}
           </div>
         )}
         <hr />

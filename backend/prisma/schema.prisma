@@ -8,20 +8,46 @@ datasource db {
 }
 
 model Job {
-  id            Int       @id @default(autoincrement())
-  title         String
-  posting       String
-  open          Boolean   @default(true)
-  published     Boolean   @default(false)
-  datePublished DateTime?
-  Company       Company?  @relation(fields: [companyId], references: [id])
-  companyId     Int?
+  id                Int        @id @default(autoincrement())
+  title             String
+  posting           String
+  open              Boolean    @default(true)
+  published         Boolean    @default(false)
+  datePublished     DateTime?
+  company           Company    @relation(fields: [companyId], references: [id])
+  companyId         Int
+  locations         Location[]
+  description       String     @db.Text
+  responsibilities  String     @db.Text
+  qualifications    String     @db.Text
+  type              String
+  experience        String
+  payRangeMin       Decimal
+  payRangeMax       Decimal
+  payRangeTimeFrame String
+  equityRangeMin    Decimal
+  equityRangeMax    Decimal
 }
 
 model Company {
-  id      Int    @id @default(autoincrement())
-  name    String
-  logo    String
-  mission String
-  jobs    Job[]
+  id             Int        @id @default(autoincrement())
+  name           String
+  username       String     @unique // should be spaceless
+  logo           String
+  mission        String
+  overview       String     @db.Text
+  jobs           Job[]
+  locations      Location[]
+  headquarters   Location   @relation(fields: [headquartersId], references: [id], name: "CompanyHeadquarters")
+  headquartersId Int
+}
+
+model Location {
+  id           Int       @id @default(autoincrement())
+  city         String
+  state        String
+  country      String
+  companies    Company[]
+  jobs         Job[]
+  headquarters Company[] @relation(name: "CompanyHeadquarters")
 }

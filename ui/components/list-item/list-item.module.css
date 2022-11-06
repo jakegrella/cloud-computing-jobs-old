@@ -4,6 +4,10 @@
   border-radius: 10px;
 }
 
+.list-item h2 {
+  margin: 0;
+}
+
 .list-item hr {
   margin: 0.5rem 0 0 0;
   border: 0;

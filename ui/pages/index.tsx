@@ -1,28 +1,24 @@
 import Head from "next/head";
-import List from "../components/list";
-import Card from "../components/card";
-import Header from "../components/header";
-import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
+import Card from "../components/card";
+import ListItem from "../components/list-item";
+import { IJob } from "../utils/types";
 
 export default function Home() {
   const basePath = "http://localhost:8080";
-  const [jobs, setJobs] = useState();
+  const [jobs, setJobs] = useState<IJob[] | undefined>();
 
   useEffect(() => {
     async function fetchJobs() {
       const response = await fetch(`${basePath}/api/jobs`);
-      console.log("response", response);
       const data = await response.json();
-      console.log("data", data);
       setJobs(data);
-      console.log("jobs", jobs);
     }
     fetchJobs();
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Cloud Computing Jobs</title>
         <meta
@@ -32,9 +28,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
-      <main className={styles.main}>
-        <Card>{jobs && <List data={jobs} />}</Card>
+      <main>
+        <h1>Jobs</h1>
+        {jobs && (
+          <Card>
+            {jobs.map((i) => (
+              <ListItem key={i.id} job={i} />
+            ))}
+          </Card>
+        )}
       </main>
     </div>
   );

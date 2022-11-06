@@ -6,26 +6,53 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 * {
   box-sizing: border-box;
 }
 
 h1 {
   font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 h2 {
   font-size: 0.875rem;
+  margin-bottom: 0.5rem;
 }
 
 h3 {
   font-size: 0.75rem;
   font-weight: 400;
+}
+
+p {
+  font-size: 0.875rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: gray;
+}
+
+ul {
+  padding-left: 1.25rem;
+}
+
+main {
+  padding: 1rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.cardChild {
+  padding: 0.75rem 0.75rem;
 }
 
 @media (prefers-color-scheme: dark) {

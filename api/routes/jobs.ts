@@ -9,8 +9,25 @@ router.get("/", async (_req, res) => {
     const response = await prisma.job.findMany({
       where: {},
       include: {
-        Company: { select: { logo: true, mission: true, name: true } },
+        company: true,
+        locations: true,
       },
+    });
+
+    res.status(200).json(response);
+  } catch (err: any) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// GET - get job by id
+router.get("/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  try {
+    const response = await prisma.job.findUnique({
+      where: { id },
+      include: { company: true, locations: true },
     });
 
     res.status(200).json(response);
@@ -21,24 +38,38 @@ router.get("/", async (_req, res) => {
 
 // POST - add job
 router.post("/", async (req, res) => {
-  const { companyId, title, posting, open, published, datePublished } =
-    req.body;
+  const {
+    companyId,
+    datePublished,
+    locations,
+    open,
+    posting,
+    published,
+    description,
+    qualifications,
+    equityRangeMax,
+    equityRangeMin,
+    payRangeMax,
+    payRangeMin,
+    payRangeTimeFrame,
+    type,
+    experience,
+    responsibilities,
+    title,
+  } = req.body;
+
   try {
     // check if company with companyId exists
     const company = await prisma.company.findUnique({
       where: { id: companyId },
     });
 
-    // if company does not exist
     if (!company) {
-      // return Error saying company doesn't exist
       res
         .status(404)
         .json({ message: "failed to create job, company does not exist" });
 
       return;
-
-      // throw new Error("failed to create job, company does not exist");
     }
 
     // if company exists
@@ -49,10 +80,23 @@ router.post("/", async (req, res) => {
         open,
         published,
         datePublished,
+        description,
         companyId,
+        responsibilities,
+        qualifications,
+        equityRangeMax,
+        equityRangeMin,
+        payRangeMax,
+        payRangeMin,
+        payRangeTimeFrame,
+        type,
+        experience,
+        locations: {
+          connect: locations.map((l: number) => ({ id: l })),
+        },
       },
     });
-    // return created job
+
     res.status(201).json(response);
   } catch (err: any) {
     res.status(500).json({ message: err.message });

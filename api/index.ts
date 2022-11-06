@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
-import jobs from "./routes/jobs";
 import companies from "./routes/companies";
+import jobs from "./routes/jobs";
+import locations from "./routes/locations";
 
 const app = express();
 
@@ -22,8 +23,9 @@ app.use(
 
 app.use(express.json());
 
-app.use("/api/jobs", jobs);
 app.use("/api/companies", companies);
+app.use("/api/jobs", jobs);
+app.use("/api/locations", locations);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`API running on port ${PORT}`));

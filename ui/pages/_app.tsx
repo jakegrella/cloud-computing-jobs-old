@@ -1,7 +1,19 @@
+import type { AppProps } from "next/app";
+import Header from "../components/header";
 import "../styles/reset.css";
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
+import styles from "../styles/_app.module.css";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  // acts as a layout
+  return (
+    <div className={styles.container}>
+      <Head>
+        <meta name="author" content="Cloud Computing Jobs" />
+      </Head>
+      <Header />
+      <Component {...pageProps} />
+    </div>
+  );
 }
