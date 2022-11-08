@@ -10,7 +10,7 @@ const origin = [
   /localhost/,
   "https://cloudcomputingjobs.com",
   "https://cloud-computing-jobs.vercel.app",
-  "https://cloud-computing-jobs-a9wv6cjvy-jakegrella.vercel.app/",
+  /https:\/\/cloud-computing-jobs-.........-jakegrella\.vercel\.app/,
 ];
 
 app.use(
