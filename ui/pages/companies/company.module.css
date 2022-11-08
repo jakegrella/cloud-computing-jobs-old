@@ -1,0 +1,11 @@
+.company a {
+  font-size: 0.875rem;
+}
+
+.companyInfo div {
+  margin-bottom: 0.5rem;
+}
+
+.companyInfo h3 {
+  color: gray;
+}

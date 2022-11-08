@@ -3,5 +3,6 @@
   border-radius: 10px;
   border: 1px solid #333336;
   background: #1d1d1f;
-  /* padding: 0.75rem 0.75rem 0 0.75rem; */ /* add this to all elements inside a card instead */
+  margin-bottom: 0.5rem;
+  /* padding: 0.75rem 0.75rem 0 0.75rem; added to .cardChild in global */
 }
