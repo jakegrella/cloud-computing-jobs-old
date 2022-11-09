@@ -5,12 +5,11 @@ import ListItem from "../../components/list-item";
 import { ICompany } from "../../utils/types";
 
 export default function Companies() {
-  const basePath = "http://localhost:8080";
   const [companies, setCompanies] = useState<ICompany[] | undefined>();
 
   useEffect(() => {
     async function fetchCompanies() {
-      const response = await fetch(`${basePath}/api/companies`);
+      const response = await fetch("/api/companies");
       const data = await response.json();
       setCompanies(data);
     }

@@ -7,11 +7,11 @@
 /coverage
 
 # next.js
-ui/.next/
-ui/out/
+.next/
+out/
 
 # production
-ui/build
+build
 
 # misc
 .DS_Store
@@ -33,6 +33,3 @@ next-env.d.ts
 
 # notes file
 notes.md
-
-# api build directory
-build
