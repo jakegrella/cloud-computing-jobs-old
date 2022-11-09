@@ -5,12 +5,11 @@ import ListItem from "../components/list-item";
 import { IJob } from "../utils/types";
 
 export default function Home() {
-  const basePath = "http://localhost:8080";
   const [jobs, setJobs] = useState<IJob[] | undefined>();
 
   useEffect(() => {
     async function fetchJobs() {
-      const response = await fetch(`${basePath}/api/jobs`);
+      const response = await fetch("/api/jobs");
       const data = await response.json();
       setJobs(data);
     }

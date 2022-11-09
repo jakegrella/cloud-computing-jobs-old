@@ -12,14 +12,13 @@ export default function Company() {
   const router = useRouter();
   const { username } = router.query;
 
-  const basePath = "http://localhost:8080";
   const [company, setCompany] = useState<ICompany | undefined>();
 
   useEffect(() => {
     async function fetchCompany() {
       if (username) {
         // don't run when username is undefined
-        const response = await fetch(`${basePath}/api/companies/${username}`);
+        const response = await fetch(`/api/companies/${username}`);
         const data: ICompany = await response.json();
         console.log(data);
         setCompany(data);
