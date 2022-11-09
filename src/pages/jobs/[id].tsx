@@ -12,16 +12,14 @@ export default function Job() {
   const router = useRouter();
   const { id } = router.query;
 
-  const basePath = "http://localhost:8080";
   const [job, setJob] = useState<IJob | undefined>();
 
   useEffect(() => {
     async function fetchCompany() {
       if (id) {
         // don't run when id is undefined
-        const response = await fetch(`${basePath}/api/jobs/${id}`);
+        const response = await fetch(`/api/jobs/${id}`);
         const data: IJob = await response.json();
-        console.log(data);
         setJob(data);
       }
     }
