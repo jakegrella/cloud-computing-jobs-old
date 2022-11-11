@@ -20,7 +20,6 @@ export default function Company() {
         // don't run when username is undefined
         const response = await fetch(`/api/companies/${username}`);
         const data: ICompany = await response.json();
-        console.log(data);
         setCompany(data);
       }
     }

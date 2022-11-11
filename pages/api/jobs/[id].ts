@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "../../../prisma/prismaClient";
 
 // GET - get job by id
 export default async function handler(req, res) {

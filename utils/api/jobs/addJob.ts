@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "../../../prisma/prismaClient";
 
 // POST - add job
 export async function addJob(body: any) {
