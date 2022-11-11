@@ -13,7 +13,7 @@ model Job {
   posting           String
   open              Boolean    @default(true)
   published         Boolean    @default(false)
-  datePublished     DateTime?
+  datePublished     DateTime?  // needs to be stored in UTC
   company           Company    @relation(fields: [companyId], references: [id])
   companyId         Int
   locations         Location[]
@@ -22,11 +22,11 @@ model Job {
   qualifications    String     @db.Text
   type              String
   experience        String
-  payRangeMin       Decimal
-  payRangeMax       Decimal
-  payRangeTimeFrame String
-  equityRangeMin    Decimal
-  equityRangeMax    Decimal
+  payRangeMin       Decimal?
+  payRangeMax       Decimal?
+  payRangeTimeFrame String?
+  equityRangeMin    Decimal?
+  equityRangeMax    Decimal?
 }
 
 model Company {

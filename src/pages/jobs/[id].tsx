@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import Button from "../../components/button";
 import Card from "../../components/card";
 import { jobMetaDescription, metaKeywords } from "../../utils/htmlTags";
-import { locationHelper } from "../../utils/locationHelper";
+import { locationHelper } from "../../utils/location";
 import { IJob } from "../../utils/types";
+import { relativeDate } from "../../utils/date";
+import { formatEquity, formatPay } from "../../utils/money";
 
 export default function Job() {
   const router = useRouter();
@@ -57,27 +59,33 @@ export default function Job() {
             <div>
               <div>
                 <h3>Posted</h3>
-                <p>{job.datePublished?.toISOString() ?? "Unpublished"}</p>
+                <p>{relativeDate(job.datePublished)}</p>
               </div>
               <div>
                 <h3>Job Type</h3>
                 <p>{job.type}</p>
               </div>
               <div>
-                <h3>Location</h3>
+                <h3>{job.locations.length > 1 ? "Locations" : "Location"}</h3>
                 <p>{locationHelper(job.locations)}</p>
               </div>
               <div>
                 <h3>Pay</h3>
-                {/* <p>{formatPay(job.locations[0]}</p> need to format for multiple locations*/}
+                <p>
+                  {formatPay(
+                    job.payRangeMin,
+                    job.payRangeMax,
+                    job.payRangeTimeFrame
+                  )}
+                </p>
               </div>
               <div>
                 <h3>Equity</h3>
-                {/* <p>{formatPay(job.locations[0]}</p> need to format for multiple locations*/}
+                <p>{formatEquity(job.equityRangeMin, job.equityRangeMax)}</p>
               </div>
               <div>
                 <h3>Experience Level</h3>
-                {/* <p>{formatPay(job.locations[0]}</p> need to format for multiple locations*/}
+                <p>{job.experience}</p>
               </div>
             </div>
           </div>
