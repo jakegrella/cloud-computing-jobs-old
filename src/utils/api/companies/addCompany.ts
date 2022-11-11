@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // POST - add company
-export const addCompany = async (body: any) => {
+export async function addCompany(body: any) {
   const { headquarters, locations, logo, mission, name, overview, username } =
     body;
 
@@ -34,4 +34,4 @@ export const addCompany = async (body: any) => {
       data: { message: err.message },
     };
   }
-};
+}

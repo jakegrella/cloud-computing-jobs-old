@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { addJob } from "../../../utils/api/jobs/addJob";
 import { getAllJobs } from "../../../utils/api/jobs/getAllJobs";
