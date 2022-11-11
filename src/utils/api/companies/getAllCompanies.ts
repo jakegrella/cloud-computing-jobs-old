@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // GET - get all companies
-export const getAllCompanies = async () => {
+export async function getAllCompanies() {
   try {
     const response = await prisma.company.findMany({
       include: { jobs: true, locations: true },
@@ -18,4 +18,4 @@ export const getAllCompanies = async () => {
       data: { message: err.message },
     };
   }
-};
+}

@@ -11,6 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <div className={styles.container}>
       <Head>
         <meta name="author" content="Cloud Computing Jobs" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
       <Component {...pageProps} />

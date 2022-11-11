@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // POST - add job
-export const addJob = async (body: any) => {
+export async function addJob(body: any) {
   const {
     companyId,
     datePublished,
@@ -71,4 +71,4 @@ export const addJob = async (body: any) => {
       data: { message: err.message },
     };
   }
-};
+}

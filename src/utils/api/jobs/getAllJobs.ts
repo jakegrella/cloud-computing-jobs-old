@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 // GET - get all jobs
-export const getAllJobs = async () => {
+export async function getAllJobs() {
   try {
     const response = await prisma.job.findMany({
       include: { company: true, locations: true },
@@ -18,4 +18,4 @@ export const getAllJobs = async () => {
       data: { message: err.message },
     };
   }
-};
+}

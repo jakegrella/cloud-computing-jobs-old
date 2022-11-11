@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addJob } from "../../../utils/api/jobs/addJob";
-import { getAllJobs } from "../../../utils/api/jobs/getAllJobs";
+import { addLocation } from "../../../utils/api/locations/addLocation";
+import { getAllLocations } from "../../../utils/api/locations/getAllLocations";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,10 +14,10 @@ export default async function handler(
   try {
     switch (req.method) {
       case "GET":
-        response = await getAllJobs();
+        response = await getAllLocations();
         break;
       case "POST":
-        response = await addJob(req.body);
+        response = await addLocation(req.body);
         break;
       default:
         break;

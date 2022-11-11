@@ -24,7 +24,6 @@ export default function Home() {
           name="description"
           content="The best job board for cloud-focused software engineers"
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
