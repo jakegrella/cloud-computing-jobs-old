@@ -28,13 +28,13 @@ export default function Home() {
 
       <main>
         <h1>Jobs</h1>
-        {jobs && (
+        {/* {jobs && (
           <Card>
             {jobs.map((i) => (
               <ListItem key={i.id} job={i} />
             ))}
           </Card>
-        )}
+        )} */}
       </main>
     </div>
   );
