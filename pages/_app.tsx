@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="author" content="Cloud Computing Jobs" />
         <link rel="icon" href="/favicon.ico" />
       </Head> */}
-      <Header />
+      {/* <Header /> */}
       <Component {...pageProps} />
     </div>
   );
