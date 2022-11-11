@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../prisma/prismaClient";
 import { ILocation } from "../../types";
-const prisma = new PrismaClient();
 
 export async function addLocation(body: ILocation) {
   try {

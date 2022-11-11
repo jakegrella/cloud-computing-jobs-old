@@ -1,4 +1,4 @@
-import prisma from "../prismaClient";
+import { prisma } from "../../../prisma/prismaClient";
 
 export async function getAllLocations() {
   try {
