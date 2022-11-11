@@ -5,16 +5,18 @@ import { useEffect, useState } from "react";
 import Button from "../../components/button";
 import Card from "../../components/card";
 import { jobMetaDescription, metaKeywords } from "../../utils/htmlTags";
-import { locationHelper } from "../../utils/location";
 import { IJob } from "../../utils/types";
 import { relativeDate } from "../../utils/date";
 import { formatEquity, formatPay } from "../../utils/money";
+
+// TODO: using ". " as a separator will break as a splitter if there are acronyms like "U.S. " in the string
 
 export default function Job() {
   const router = useRouter();
   const { id } = router.query;
 
   const [job, setJob] = useState<IJob | undefined>();
+  const [showAllLocations, setShowAllLocations] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchCompany() {
@@ -28,7 +30,44 @@ export default function Job() {
     fetchCompany();
   }, [id]);
 
-  // using ". " as a separator will break as a splitter if there are acronyms like "U.S. " in the string
+  const locations = () => {
+    const multipleLocations = job.locations.length > 1;
+
+    return (
+      <div>
+        {multipleLocations ? (
+          <h3 onClick={() => setShowAllLocations(!showAllLocations)}>
+            {showAllLocations ? "Locations ⬇️" : "Locations ⬆️"}
+          </h3>
+        ) : (
+          <h3>Location</h3>
+        )}
+        <div>
+          {multipleLocations ? (
+            showAllLocations ? (
+              job.locations.map((l) => {
+                const key = `${l.city
+                  .toLowerCase()
+                  .replace(/ /g, "_")}-${l.state
+                  .toLowerCase()
+                  .replace(/ /g, "_")}`;
+
+                const content = `${l.city}, ${l.state}`;
+
+                return <h2 key={key}>{content}</h2>;
+              })
+            ) : (
+              <h2>{`${job.locations[0].city}, ${job.locations[0].state} +${
+                job.locations.length - 1
+              }`}</h2>
+            )
+          ) : (
+            <h2>{`${job.locations[0].city}, ${job.locations[0].state}`}</h2>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   return !job ? (
     <div>
@@ -59,34 +98,31 @@ export default function Job() {
             <div>
               <div>
                 <h3>Posted</h3>
-                <p>{relativeDate(job.datePublished)}</p>
+                <h2>{relativeDate(job.datePublished)}</h2>
               </div>
               <div>
-                <h3>Job Type</h3>
-                <p>{job.type}</p>
+                <h3>Type</h3>
+                <h2>{job.type}</h2>
               </div>
               <div>
-                <h3>{job.locations.length > 1 ? "Locations" : "Location"}</h3>
-                <p>{locationHelper(job.locations)}</p>
+                <h3>Experience</h3>
+                <h2>{job.experience}</h2>
               </div>
               <div>
                 <h3>Pay</h3>
-                <p>
+                <h2>
                   {formatPay(
                     job.payRangeMin,
                     job.payRangeMax,
                     job.payRangeTimeFrame
                   )}
-                </p>
+                </h2>
               </div>
               <div>
                 <h3>Equity</h3>
-                <p>{formatEquity(job.equityRangeMin, job.equityRangeMax)}</p>
+                <h2>{formatEquity(job.equityRangeMin, job.equityRangeMax)}</h2>
               </div>
-              <div>
-                <h3>Experience Level</h3>
-                <p>{job.experience}</p>
-              </div>
+              {locations()}
             </div>
           </div>
         </Card>
@@ -120,12 +156,6 @@ export default function Job() {
             </ul>
           </div>
         </Card>
-        {/* <Card>
-          <div>
-            <h2>Perks & Benefits</h2>
-            <p>cool perks</p>
-          </div>
-        </Card> */}
         <Button>
           <Link href={job.posting}>Apply at {job.company.name}</Link>
         </Button>
