@@ -9,10 +9,10 @@ export default function App({ Component, pageProps }: AppProps) {
   // acts as a layout
   return (
     <div className={styles.container}>
-      <Head>
+      {/* <Head>
         <meta name="author" content="Cloud Computing Jobs" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </Head> */}
       <Header />
       <Component {...pageProps} />
     </div>
