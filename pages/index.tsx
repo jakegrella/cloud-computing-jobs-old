@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import Card from "../components/card";
-import ListItem from "../components/list-item";
+import { Card, ListItem, Map, Search } from "../components";
 import { IJob } from "../utils/types";
+import styles from "./home.module.css";
 
 export default function Home() {
   const [jobs, setJobs] = useState<IJob[] | undefined>();
@@ -26,15 +26,31 @@ export default function Home() {
         />
       </Head>
 
-      <main>
-        <h1>Jobs</h1>
-        {jobs && (
-          <Card>
-            {jobs.map((i) => (
-              <ListItem key={i.id} job={i} />
-            ))}
-          </Card>
-        )}
+      <main className={styles.home}>
+        <div className={styles.home_jobSearch}>
+          <Search
+            className={styles.home_jobSearch_search}
+            placeholder="Search by location, company, job title, etc"
+          />
+          {jobs && (
+            <div className={styles.home_jobSearch_content}>
+              <Card className={styles.home_jobSearch_content_mapCard}>
+                <Map />
+              </Card>
+              <Card className={styles.home_jobSearch_content_jobList}>
+                {jobs.map((i) => (
+                  <ListItem key={i.id} job={i} />
+                ))}
+              </Card>
+            </div>
+          )}
+        </div>
+        <Card>
+          <h2>News</h2>
+        </Card>
+        <Card>
+          <h2>Blog</h2>
+        </Card>
       </main>
     </div>
   );

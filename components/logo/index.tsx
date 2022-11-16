@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useStore } from "../../store";
 import styles from "./logo.module.css";
 
-export default function Logo() {
+export function Logo() {
   const setIsMenuVisible = useStore((state) => state.setIsMenuVisible);
 
   return (

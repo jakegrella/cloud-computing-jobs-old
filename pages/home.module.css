@@ -1,0 +1,33 @@
+.home {
+  /* margin: 0; */
+  /* padding: 0; */
+}
+
+.home_jobSearch {
+  width: 100%;
+  height: 85vh;
+  margin: 0 0 1rem 0;
+}
+
+.home_jobSearch_search {
+  height: 2rem;
+}
+
+.home_jobSearch_content {
+  height: calc(100% - 2rem);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.home_jobSearch_content_mapCard {
+  height: 100%;
+  margin-right: 0.25rem;
+}
+
+.home_jobSearch_content_jobList {
+  height: 100%;
+  overflow-y: auto;
+  margin-left: 0.25rem;
+}
