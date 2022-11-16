@@ -21,3 +21,5 @@ export default async function handler(
   var token = sign(payload, process.env.MAPKIT_PRIVATE_KEY, { header: header });
   res.json({ token: token });
 }
+
+// implement restricted API routes utilizing API key

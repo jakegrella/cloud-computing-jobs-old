@@ -5,6 +5,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   env: result.parsed,
+  experimental: {
+    allowMiddlewareResponseBody: true,
+  },
   images: {
     remotePatterns: [
       {
