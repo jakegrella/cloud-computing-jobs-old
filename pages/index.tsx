@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Card, ListItem, Map, Search } from "../components";
-import { IJob } from "../utils/types";
+import { IJob } from "../utils";
 import styles from "./home.module.css";
 
 export default function Home() {
@@ -9,7 +9,12 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchJobs() {
-      const response = await fetch("/api/jobs");
+      const response = await fetch("/api/jobs", {
+        method: "get",
+        headers: new Headers({
+          Authorization: "Bearer " + process.env.API_SECRET_KEY,
+        }),
+      });
       const data = await response.json();
       setJobs(data);
     }

@@ -2,10 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Card from "../../components/card";
-import { companyMetaDescription } from "../../utils/htmlTags";
-import { ICompany } from "../../utils/types";
-import { jobsPlurality } from "../../utils/words";
+import { Card } from "../../components";
+import { companyMetaDescription, ICompany, jobsPlurality } from "../../utils";
 import styles from "./company.module.css";
 
 export default function Company() {
@@ -18,7 +16,12 @@ export default function Company() {
     async function fetchCompany() {
       if (username) {
         // don't run when username is undefined
-        const response = await fetch(`/api/companies/${username}`);
+        const response = await fetch(`/api/companies/${username}`, {
+          method: "get",
+          headers: new Headers({
+            Authorization: "Bearer " + process.env.API_SECRET_KEY,
+          }),
+        });
         const data: ICompany = await response.json();
         setCompany(data);
       }

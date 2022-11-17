@@ -2,12 +2,15 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Button from "../../components/button";
-import Card from "../../components/card";
-import { jobMetaDescription, metaKeywords } from "../../utils/htmlTags";
-import { IJob } from "../../utils/types";
-import { relativeDate } from "../../utils/date";
-import { formatEquity, formatPay } from "../../utils/money";
+import { Button, Card } from "../../components";
+import {
+  formatEquity,
+  formatPay,
+  IJob,
+  jobMetaDescription,
+  metaKeywords,
+  relativeDate,
+} from "../../utils";
 
 // TODO: using ". " as a separator will break as a splitter if there are acronyms like "U.S. " in the string
 
@@ -22,7 +25,12 @@ export default function Job() {
     async function fetchCompany() {
       if (id) {
         // don't run when id is undefined
-        const response = await fetch(`/api/jobs/${id}`);
+        const response = await fetch(`/api/jobs/${id}`, {
+          method: "get",
+          headers: new Headers({
+            Authorization: "Bearer " + process.env.API_SECRET_KEY,
+          }),
+        });
         const data: IJob = await response.json();
         setJob(data);
       }

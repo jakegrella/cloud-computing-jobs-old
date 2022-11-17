@@ -10,7 +10,12 @@ export function Map() {
         onLoad={() => {
           mapkit.init({
             authorizationCallback: function (done) {
-              fetch("http://localhost:3000/api/services/jwt")
+              fetch("http://localhost:3000/api/services/jwt", {
+                method: "get",
+                headers: new Headers({
+                  Authorization: "Bearer " + process.env.API_SECRET_KEY,
+                }),
+              })
                 .then((response) => response.json())
                 .then((result) => {
                   done(result.token);

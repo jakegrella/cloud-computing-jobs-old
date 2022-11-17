@@ -31,3 +31,22 @@
   overflow-y: auto;
   margin-left: 0.25rem;
 }
+
+/* small */
+@media only screen and (max-width: 768px) {
+  .home_jobSearch_content {
+    flex-flow: column nowrap;
+  }
+
+  .home_jobSearch {
+    margin-bottom: 0.5rem;
+  }
+
+  .home_jobSearch_content_mapCard {
+    margin-right: 0;
+  }
+
+  .home_jobSearch_content_jobList {
+    margin-left: 0;
+  }
+}

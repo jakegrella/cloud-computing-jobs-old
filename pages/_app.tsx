@@ -1,9 +1,9 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { Header } from "../components";
 import "../styles/reset.css";
 import "../styles/globals.css";
 import styles from "../styles/_app.module.css";
-import { Header } from "../components";
 
 export default function App({ Component, pageProps }: AppProps) {
   // acts as a layout
