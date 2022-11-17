@@ -13,6 +13,8 @@ export async function addLocation(body: ILocation) {
       postalCode,
       thoroughfare,
       premise,
+      latitude,
+      longitude,
     } = body;
 
     const response = await prisma.location.create({
@@ -27,6 +29,8 @@ export async function addLocation(body: ILocation) {
         postalCode,
         thoroughfare,
         premise,
+        latitude,
+        longitude,
       },
     });
 

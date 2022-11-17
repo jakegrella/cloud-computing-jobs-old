@@ -9,3 +9,8 @@
 .companyInfo h3 {
   color: gray;
 }
+
+.company_mapCard {
+  height: 300px;
+  /* margin-right: 0.25rem; */
+}

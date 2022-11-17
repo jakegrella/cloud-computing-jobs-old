@@ -1,13 +1,14 @@
 import Script from "next/script";
 import styles from "./map.module.css";
 
-export function Map() {
+export function Map({ mapInfo = undefined }) {
   return (
     <div id="map" className={styles.map}>
       <Script
         src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"
-        strategy="afterInteractive"
-        onLoad={() => {
+        strategy="afterInteractive" // default
+        onReady={() => {
+          // TODO: check if already initialized
           mapkit.init({
             authorizationCallback: function (done) {
               fetch("http://localhost:3000/api/services/jwt", {
@@ -23,26 +24,30 @@ export function Map() {
             },
           });
 
-          // los angeles region
-          const coordinate = new mapkit.Coordinate(34.05334, -118.24235);
-          const span = new mapkit.CoordinateSpan(0.16, 0.16);
-          const region = new mapkit.CoordinateRegion(coordinate, span);
-
           // init map
           const map = new mapkit.Map("map");
-          console.log("map", map);
 
-          // set region
-          map.region = region;
+          if (mapInfo) {
+            // add annotation
+            const x = new mapkit.Coordinate(
+              mapInfo.latitude,
+              mapInfo.longitude
+            );
+            var xAnnotation = new mapkit.MarkerAnnotation(x, {
+              color: "#8076F0",
+              title: mapInfo.company,
+              glyphText: "●",
+            });
+            map.showItems([xAnnotation]);
+          } else {
+            // los angeles region
+            const coordinate = new mapkit.Coordinate(34.05334, -118.24235);
+            const span = new mapkit.CoordinateSpan(0.16, 0.16);
+            const region = new mapkit.CoordinateRegion(coordinate, span);
 
-          // add annotation
-          const hollywoodSign = new mapkit.Coordinate(34.1340991, -118.321652);
-          var hsAnnotation = new mapkit.MarkerAnnotation(hollywoodSign, {
-            color: "#8076F0",
-            title: "Hollywood Sign",
-            glyphText: "●",
-          });
-          map.showItems([hsAnnotation]);
+            // set region
+            map.region = region;
+          }
 
           const mkMapView = document.getElementsByClassName("mk-map-view")[0];
           mkMapView.setAttribute("style", "border-radius:10px");
