@@ -2,8 +2,7 @@ import { prisma } from "../../../prisma/prismaClient";
 
 // POST - add company
 export async function addCompany(body: any) {
-  const { headquarters, locations, logo, mission, name, overview, username } =
-    body;
+  const { locations, logo, mission, name, overview, username } = body;
 
   try {
     // right now, assume headquarters and locations have valid ids
@@ -14,12 +13,6 @@ export async function addCompany(body: any) {
         name,
         overview,
         username,
-        headquarters: {
-          connect: { id: headquarters },
-        },
-        locations: {
-          connect: locations.map((l: number) => ({ id: l })),
-        },
       },
     });
 

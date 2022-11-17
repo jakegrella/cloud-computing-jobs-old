@@ -5,23 +5,23 @@ export interface ICompany {
   logo: string;
   mission: string;
   overview: string;
-  headquarters: ILocation;
-  locations: ILocation[];
   jobs: IJob[];
+  locations: ILocation[];
 }
 
 export interface IJob {
   id: number;
   title: string;
+  posting: string;
+  open: boolean;
+  published: boolean;
+  datePublished?: Date;
   company: ICompany;
   companyId: number;
-  datePublished?: Date;
+  locations: ILocation[];
   description: string;
-  open: boolean;
-  posting: string;
-  published: boolean;
-  qualifications: string;
   responsibilities: string;
+  qualifications: string;
   type: "Full Time" | "Part Time" | "Internship" | "Contract";
   experience: "Entry" | "Mid" | "Senior";
   payRangeMin: number;
@@ -29,15 +29,18 @@ export interface IJob {
   payRangeTimeFrame: "Year" | "Hour";
   equityRangeMax: number;
   equityRangeMin: number;
-  locations: ILocation[];
 }
 
 export interface ILocation {
   id: number;
-  city: string;
-  country: string;
-  state: string;
+  company: ICompany;
+  companyId: number;
+  headquarters: boolean;
   jobs: IJob[];
-  companies: ICompany[];
-  headquarters: ICompany[];
+  country: string;
+  administrativeArea: string;
+  locality: string;
+  postalCode: number;
+  thoroughfare: string;
+  premise: string;
 }
