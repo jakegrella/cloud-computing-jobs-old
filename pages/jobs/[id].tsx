@@ -54,23 +54,23 @@ export default function Job() {
           {multipleLocations ? (
             showAllLocations ? (
               job.locations.map((l) => {
-                const key = `${l.city
+                const key = `${l.locality
                   .toLowerCase()
-                  .replace(/ /g, "_")}-${l.state
+                  .replace(/ /g, "_")}-${l.administrativeArea
                   .toLowerCase()
                   .replace(/ /g, "_")}`;
 
-                const content = `${l.city}, ${l.state}`;
+                const content = `${l.locality}, ${l.administrativeArea}`;
 
                 return <h2 key={key}>{content}</h2>;
               })
             ) : (
-              <h2>{`${job.locations[0].city}, ${job.locations[0].state} +${
-                job.locations.length - 1
-              }`}</h2>
+              <h2>{`${job.locations[0].locality}, ${
+                job.locations[0].administrativeArea
+              } +${job.locations.length - 1}`}</h2>
             )
           ) : (
-            <h2>{`${job.locations[0].city}, ${job.locations[0].state}`}</h2>
+            <h2>{`${job.locations[0].locality}, ${job.locations[0].administrativeArea}`}</h2>
           )}
         </div>
       </div>

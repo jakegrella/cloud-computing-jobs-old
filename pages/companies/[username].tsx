@@ -3,12 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Card, Map } from "../../components";
-import {
-  companyMetaDescription,
-  ICompany,
-  ILocation,
-  jobsPlurality,
-} from "../../utils";
+import { companyMetaDescription, ICompany, jobsPlurality } from "../../utils";
 import styles from "./company.module.css";
 
 export default function Company() {

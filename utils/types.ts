@@ -43,6 +43,6 @@ export interface ILocation {
   postalCode: number;
   thoroughfare: string;
   premise: string;
-  latitude: number;
-  longitude: number;
+  latitude: string; // fix
+  longitude: string; // fix
 }
