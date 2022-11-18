@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@prisma/client": "^4.5.0",
+    "@types/apple-mapkit-js-browser": "^5.65.3",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "18.11.7",
     "@types/react": "18.0.24",
