@@ -11,7 +11,7 @@ export function Map({ mapInfo = undefined }) {
           // TODO: check if already initialized
           mapkit.init({
             authorizationCallback: function (done) {
-              fetch("http://localhost:3000/api/services/jwt", {
+              fetch("/api/services/jwt", {
                 method: "get",
                 headers: new Headers({
                   Authorization: "Bearer " + process.env.API_SECRET_KEY,
