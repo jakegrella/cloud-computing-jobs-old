@@ -40,7 +40,21 @@ export function Map() {
       >
         {mapMarkers &&
           mapMarkers.map((m) => {
-            console.log("m", typeof m.center.lat);
+            if (
+              // check type of lat + lng, discrepancy between environments
+              typeof m.center.lat === "string" &&
+              typeof m.center.lng === "string"
+            ) {
+              return (
+                <Marker
+                  key={Math.random()}
+                  position={{
+                    lat: parseFloat(m.center.lat),
+                    lng: parseFloat(m.center.lng),
+                  }}
+                />
+              );
+            }
             return (
               <Marker
                 key={Math.random()}
