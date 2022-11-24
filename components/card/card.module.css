@@ -1,8 +1,15 @@
 .card {
   width: 100%; /* will likely change */
   border-radius: 10px;
-  border: 1px solid #333336;
-  background: #1d1d1f;
+  border: 1px solid var(--dark-gray);
+  background: var(--card-gray);
   margin-bottom: 0.5rem;
   /* padding: 0.75rem 0.75rem 0 0.75rem; added to .cardChild in global */
+}
+
+@media (prefers-color-scheme: light) {
+  .card {
+    border: 1px solid var(--gray);
+    background: var(--white);
+  }
 }

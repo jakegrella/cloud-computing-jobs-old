@@ -7,7 +7,7 @@
 }
 
 .companyInfo h3 {
-  color: gray;
+  color: var(--gray);
 }
 
 .company_mapCard {
