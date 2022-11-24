@@ -21,8 +21,6 @@ export function Map() {
     });
   }
 
-  console.log("api key:", process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
-
   return (
     isLoaded && (
       <GoogleMap
