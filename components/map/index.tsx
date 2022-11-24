@@ -40,8 +40,13 @@ export function Map() {
       >
         {mapMarkers &&
           mapMarkers.map((m) => {
-            console.log("m", m);
-            return <Marker key={Math.random()} position={m.center} />;
+            console.log("m", typeof m.center.lat);
+            return (
+              <Marker
+                key={Math.random()}
+                position={{ lat: m.center.lat, lng: m.center.lng }}
+              />
+            );
           })}
       </GoogleMap>
     )
