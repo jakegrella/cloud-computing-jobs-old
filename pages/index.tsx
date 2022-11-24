@@ -20,7 +20,6 @@ async function fetchMappableJobs(latBound, lngBound) {
   });
 
   const data = await response.json();
-  console.log("fetchMappableJobs data", data);
   return data;
 }
 
@@ -34,8 +33,6 @@ export default function Home() {
 
   // on page load
   useEffect(() => {
-    console.log("UE on page load");
-
     // request location
     navigator.geolocation.getCurrentPosition(
       // location provided
@@ -61,10 +58,7 @@ export default function Home() {
 
   // on update to visible map region
   useEffect(() => {
-    console.log("UE on update to map bounds");
-
     if (mapBounds !== undefined) {
-      console.log("mapBounds:", mapBounds);
       // prevent multiple calls to fetch jobs when map updates occur within 1s
       clearTimeout(timeout);
       timeout = setTimeout(() => {
@@ -88,8 +82,6 @@ export default function Home() {
 
   // on update to jobs
   useEffect(() => {
-    console.log("UE on update to jobs");
-
     // init markerPositions
     let markerPositions = [];
 
@@ -97,6 +89,7 @@ export default function Home() {
     if (jobs && jobs.length) {
       jobs.forEach((job) => {
         job.locations.forEach((location) => {
+          console.log("location", location);
           markerPositions.push({
             center: { lat: location.latitude, lng: location.longitude },
           });

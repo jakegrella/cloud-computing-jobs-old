@@ -13,7 +13,6 @@ export function Map() {
   const initMap = useStore((state) => state.initMap);
   const map = useStore((state) => state.map);
   const setMap = useStore((state) => state.setMap);
-  const mapBounds = useStore((state) => state.mapBounds);
   const setMapBounds = useStore((state) => state.setMapBounds);
   const mapMarkers = useStore((state) => state.mapMarkers);
 
@@ -24,15 +23,8 @@ export function Map() {
   function onBoundsChanged() {
     clearTimeout(boundsChangedTimeout);
     boundsChangedTimeout = setTimeout(() => {
-      if (
-        map !== undefined
-        // JSON.stringify(mapBounds) !== JSON.stringify(map.getBounds().toJSON())
-      ) {
-        console.log("bounds different");
-        console.log("map!!!", map);
-        const mapBs = map.getBounds();
-        console.log("mapBs", mapBs);
-        setMapBounds(mapBs.toJSON());
+      if (map) {
+        setMapBounds(map.getBounds().toJSON());
       }
     }, 500);
   }
@@ -47,9 +39,10 @@ export function Map() {
         onBoundsChanged={onBoundsChanged}
       >
         {mapMarkers &&
-          mapMarkers.map((m) => (
-            <Marker key={Math.random()} position={m.center} />
-          ))}
+          mapMarkers.map((m) => {
+            console.log("m", m);
+            return <Marker key={Math.random()} position={m.center} />;
+          })}
       </GoogleMap>
     )
   );
