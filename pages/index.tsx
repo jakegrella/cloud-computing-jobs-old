@@ -28,9 +28,8 @@ let timeout;
 
 export default function Home() {
   const [jobs, setJobs] = useState<IJob[] | undefined>();
-  const setMap = useStore((state) => state.setMap);
+  const setInitMap = useStore((state) => state.setInitMap);
   const mapBounds = useStore((state) => state.mapBounds);
-  const mapMarkers = useStore((state) => state.mapMarkers);
   const setMapMarkers = useStore((state) => state.setMapMarkers);
 
   // on page load
@@ -44,7 +43,7 @@ export default function Home() {
         const { latitude, longitude } = position.coords;
 
         // set region to user location
-        setMap({
+        setInitMap({
           center: { lat: latitude, lng: longitude },
           zoom: 12,
         });
@@ -52,7 +51,7 @@ export default function Home() {
       // no location provided
       () => {
         // set region to default Manhattan
-        setMap({
+        setInitMap({
           center: { lat: 40.741895, lng: -73.989308 },
           zoom: 12,
         });

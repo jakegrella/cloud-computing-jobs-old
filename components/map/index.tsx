@@ -10,6 +10,7 @@ export function Map() {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
 
+  const initMap = useStore((state) => state.initMap);
   const map = useStore((state) => state.map);
   const setMap = useStore((state) => state.setMap);
   const mapBounds = useStore((state) => state.mapBounds);
@@ -24,10 +25,14 @@ export function Map() {
     clearTimeout(boundsChangedTimeout);
     boundsChangedTimeout = setTimeout(() => {
       if (
-        JSON.stringify(mapBounds) !== JSON.stringify(map.getBounds().toJSON())
+        map !== undefined
+        // JSON.stringify(mapBounds) !== JSON.stringify(map.getBounds().toJSON())
       ) {
         console.log("bounds different");
-        setMapBounds(map.getBounds().toJSON());
+        console.log("map!!!", map);
+        const mapBs = map.getBounds();
+        console.log("mapBs", mapBs);
+        setMapBounds(mapBs.toJSON());
       }
     }, 500);
   }
@@ -36,8 +41,8 @@ export function Map() {
     isLoaded && (
       <GoogleMap
         mapContainerClassName={styles.map}
-        center={map.center} // init
-        zoom={map.zoom} // init
+        center={initMap.center} // init
+        zoom={initMap.zoom} // init
         onLoad={onMapLoad}
         onBoundsChanged={onBoundsChanged}
       >

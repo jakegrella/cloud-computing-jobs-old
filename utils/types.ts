@@ -50,3 +50,23 @@ export interface ILocation {
 export interface IMapMarker {
   center: { lat: number; lng: number };
 }
+
+interface IInitMap {
+  center: { lat: number; lng: number };
+  zoom: number;
+}
+
+export interface IState {
+  isMenuVisible: boolean;
+  setIsMenuVisible: (isVisible: boolean) => void;
+  jobs: IJob[];
+  setJobs: (jobs: IJob[]) => void;
+  initMap: IInitMap;
+  setInitMap: (initMap: IInitMap) => void;
+  map: any;
+  setMap: (map: any) => void;
+  mapBounds: any;
+  setMapBounds: (mapBounds: any) => void;
+  mapMarkers: IMapMarker[];
+  setMapMarkers: (mapMarkers: IMapMarker[]) => void;
+}
