@@ -1,3 +1,4 @@
+import { useGoogleMap } from "@react-google-maps/api";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Card, ListItem, Map, Search } from "../components";
@@ -23,16 +24,13 @@ async function fetchMappableJobs(latBound, lngBound) {
   return data;
 }
 
-// NEED TO
-// set map location on page load
-// fetch new jobs every time map moves
-
 let timeout;
 
 export default function Home() {
   const [jobs, setJobs] = useState<IJob[] | undefined>();
-  const map = useStore((state) => state.map);
   const setMap = useStore((state) => state.setMap);
+  const mapBounds = useStore((state) => state.mapBounds);
+  const mapMarkers = useStore((state) => state.mapMarkers);
   const setMapMarkers = useStore((state) => state.setMapMarkers);
 
   // on page load
@@ -53,41 +51,41 @@ export default function Home() {
       },
       // no location provided
       () => {
-        console.log("location not given");
         // set region to default Manhattan
         setMap({
           center: { lat: 40.741895, lng: -73.989308 },
           zoom: 12,
         });
-        console.log("mapRegion", map);
       }
     );
   }, []);
 
   // on update to visible map region
   useEffect(() => {
-    console.log("UE on update to map");
+    console.log("UE on update to map bounds");
 
-    // prevent multiple calls to fetch jobs when map updates occur within 1s
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      const latBound = {
-        min: map.center.lat - 0.25,
-        max: map.center.lat + 0.25,
-      };
-      const lngBound = {
-        min: map.center.lng - 0.25,
-        max: map.center.lat + 0.25,
-      };
+    if (mapBounds !== undefined) {
+      console.log("mapBounds:", mapBounds);
+      // prevent multiple calls to fetch jobs when map updates occur within 1s
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const latBound = {
+          min: mapBounds.south,
+          max: mapBounds.north,
+        };
+        const lngBound = {
+          min: mapBounds.west,
+          max: mapBounds.east,
+        };
 
-      async function getJobs() {
-        console.log("running GET JOBS");
-        const response = await fetchMappableJobs(latBound, lngBound);
-        setJobs(response);
-      }
-      getJobs();
-    }, 1000);
-  }, [map]);
+        async function getJobs() {
+          const response = await fetchMappableJobs(latBound, lngBound);
+          setJobs(response);
+        }
+        getJobs();
+      }, 500);
+    }
+  }, [mapBounds]);
 
   // on update to jobs
   useEffect(() => {
@@ -97,7 +95,7 @@ export default function Home() {
     let markerPositions = [];
 
     // markerPositions = array of marker locations
-    jobs && // line should be able to be removed
+    if (jobs && jobs.length) {
       jobs.forEach((job) => {
         job.locations.forEach((location) => {
           markerPositions.push({
@@ -105,6 +103,7 @@ export default function Home() {
           });
         });
       });
+    }
 
     // set map markers to array of marker locations
     setMapMarkers(markerPositions);
@@ -127,15 +126,18 @@ export default function Home() {
             <Card className={styles.home_primaryContent_mapCard}>
               <Map />
             </Card>
-            {jobs ? (
+            {jobs && jobs.length ? (
               <Card className={styles.home_primaryContent_jobList}>
                 {jobs.map((i) => (
                   <ListItem key={i.id} job={i} />
                 ))}
               </Card>
             ) : (
-              <Card>
-                <p>no jobs</p>
+              <Card className={styles.home_primaryContent_jobList}>
+                <p>
+                  No jobs found in mapped region. Try searching in a larger area
+                  or changing filters.
+                </p>
               </Card>
             )}
           </div>

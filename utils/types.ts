@@ -47,10 +47,6 @@ export interface ILocation {
   longitude: number;
 }
 
-export interface IMap extends IMapMarker {
-  zoom: number;
-}
-
 export interface IMapMarker {
   center: { lat: number; lng: number };
 }
