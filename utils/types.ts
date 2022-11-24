@@ -43,6 +43,14 @@ export interface ILocation {
   postalCode: number;
   thoroughfare: string;
   premise: string;
-  latitude: string; // fix
-  longitude: string; // fix
+  latitude: number;
+  longitude: number;
+}
+
+export interface IMap extends IMapMarker {
+  zoom: number;
+}
+
+export interface IMapMarker {
+  center: { lat: number; lng: number };
 }

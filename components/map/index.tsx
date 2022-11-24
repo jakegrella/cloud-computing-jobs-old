@@ -1,65 +1,43 @@
-import Script from "next/script";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { useStore } from "../../store";
 import styles from "./map.module.css";
 
-export function Map({ mapInfo = undefined }) {
+export function Map() {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+  });
+
+  const map = useStore((state) => state.map);
+  const setMap = useStore((state) => state.setMap);
+  const mapMarkers = useStore((state) => state.mapMarkers);
+
+  function onMapLoad(e) {
+    console.log("map loaded");
+
+    setMap({
+      center: { lat: e.center.lat(), lng: e.center.lng() },
+      zoom: e.zoom,
+    });
+  }
+
   return (
-    <div id="map" className={styles.map}>
-      <Script
-        src="https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js"
-        strategy="afterInteractive" // default
-        onReady={() => {
-          // TODO: check if already initialized
-          mapkit.init({
-            authorizationCallback: function (done) {
-              fetch("/api/services/jwt", {
-                method: "get",
-                headers: new Headers({
-                  Authorization: "Bearer " + process.env.API_SECRET_KEY,
-                }),
-              })
-                .then((response) => response.json())
-                .then((result) => {
-                  done(result.token);
-                });
-            },
-          });
-
-          // init map
-          const map = new mapkit.Map("map");
-
-          if (mapInfo) {
-            // add annotation
-            const x = new mapkit.Coordinate(
-              mapInfo.latitude,
-              mapInfo.longitude
-            );
-            var xAnnotation = new mapkit.MarkerAnnotation(x, {
-              color: "#8076F0",
-              title: mapInfo.company,
-              glyphText: "●",
-            });
-            map.showItems([xAnnotation]);
-          } else {
-            // los angeles region
-            const coordinate = new mapkit.Coordinate(34.05334, -118.24235);
-            const span = new mapkit.CoordinateSpan(0.16, 0.16);
-            const region = new mapkit.CoordinateRegion(coordinate, span);
-
-            // set region
-            map.region = region;
-          }
-
-          const mkMapView = document.getElementsByClassName("mk-map-view")[0];
-          mkMapView.setAttribute("style", "border-radius:10px");
-
-          map.addEventListener("region-change-end", (e) => {
-            console.log("region change end", e);
-          });
-        }}
-        onError={(e) => {
-          console.error("Script failed to load", e);
-        }}
-      />
-    </div>
+    isLoaded && (
+      <GoogleMap
+        mapContainerClassName={styles.map}
+        center={map.center} // init
+        zoom={map.zoom} // init
+        onLoad={onMapLoad}
+        // onUnmount={onUnmount}
+        // onCenterChanged={getJobs}
+        // onBoundsChanged={getJobs}
+        // options={{}}
+      >
+        {mapMarkers &&
+          mapMarkers.map((m) => (
+            <Marker key={Math.random()} position={m.center} />
+          ))}
+      </GoogleMap>
+    )
   );
 }
