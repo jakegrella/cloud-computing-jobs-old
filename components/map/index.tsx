@@ -1,6 +1,6 @@
 import {
   GoogleMap,
-  LoadScriptNext,
+  LoadScript,
   Marker,
   // useJsApiLoader,
 } from "@react-google-maps/api";
@@ -28,7 +28,7 @@ export function Map() {
 
   return (
     // isLoaded && (
-    <LoadScriptNext googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}>
+    <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}>
       <GoogleMap
         mapContainerClassName={styles.map}
         center={map.center} // init
@@ -44,7 +44,7 @@ export function Map() {
             <Marker key={Math.random()} position={m.center} />
           ))}
       </GoogleMap>
-    </LoadScriptNext>
+    </LoadScript>
     // )
   );
 }
