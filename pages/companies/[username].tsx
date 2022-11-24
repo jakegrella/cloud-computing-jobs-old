@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Card, Map } from "../../components";
+import { Card } from "../../components";
 import { companyMetaDescription, ICompany, jobsPlurality } from "../../utils";
 import styles from "./company.module.css";
 
@@ -34,8 +34,8 @@ export default function Company() {
         console.log(data);
         const mapStuff = {
           company: data.name,
-          latitude: parseFloat(data.locations[0].latitude),
-          longitude: parseFloat(data.locations[0].longitude),
+          latitude: data.locations[0].latitude,
+          longitude: data.locations[0].longitude,
         };
         console.log("ms", mapStuff);
         setMapInfo(mapStuff);
@@ -87,9 +87,9 @@ export default function Company() {
             </div>
           </div>
         </Card>
-        <Card className={styles.company_mapCard}>
-          <Map mapInfo={mapInfo} />
-        </Card>
+        {/* <Card className={styles.company_mapCard}>
+          <Map />
+        </Card> */}
         <Card>
           <h2>{company.name} In The News</h2>
         </Card>
