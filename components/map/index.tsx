@@ -26,6 +26,8 @@ export function Map() {
     });
   }
 
+  console.log("api key:", process.env.GOOGLE_MAPS_API_KEY);
+
   return (
     // isLoaded && (
     <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}>
