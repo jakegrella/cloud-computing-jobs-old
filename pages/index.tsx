@@ -89,7 +89,6 @@ export default function Home() {
     if (jobs && jobs.length) {
       jobs.forEach((job) => {
         job.locations.forEach((location) => {
-          console.log("location", location);
           markerPositions.push({
             center: { lat: location.latitude, lng: location.longitude },
           });

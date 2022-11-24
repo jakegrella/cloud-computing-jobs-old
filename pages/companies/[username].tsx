@@ -31,13 +31,12 @@ export default function Company() {
           (obj) => obj.headquarters === true
         );
         setHq(`${headquarters.locality}, ${headquarters.administrativeArea}`);
-        console.log(data);
+
         const mapStuff = {
           company: data.name,
           latitude: data.locations[0].latitude,
           longitude: data.locations[0].longitude,
         };
-        console.log("ms", mapStuff);
         setMapInfo(mapStuff);
       }
     }

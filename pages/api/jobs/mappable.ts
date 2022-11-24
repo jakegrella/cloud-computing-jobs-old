@@ -10,7 +10,6 @@ export default async function handler(
   // return only the mappable locations
 
   const { latBound, lngBound } = req.body;
-  console.log("latBound:", latBound, "lngBound:", lngBound);
 
   let response: { status: number; data: any } = {
     status: 500,
