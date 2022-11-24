@@ -1,12 +1,17 @@
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScriptNext,
+  Marker,
+  // useJsApiLoader,
+} from "@react-google-maps/api";
 import { useStore } from "../../store";
 import styles from "./map.module.css";
 
 export function Map() {
-  const { isLoaded } = useJsApiLoader({
-    // id: "google-map-script",
-    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
-  });
+  // const { isLoaded } = useJsApiLoader({
+  //   // id: "google-map-script",
+  //   googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+  // });
 
   const map = useStore((state) => state.map);
   const setMap = useStore((state) => state.setMap);
@@ -22,7 +27,8 @@ export function Map() {
   }
 
   return (
-    isLoaded && (
+    // isLoaded && (
+    <LoadScriptNext googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}>
       <GoogleMap
         mapContainerClassName={styles.map}
         center={map.center} // init
@@ -38,6 +44,7 @@ export function Map() {
             <Marker key={Math.random()} position={m.center} />
           ))}
       </GoogleMap>
-    )
+    </LoadScriptNext>
+    // )
   );
 }
