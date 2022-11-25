@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./list-item.module.css";
 
-export default function ListItem({ job = undefined, company = undefined }) {
+export function ListItem({ job = undefined, company = undefined }) {
   // format depending on whether data is job or company
   if (job) company = job.company;
 

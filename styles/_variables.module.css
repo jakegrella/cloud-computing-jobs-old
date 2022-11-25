@@ -1,0 +1,18 @@
+:root {
+  /* colors */
+  --black: #000000;
+  --card-gray: #1d1d1f;
+  --dark-gray: #333336;
+  --gray: #3d3d41;
+  --white: #ffffff;
+  --primary: #5c7cff;
+  --primary-light: #7692ff;
+
+  /* breakpoints */
+  --small: 25em; /* 400px */
+  --medium: 48em; /* 768px */
+  --large: 64em; /* 1024px */
+  --xlarge: 80em; /* 1280px */
+  --huge: 90em; /* 1440px */
+  --xhuge: 125em; /* 2000px */
+}

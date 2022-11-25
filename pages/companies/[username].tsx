@@ -2,10 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Card from "../../components/card";
-import { companyMetaDescription } from "../../utils/htmlTags";
-import { ICompany } from "../../utils/types";
-import { jobsPlurality } from "../../utils/words";
+import { Card } from "../../components";
+import { companyMetaDescription, ICompany, jobsPlurality } from "../../utils";
 import styles from "./company.module.css";
 
 export default function Company() {
@@ -13,14 +11,33 @@ export default function Company() {
   const { username } = router.query;
 
   const [company, setCompany] = useState<ICompany | undefined>();
+  const [hq, setHq] = useState<string | undefined>();
+  const [mapInfo, setMapInfo] = useState<object | undefined>();
 
   useEffect(() => {
     async function fetchCompany() {
       if (username) {
         // don't run when username is undefined
-        const response = await fetch(`/api/companies/${username}`);
+        const response = await fetch(`/api/companies/${username}`, {
+          method: "get",
+          headers: new Headers({
+            Authorization: "Bearer " + process.env.API_SECRET_KEY,
+          }),
+        });
         const data: ICompany = await response.json();
         setCompany(data);
+
+        const headquarters = data.locations.find(
+          (obj) => obj.headquarters === true
+        );
+        setHq(`${headquarters.locality}, ${headquarters.administrativeArea}`);
+
+        const mapStuff = {
+          company: data.name,
+          latitude: data.locations[0].latitude,
+          longitude: data.locations[0].longitude,
+        };
+        setMapInfo(mapStuff);
       }
     }
     fetchCompany();
@@ -64,12 +81,16 @@ export default function Company() {
               </div>
               <div>
                 <h3>Headquarters</h3>
-                <p>
-                  {company.headquarters.city}, {company.headquarters.state}
-                </p>
+                <p>{hq}</p>
               </div>
             </div>
           </div>
+        </Card>
+        {/* <Card className={styles.company_mapCard}>
+          <Map />
+        </Card> */}
+        <Card>
+          <h2>{company.name} In The News</h2>
         </Card>
       </main>
     </div>

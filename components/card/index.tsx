@@ -1,7 +1,7 @@
 import { Children, cloneElement, ReactElement } from "react";
 import styles from "./card.module.css";
 
-export default function Card({ children }) {
+export function Card({ children, className = null }) {
   const childrenWithClass = Children.map(children, (child: ReactElement) =>
     cloneElement(child, {
       className: child.props.className
@@ -10,5 +10,9 @@ export default function Card({ children }) {
     })
   );
 
-  return <div className={styles["card"]}>{childrenWithClass}</div>;
+  return (
+    <div className={`${styles.card} ${className ?? ""}`}>
+      {childrenWithClass}
+    </div>
+  );
 }

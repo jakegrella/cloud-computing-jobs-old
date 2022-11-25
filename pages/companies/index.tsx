@@ -1,15 +1,19 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import Card from "../../components/card";
-import ListItem from "../../components/list-item";
-import { ICompany } from "../../utils/types";
+import { Card, ListItem } from "../../components";
+import { ICompany } from "../../utils";
 
 export default function Companies() {
   const [companies, setCompanies] = useState<ICompany[] | undefined>();
 
   useEffect(() => {
     async function fetchCompanies() {
-      const response = await fetch("/api/companies");
+      const response = await fetch("/api/companies", {
+        method: "get",
+        headers: new Headers({
+          Authorization: "Bearer " + process.env.API_SECRET_KEY,
+        }),
+      });
       const data = await response.json();
       setCompanies(data);
     }

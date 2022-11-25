@@ -1,4 +1,5 @@
 import { prisma } from "../../../prisma/prismaClient";
+// import { IJob } from "../../types";
 
 // POST - add job
 export async function addJob(body: any) {
@@ -55,7 +56,7 @@ export async function addJob(body: any) {
         type,
         experience,
         locations: {
-          connect: locations.map((l: number) => ({ id: l })),
+          connect: locations.map((locationId: number) => ({ id: locationId })),
         },
       },
     });

@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   try {
     const response = await prisma.company.findUnique({
       where: { username },
-      include: { jobs: true, locations: true, headquarters: true },
+      include: { jobs: true, locations: true },
     });
 
     res.status(200).json(response);

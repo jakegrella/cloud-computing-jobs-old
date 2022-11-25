@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { useStore } from "../../store";
-import Card from "../card";
+import { Card } from "../card";
 import styles from "./menu.module.css";
 
-export default function Menu() {
+export function Menu() {
   const setIsMenuVisible = useStore((state) => state.setIsMenuVisible);
 
   return (
