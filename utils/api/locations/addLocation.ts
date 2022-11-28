@@ -4,8 +4,34 @@ import { ILocation } from "../../types";
 export async function addLocation(body: ILocation) {
   try {
     // right now, assume headquarters and locations have valid ids
+    const {
+      companyId,
+      headquarters,
+      country,
+      administrativeArea,
+      locality,
+      postalCode,
+      thoroughfare,
+      premise,
+      latitude,
+      longitude,
+    } = body;
+
     const response = await prisma.location.create({
-      data: body,
+      data: {
+        company: {
+          connect: { id: companyId },
+        },
+        headquarters,
+        country,
+        administrativeArea,
+        locality,
+        postalCode,
+        thoroughfare,
+        premise,
+        latitude,
+        longitude,
+      },
     });
 
     return {
