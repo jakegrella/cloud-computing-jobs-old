@@ -1,5 +1,77 @@
-.search input {
+.search {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  height: 2.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.search_bar {
+  margin-right: 0.5rem;
+  height: 100%;
+}
+
+.search_bar input {
   height: 100%;
   width: 100%;
+  background: var(--card-gray);
+  border: none;
+  border-radius: 10px;
+}
+
+.buttonGroup {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  height: 2.75rem;
+  background: var(--card-gray);
+  padding: 0 0.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--dark-gray);
+  z-index: 0;
+}
+
+.buttonGroup button {
+  background: none;
+  border: none;
   height: 2rem;
+  margin: 0.25rem;
+  z-index: 2;
+}
+
+.buttonBackground {
+  position: absolute;
+  height: 1.75rem;
+  width: 2.75rem;
+  background: rgb(92, 124, 255);
+  background: linear-gradient(
+    110deg,
+    rgba(92, 124, 255, 1) 0%,
+    rgba(118, 146, 255, 1) 100%
+  );
+  border-radius: 5px;
+  z-index: 1;
+  transition: left 0.15s;
+}
+
+.buttonBackground.map {
+  top: 0.5rem;
+  left: 0.45rem;
+}
+.buttonBackground.list {
+  top: 0.5rem;
+  left: 3.5rem;
+}
+.buttonBackground.both {
+  top: 0.5rem;
+  left: 6.65rem;
+}
+
+/* large */
+@media only screen and (min-width: 48em) {
+  .search_bar {
+    margin-right: 0;
+  }
 }

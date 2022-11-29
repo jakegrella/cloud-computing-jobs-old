@@ -43,6 +43,10 @@ a:hover {
   background: var(--gray);
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 ul {
   padding-left: 1.25rem;
 }

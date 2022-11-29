@@ -17,4 +17,6 @@ export const useStore = create<IState>((set) => ({
   setMapBounds: (mapBounds) => set(() => ({ mapBounds })),
   mapMarkers: [],
   setMapMarkers: (mapMarkers) => set(() => ({ mapMarkers })),
+  homePageView: "map",
+  setHomePageView: (homePageView) => set(() => ({ homePageView })),
 }));
