@@ -14,6 +14,7 @@ export function Map() {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
 
+  const homePageView = useStore((state) => state.homePageView);
   const initMap = useStore((state) => state.initMap);
   const map = useStore((state) => state.map);
   const setMap = useStore((state) => state.setMap);
@@ -43,6 +44,7 @@ export function Map() {
   }
 
   function handleMarkerClick(e) {
+    // console.log(e);
     const job = jobs.find(
       (job) =>
         job.id.toString() === e.domEvent.srcElement.attributes.title.value
@@ -50,6 +52,16 @@ export function Map() {
     // set active
     setActiveMarker({ e, job });
   }
+
+  // const path = `M 0,0
+  // C 0,-8 12,-8 12,0
+  // C 12,8 0,8 0,0`;
+
+  // const icon = {
+  //   path,
+  //   fillColor: "rgb(92, 124, 255)",
+  //   strokeColor: "rgb(92, 124, 255)",
+  // };
 
   return (
     isLoaded && (
@@ -61,7 +73,7 @@ export function Map() {
         onBoundsChanged={onBoundsChanged}
         onClick={handleMapClick}
       >
-        {width < 768 && activeMarker && (
+        {width < 768 && activeMarker && homePageView === "map" && (
           <div className={styles.activeMarkerPreviewContainer}>
             <Card>
               <ListItem job={activeMarker.job} />
@@ -82,8 +94,9 @@ export function Map() {
                     lat: parseFloat(m.center.lat),
                     lng: parseFloat(m.center.lng),
                   }}
-                  onClick={handleMarkerClick}
                   title={m.job.id.toString()}
+                  onClick={handleMarkerClick}
+                  // icon={icon}
                 />
               );
             }
@@ -91,8 +104,9 @@ export function Map() {
               <Marker
                 key={Math.random()}
                 position={{ lat: m.center.lat, lng: m.center.lng }}
-                onClick={handleMarkerClick}
                 title={m.job.id.toString()}
+                onClick={handleMarkerClick}
+                // icon={icon}
               />
             );
           })}
