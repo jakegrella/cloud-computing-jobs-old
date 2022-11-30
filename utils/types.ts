@@ -49,6 +49,7 @@ export interface ILocation {
 
 export interface IMapMarker {
   center: { lat: number; lng: number };
+  job: IJob;
 }
 
 interface IInitMap {
@@ -69,4 +70,6 @@ export interface IState {
   setMapBounds: (mapBounds: any) => void;
   mapMarkers: IMapMarker[];
   setMapMarkers: (mapMarkers: IMapMarker[]) => void;
+  homePageView: "map" | "list" | "both";
+  setHomePageView: (homePageView: "map" | "list" | "both") => void;
 }
