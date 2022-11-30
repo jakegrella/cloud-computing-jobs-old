@@ -9,6 +9,7 @@
 .search_bar {
   margin-right: 0.5rem;
   height: 100%;
+  position: relative;
 }
 
 .search_bar input {
@@ -17,6 +18,26 @@
   background: var(--card-gray);
   border: none;
   border-radius: 10px;
+  z-index: 2;
+  position: relative;
+}
+
+.search_bar .dropdown {
+  background-color: var(--card-gray);
+  position: absolute;
+  top: 0.5rem;
+  padding-top: 2.75rem;
+  z-index: 1;
+  width: 100%;
+}
+
+.dropdown button {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  margin-right: 0.5rem;
+  background: var(--dark-gray);
+  border: none;
+  border-radius: 5px;
 }
 
 .buttonGroup {
