@@ -13,11 +13,6 @@
 }
 
 .search_bar input {
-  height: 100%;
-  width: 100%;
-  background: var(--card-gray);
-  border: none;
-  border-radius: 10px;
   z-index: 2;
   position: relative;
 }

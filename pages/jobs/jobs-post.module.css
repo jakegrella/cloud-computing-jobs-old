@@ -1,0 +1,60 @@
+.jobPostingFormContainer {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+
+.form {
+  width: 100%;
+}
+
+.form label {
+}
+
+.form div {
+  padding-bottom: 0;
+}
+
+.form input {
+  height: 2rem;
+}
+
+.form textarea {
+  padding-top: 0.5rem;
+}
+
+.form .similarCompanyContainer {
+  display: flex;
+}
+
+.form .similarCompany {
+  display: flex;
+  width: fit-content;
+}
+
+.sidebar {
+  margin-top: 0.5rem;
+}
+
+/* large */
+@media only screen and (min-width: 48em) {
+  .jobPostingFormContainer {
+    flex-flow: row nowrap;
+  }
+
+  .form {
+    width: 65%;
+    margin-right: 0.25rem;
+  }
+
+  .sidebar {
+    width: 35%;
+    margin-left: 0.25rem;
+    margin-top: 0;
+  }
+
+  .form input,
+  .form textarea,
+  .form select {
+  }
+}

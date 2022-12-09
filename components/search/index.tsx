@@ -32,12 +32,6 @@ export function Search({ className = undefined, placeholder = "Search" }) {
 
   const searchInput = useRef(null);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      console.log("document", document.activeElement);
-    }
-  }, []);
-
   function handleInputFocus() {
     setDropdownVisible(true);
   }

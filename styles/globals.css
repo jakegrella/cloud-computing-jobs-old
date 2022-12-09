@@ -51,6 +51,32 @@ ul {
   padding-left: 1.25rem;
 }
 
+label {
+  font-size: 0.75rem;
+}
+
+input {
+  background: var(--card-gray);
+  border: none;
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+}
+input:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
+
+select,
+option,
+textarea {
+  background: var(--card-gray);
+  border: none;
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+}
+
 main {
   padding: 1rem 0;
   flex: 1;

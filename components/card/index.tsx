@@ -1,18 +1,18 @@
-import { Children, cloneElement, ReactElement } from "react";
+import React, { Children, cloneElement, ReactElement } from "react";
 import styles from "./card.module.css";
 
 export function Card({ children, className = null }) {
-  const childrenWithClass = Children.map(children, (child: ReactElement) =>
-    cloneElement(child, {
-      className: child.props.className
-        ? `cardChild ${child.props.className}`
-        : `cardChild`,
-    })
-  );
+  const clonedChild = Children.map(children, (child: ReactElement) => {
+    return child === null
+      ? child
+      : cloneElement(child, {
+          className: child?.props.className
+            ? `cardChild ${child.props.className}`
+            : `cardChild`,
+        });
+  });
 
   return (
-    <div className={`${styles.card} ${className ?? ""}`}>
-      {childrenWithClass}
-    </div>
+    <div className={`${styles.card} ${className ?? ""}`}>{clonedChild}</div>
   );
 }

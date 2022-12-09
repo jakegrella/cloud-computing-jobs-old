@@ -1,8 +1,27 @@
 import styles from "./button.module.css";
 
-export function Button({ children, onClick = undefined }) {
+interface IButton {
+  children: any;
+  className?: any;
+  disabled?: boolean;
+  onClick?: any;
+  type?: "button" | "submit" | "reset";
+}
+
+export function Button({
+  children,
+  className,
+  disabled = false,
+  onClick = undefined,
+  type = "button",
+}: IButton) {
   return (
-    <button className={styles.button} onClick={onClick}>
+    <button
+      type={type}
+      disabled={disabled}
+      className={`${styles.button}`}
+      onClick={onClick}
+    >
       {children}
     </button>
   );
