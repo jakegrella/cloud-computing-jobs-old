@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useStore } from "../../../store";
 import { Button } from "../../button";
-import { Card } from "../../card";
+import { Input } from "../../input";
+import styles from "./new-location-section.module.css";
 
 export function NewLocationSection() {
   const previewJob = useStore((state) => state.previewJob);
@@ -14,20 +15,18 @@ export function NewLocationSection() {
     (state) => state.setCompanyLocationOptions
   );
 
-  useEffect(() => {
-    console.log("locations", previewJob.locations);
-  }, [previewJob.locations]);
-
   const initNewLocation = {
-    country: "",
+    id: 0,
+    // companyId
+    country: "US",
     administrativeArea: "",
     locality: "",
     thoroughfare: "",
     premise: "",
     postalCode: undefined,
     headquarters: false,
-    latitude: undefined,
-    longitude: undefined,
+    latitude: 40.0, // TODO add helper to determine lat long from address
+    longitude: -70.0,
   };
 
   const [newLocation, setNewLocation] = useState(initNewLocation);
@@ -61,62 +60,42 @@ export function NewLocationSection() {
   }
 
   return (
-    <div>
+    <div className={styles.newLocationSection}>
       <Button onClick={handleAddNewLocationButtonClick}>
         Add a new location
       </Button>
       {newLocationSectionActive && (
-        <Card>
-          <div>
-            <label htmlFor="thoroughfare">Street Address</label>
-            <Card>
-              <input
-                type="text"
-                name="thoroughfare"
-                placeholder="Street Address"
-                value={newLocation.thoroughfare}
-                onChange={handleNewLocationInputChange}
-              />
-            </Card>
-          </div>
-          <div>
-            <label htmlFor="locality">City</label>
-            <Card>
-              <input
-                type="text"
-                name="locality"
-                placeholder="City"
-                value={newLocation.locality}
-                onChange={handleNewLocationInputChange}
-              />
-            </Card>
-          </div>
-          <div>
-            <label htmlFor="administrativeArea">State</label>
-            <Card>
-              <input
-                type="text"
-                name="administrativeArea"
-                placeholder="State"
-                value={newLocation.administrativeArea}
-                onChange={handleNewLocationInputChange}
-              />
-            </Card>
-          </div>
-          <div>
-            <label htmlFor="postalCode">ZIP Code</label>
-            <Card>
-              <input
-                type="text"
-                name="postalCode"
-                placeholder="ZIP Code"
-                value={newLocation.postalCode}
-                onChange={handleNewLocationInputChange}
-              />
-            </Card>
-          </div>
+        <div>
+          <Input
+            type="text"
+            name="thoroughfare"
+            label="Street Address"
+            value={newLocation.thoroughfare}
+            onChange={handleNewLocationInputChange}
+          />
+          <Input
+            type="text"
+            name="locality"
+            label="City"
+            value={newLocation.locality}
+            onChange={handleNewLocationInputChange}
+          />
+          <Input
+            type="text"
+            name="administrativeArea"
+            label="State"
+            value={newLocation.administrativeArea}
+            onChange={handleNewLocationInputChange}
+          />
+          <Input
+            type="text"
+            name="postalCode"
+            label="ZIP Code"
+            value={newLocation.postalCode}
+            onChange={handleNewLocationInputChange}
+          />
           <Button onClick={handleNewLocationClick}>Add Location</Button>
-        </Card>
+        </div>
       )}
     </div>
   );

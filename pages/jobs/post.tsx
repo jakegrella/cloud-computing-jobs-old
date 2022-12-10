@@ -142,76 +142,6 @@ export default function PostAJob() {
     setPreviewJob(previewJob);
   }
 
-  function similarCompaniesFn() {
-    // similar companies exist after fetch
-    if (similarCompanies.length && showSimilarCompanies) {
-      return (
-        <div>
-          <p>We found these companies with similar names:</p>
-          <div className={styles.similarCompanyContainer}>
-            {similarCompanies &&
-              similarCompanies.map((sc) => (
-                <Card key={sc.id} className={styles.similarCompany}>
-                  <div>
-                    <p>{sc.name}</p>
-                    <p>@{sc.username}</p>
-                  </div>
-                  <Button onClick={() => handleSimilarCompanyButtonClick(sc)}>
-                    Link
-                  </Button>
-                </Card>
-              ))}
-          </div>
-          <Button onClick={handleNoSimilarCompaniesButtonClick}>
-            Do Not Link
-          </Button>
-        </div>
-      );
-    }
-    // user links similar company
-    if (similarCompanySelected) {
-      return (
-        <div>
-          <p>
-            We have linked your posting to @{selectedSimilarCompany.username}
-          </p>
-          <Button onClick={handleUndoLinkingSimilarCompanyButtonClick}>
-            Undo
-          </Button>
-        </div>
-      );
-    }
-
-    // no similar companies after fetch or user declines similar companies
-    if (
-      (!similarCompanies.length && showSimilarCompanies) ||
-      similarCompanyIncorrect
-    ) {
-      return (
-        <div>
-          <p>{previewJob.companyName} will be added as a new company</p>
-          <Button onClick={handleUndoNoSimilarCompanyButtonClick}>Undo</Button>
-          <div>
-            <label htmlFor="companyUsername">Company Username</label>
-            <Card>
-              <input
-                type="text"
-                name="companyUsername"
-                placeholder={`Add a username for ${previewJob.companyName}`}
-                value={previewJob.companyUsername}
-                required
-                onChange={handleInputChange}
-              />
-            </Card>
-          </div>
-        </div>
-      );
-    }
-
-    // init - not fetched
-    return;
-  }
-
   function handleExistingCompanyLocationClick(l: ILocation) {
     const locations = previewJob.locations;
     console.log("locations 1", locations);
@@ -253,6 +183,7 @@ export default function PostAJob() {
             </Card>
 
             <Card>
+              <h2>Company Information</h2>
               <Input
                 type="text"
                 name="companyName"
@@ -264,53 +195,68 @@ export default function PostAJob() {
                 required={true}
               />
 
-              {similarCompaniesFn()}
+              <div className={styles.similarCompaniesFormSection}>
+                {showSimilarCompanies && (
+                  <div>
+                    <p>We found these companies with similar names:</p>
+                    <div className={styles.similarCompanyContainer}>
+                      {similarCompanies &&
+                        similarCompanies.map((sc) => (
+                          <Card key={sc.id} className={styles.similarCompany}>
+                            <div>
+                              <h3>{sc.name}</h3>
+                              <p>@{sc.username}</p>
+                            </div>
+                            <Button
+                              onClick={() =>
+                                handleSimilarCompanyButtonClick(sc)
+                              }
+                            >
+                              Link
+                            </Button>
+                          </Card>
+                        ))}
+                    </div>
+                    <Button onClick={handleNoSimilarCompaniesButtonClick}>
+                      Do Not Link
+                    </Button>
+                  </div>
+                )}
+                {/* // user links similar company */}
+                {similarCompanySelected && (
+                  <div>
+                    <p>
+                      We have linked your posting to @
+                      {selectedSimilarCompany.username}
+                    </p>
+                    <Button
+                      onClick={handleUndoLinkingSimilarCompanyButtonClick}
+                    >
+                      Undo
+                    </Button>
+                  </div>
+                )}
 
-              <Input
-                type={"text"}
-                name={"title"}
-                label={"Job Title"}
-                value={previewJob.title}
-                onChange={handleInputChange}
-                required={true}
-              />
-
-              <div>
-                <label htmlFor="type">Job Type</label>
-                <Card>
-                  <select
-                    id="type"
-                    name="type"
-                    value={previewJob.type}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="Select Job Type" disabled>
-                      Select Job Type
-                    </option>
-                    <option value="Full Time">Full Time</option>
-                    <option value="Part Time">Part Time</option>
-                  </select>
-                </Card>
-              </div>
-
-              <div>
-                <label htmlFor="experience">Experience Level</label>
-                <Card>
-                  <select
-                    id="experience"
-                    name="experience"
-                    value={previewJob.experience}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="Select Experience Level" disabled>
-                      Select Experience Level
-                    </option>
-                    <option value="Senior">Senior</option>
-                    <option value="Senior">Entry</option>
-                  </select>
-                </Card>
+                {/* // no similar companies after fetch or user declines similar companies */}
+                {((!similarCompanies.length && showSimilarCompanies) ||
+                  similarCompanyIncorrect) && (
+                  <div className={styles.companyUsernameContainer}>
+                    <p>
+                      {previewJob.companyName} will be added as a new company
+                    </p>
+                    <Button onClick={handleUndoNoSimilarCompanyButtonClick}>
+                      Undo
+                    </Button>
+                    <Input
+                      type="text"
+                      name="companyUsername"
+                      label="Company Username"
+                      value={previewJob.companyUsername}
+                      onChange={handleInputChange}
+                      required={true}
+                    />
+                  </div>
+                )}
               </div>
 
               <Input
@@ -329,67 +275,119 @@ export default function PostAJob() {
                 value={previewJob.companyLogo}
                 onChange={handleInputChange}
                 required={true}
+                disabled={disableLinkedFields}
               />
 
               <div>
                 <label htmlFor="companyOverview">Company Overview</label>
-                <Card>
-                  <textarea
-                    name="companyOverview"
-                    rows={4}
-                    placeholder="Company Overview"
-                    value={previewJob.companyOverview}
-                    onChange={handleInputChange}
-                    disabled={disableLinkedFields}
-                    required
-                  />
-                </Card>
+                {/* <Card> */}
+                <textarea
+                  name="companyOverview"
+                  rows={4}
+                  placeholder="Company Overview"
+                  value={previewJob.companyOverview}
+                  onChange={handleInputChange}
+                  disabled={disableLinkedFields}
+                  required
+                />
+                {/* </Card> */}
+              </div>
+            </Card>
+
+            <Card>
+              <h2>Job Information</h2>
+              <Input
+                type={"text"}
+                name={"title"}
+                label={"Job Title"}
+                value={previewJob.title}
+                onChange={handleInputChange}
+                required={true}
+              />
+
+              <div>
+                <label htmlFor="type">Job Type</label>
+                <select
+                  id="type"
+                  name="type"
+                  value={previewJob.type}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="Select Job Type" disabled>
+                    Select Job Type
+                  </option>
+                  <option value="Full Time">Full Time</option>
+                  <option value="Part Time">Part Time</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="experience">Experience Level</label>
+                <select
+                  id="experience"
+                  name="experience"
+                  value={previewJob.experience}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="Select Experience Level" disabled>
+                    Select Experience Level
+                  </option>
+                  <option value="Senior">Senior</option>
+                  <option value="Senior">Entry</option>
+                </select>
               </div>
 
               <div>
                 <label htmlFor="description">Description</label>
-                <Card>
-                  <textarea
-                    name="description"
-                    rows={4}
-                    placeholder="Position Description"
-                    value={previewJob.description}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Card>
+                <textarea
+                  name="description"
+                  rows={4}
+                  placeholder="Position Description"
+                  value={previewJob.description}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
 
               <div>
                 <label htmlFor="qualifications">Qualifications</label>
-                <Card>
-                  <textarea
-                    name="qualifications"
-                    rows={4}
-                    placeholder="Qualifications"
-                    value={previewJob.qualifications}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Card>
+                <textarea
+                  name="qualifications"
+                  rows={4}
+                  placeholder="Qualifications"
+                  value={previewJob.qualifications}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
 
               <div>
                 <label htmlFor="qualifications">Responsibilities</label>
-                <Card>
-                  <textarea
-                    name="responsibilities"
-                    rows={4}
-                    placeholder="Responsibilities"
-                    value={previewJob.responsibilities}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </Card>
+                <textarea
+                  name="responsibilities"
+                  rows={4}
+                  placeholder="Responsibilities"
+                  value={previewJob.responsibilities}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
 
-              <h3>Compensation</h3>
-              <div>
+              <Input
+                type={"text"}
+                name={"posting"}
+                label={"Posting Link"}
+                value={previewJob.posting}
+                onChange={handleInputChange}
+                required={true}
+              />
+            </Card>
+
+            <Card>
+              <h2>Compensation</h2>
+              <div className={styles.compensationCheckbox}>
                 <input
                   type="checkbox"
                   name="salary"
@@ -397,7 +395,6 @@ export default function PostAJob() {
                 />
                 <label htmlFor="salary">Display Compensation Info</label>
               </div>
-
               {displayCompensationInfo && (
                 <div>
                   <h3>Pay Range</h3>
@@ -433,43 +430,33 @@ export default function PostAJob() {
                   />
                 </div>
               )}
-
-              <Input
-                type={"text"}
-                name={"posting"}
-                label={"Posting Link"}
-                value={previewJob.posting}
-                onChange={handleInputChange}
-                required={true}
-              />
             </Card>
 
-            <div>
+            <Card>
               <p>Locations</p>
               {similarCompanySelected && (
                 <h3>Other locations for {previewJob.companyName}</h3>
               )}
-              {companyLocationOptions.length &&
-                companyLocationOptions.map((l: ILocation) => (
-                  <Card key={l.id}>
-                    <h2>{l.locality}</h2>
-                    <p>
-                      {l.thoroughfare}, {l.locality}, {l.administrativeArea}
-                    </p>
-                    <Button
-                      className="active"
-                      onClick={() => handleExistingCompanyLocationClick(l)}
-                    >
-                      {previewJob.locations.length &&
-                      previewJob.locations.some((el) => el.id === l.id)
-                        ? "Selected"
-                        : "Select"}
-                    </Button>
-                  </Card>
-                ))}
-            </div>
+              {companyLocationOptions.map((l: ILocation) => (
+                <Card key={l.id}>
+                  <h2>{l.locality}</h2>
+                  <p>
+                    {l.thoroughfare}, {l.locality}, {l.administrativeArea}
+                  </p>
+                  <Button
+                    className="active"
+                    onClick={() => handleExistingCompanyLocationClick(l)}
+                  >
+                    {previewJob.locations.length &&
+                    previewJob.locations.some((el) => el.id === l.id)
+                      ? "Selected"
+                      : "Select"}
+                  </Button>
+                </Card>
+              ))}
 
-            <NewLocationSection />
+              <NewLocationSection />
+            </Card>
 
             <Button
               type="submit"
@@ -482,10 +469,6 @@ export default function PostAJob() {
         ) : (
           <CheckoutForm />
         )}
-
-        <Card className={styles.sidebar}>
-          <p>sidebar</p>
-        </Card>
       </div>
     </div>
   );

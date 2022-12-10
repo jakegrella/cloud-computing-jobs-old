@@ -1,4 +1,5 @@
 import { prisma } from "../../../prisma/prismaClient";
+import { IJob } from "../../types";
 
 interface IRequestBody {
   title: string;
@@ -23,64 +24,68 @@ interface IRequestBody {
   companyOverview: string;
 }
 
-// POST - add job
-export async function addJob({
-  title,
-  posting,
-  // open,
-  // published,
-  description,
-  responsibilities,
-  qualifications,
-  type,
-  experience,
-  companyName: name,
-  companyUsername: username,
-  companyLogo: logo,
-  companyMission: mission,
-  companyOverview: overview,
-  locations: locationIds,
-  payRangeMin,
-  payRangeMax,
-  equityRangeMin,
-  equityRangeMax,
-  payRangeTimeFrame,
-}: IRequestBody) {
+export async function addJob(job: IJob) {
   try {
     const response = await prisma.job.create({
       data: {
-        title,
-        posting,
-        description,
-        responsibilities,
-        qualifications,
-        payRangeMin,
-        payRangeMax,
-        equityRangeMin,
-        equityRangeMax,
-        payRangeTimeFrame,
-        type,
-        experience,
+        title: job.title,
+        posting: job.posting,
+        description: job.description,
+        responsibilities: job.responsibilities,
+        qualifications: job.qualifications,
+        type: job.type,
+        experience: job.experience,
+        payRangeMin: job.payRangeMin,
+        payRangeMax: job.payRangeMax,
+        payRangeTimeFrame: job.payRangeTimeFrame,
+        equityRangeMin: job.equityRangeMin,
+        equityRangeMax: job.equityRangeMax,
         company: {
           connectOrCreate: {
-            where: { username },
+            where: { username: job.company.username },
             create: {
-              logo,
-              mission,
-              overview,
-              name,
-              username,
+              name: job.company.name,
+              username: job.company.username,
+              logo: job.company.logo,
+              mission: job.company.mission,
+              overview: job.company.overview,
             },
           },
         },
         locations: {
-          connect: locationIds.map((locationId: number) => ({
-            id: locationId,
+          connectOrCreate: job.locations.map((location) => ({
+            where: { id: location.id ? location.id : 0 }, // 0 passed in for new locations
+            create: {
+              headquarters: location.headquarters,
+              country: location.country,
+              administrativeArea: location.administrativeArea,
+              locality: location.locality,
+              postalCode: parseInt(`${location.postalCode}`), // change zip to string
+              thoroughfare: location.thoroughfare,
+              premise: location.premise,
+              latitude: location.latitude,
+              longitude: location.longitude,
+              company: {
+                connectOrCreate: {
+                  where: { username: job.company.username },
+                  create: {
+                    name: job.company.name,
+                    username: job.company.username,
+                    logo: job.company.logo,
+                    mission: job.company.mission,
+                    overview: job.company.overview,
+                  },
+                },
+              },
+            },
           })),
         },
       },
+      include: {
+        company: true,
+        locations: true,
+      },
     });
-
     return {
       status: 201,
       data: response,
@@ -92,11 +97,3 @@ export async function addJob({
     };
   }
 }
-
-// to add a job
-// company + at least one location  needs to exist
-//
-// try to find company username
-// if not there, create company
-//
-//

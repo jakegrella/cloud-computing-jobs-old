@@ -1,15 +1,13 @@
-.card {
-  width: 100%; /* will likely change */
+/*  mimicking the card styles */
+.inputComponent {
   border-radius: 10px;
   border: 1px solid var(--dark-gray);
   background: var(--card-gray);
-  margin-bottom: 0.5rem;
-  /* padding: 0.75rem 0.75rem 0 0.75rem; added to .cardChild in global */
-  padding-bottom: 0.75rem;
+  margin: 0.75rem 0.75rem 0 0.75rem;
 }
 
 @media (prefers-color-scheme: light) {
-  .card {
+  .inputComponent {
     border: 1px solid var(--gray);
     background: var(--white);
   }

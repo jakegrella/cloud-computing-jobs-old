@@ -8,15 +8,22 @@
   width: 100%;
 }
 
-.form label {
-}
-
-.form div {
-  padding-bottom: 0;
-}
-
 .form input {
   height: 2rem;
+}
+
+.compensationCheckbox {
+  display: flex;
+  align-items: center;
+}
+
+.compensationCheckbox input {
+  width: 1rem;
+  margin-right: 0.5rem;
+}
+
+.compensationCheckbox label {
+  display: initial;
 }
 
 .form textarea {
@@ -25,36 +32,57 @@
 
 .form .similarCompanyContainer {
   display: flex;
+  padding: 0.75rem 0;
 }
 
-.form .similarCompany {
+.similarCompaniesFormSection {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* company username */
+.similarCompaniesFormSection > div > div {
+  margin: 0;
+  padding: 0;
+}
+
+/* similar company card */
+.similarCompany {
   display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
   width: fit-content;
+  padding: 0.75rem;
+  margin-right: 0.5rem;
 }
 
-.sidebar {
-  margin-top: 0.5rem;
+.similarCompany div {
+  padding: 0;
+  margin-right: 0.75rem;
+}
+
+.similarCompany div h3 {
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+.similarCompany div p {
+  font-size: 0.75rem;
+}
+
+.similarCompany button {
+  margin: 0;
 }
 
 /* large */
 @media only screen and (min-width: 48em) {
   .jobPostingFormContainer {
-    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
   }
 
   .form {
-    width: 65%;
+    max-width: 48rem;
     margin-right: 0.25rem;
-  }
-
-  .sidebar {
-    width: 35%;
-    margin-left: 0.25rem;
-    margin-top: 0;
-  }
-
-  .form input,
-  .form textarea,
-  .form select {
   }
 }

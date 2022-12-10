@@ -53,6 +53,7 @@ ul {
 
 label {
   font-size: 0.75rem;
+  display: none;
 }
 
 input {
@@ -61,6 +62,8 @@ input {
   border-radius: 10px;
   height: 100%;
   width: 100%;
+  font-size: 0.875rem;
+  padding: 0 0 0 0.5rem;
 }
 input:disabled,
 textarea:disabled {
@@ -71,10 +74,12 @@ select,
 option,
 textarea {
   background: var(--card-gray);
-  border: none;
+  border: 1px solid var(--dark-gray);
   border-radius: 10px;
   height: 100%;
   width: 100%;
+  font-size: 0.875rem;
+  padding: 0 0 0 0.5rem;
 }
 
 main {
@@ -87,7 +92,7 @@ main {
 }
 
 .cardChild {
-  padding: 0.75rem 0.75rem;
+  padding: 0.75rem 0.75rem 0 0.75rem;
 }
 
 @media (prefers-color-scheme: light) {

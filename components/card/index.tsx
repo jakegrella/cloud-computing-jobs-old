@@ -6,13 +6,13 @@ export function Card({ children, className = null }) {
     return child === null
       ? child
       : cloneElement(child, {
-          className: child?.props.className
+          className: child?.props?.className
             ? `cardChild ${child.props.className}`
             : `cardChild`,
         });
   });
 
   return (
-    <div className={`${styles.card} ${className ?? ""}`}>{clonedChild}</div>
+    <div className={`${styles.card} ${className || ""}`}>{clonedChild}</div>
   );
 }

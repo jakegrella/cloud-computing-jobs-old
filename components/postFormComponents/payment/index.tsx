@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useStore } from "../../../store";
 import { addJob } from "../../../utils/httpRequests";
 
+// ERRORS ARE NOT HANDLED CORRECTLY
 export function Payment() {
   const stripe = useStripe();
   const elements = useElements();
