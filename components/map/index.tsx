@@ -44,12 +44,10 @@ export function Map() {
   }
 
   function handleMarkerClick(e) {
-    // console.log(e);
     const job = jobs.find(
       (job) =>
         job.id.toString() === e.domEvent.srcElement.attributes.title.value
     );
-    // set active
     setActiveMarker({ e, job });
   }
 

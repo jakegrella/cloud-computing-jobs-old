@@ -1,66 +1,91 @@
 import { prisma } from "../../../prisma/prismaClient";
-// import { IJob } from "../../types";
+import { IJob } from "../../types";
 
-// POST - add job
-export async function addJob(body: any) {
-  const {
-    companyId,
-    datePublished,
-    locations,
-    open,
-    posting,
-    published,
-    description,
-    qualifications,
-    equityRangeMax,
-    equityRangeMin,
-    payRangeMax,
-    payRangeMin,
-    payRangeTimeFrame,
-    type,
-    experience,
-    responsibilities,
-    title,
-  } = body;
+interface IRequestBody {
+  title: string;
+  posting: string;
+  // open: boolean;
+  // published: boolean;
+  description: string;
+  responsibilities: string;
+  qualifications: string;
+  type: string;
+  experience: string;
+  equityRangeMax: number | undefined;
+  equityRangeMin: number | undefined;
+  payRangeMax: number | undefined;
+  payRangeMin: number | undefined;
+  payRangeTimeFrame: string | undefined;
+  locations: number[];
+  companyName: string;
+  companyUsername: string;
+  companyLogo: string;
+  companyMission: string;
+  companyOverview: string;
+}
 
+export async function addJob(job: IJob) {
   try {
-    // check if company with companyId exists
-    const company = await prisma.company.findUnique({
-      where: { id: companyId },
-    });
-
-    if (!company) {
-      return {
-        status: 404,
-        data: { message: "failed to create job, company does not exist" },
-      };
-    }
-
-    // if company exists
     const response = await prisma.job.create({
       data: {
-        title,
-        posting,
-        open,
-        published,
-        datePublished,
-        description,
-        companyId,
-        responsibilities,
-        qualifications,
-        equityRangeMax,
-        equityRangeMin,
-        payRangeMax,
-        payRangeMin,
-        payRangeTimeFrame,
-        type,
-        experience,
+        title: job.title,
+        posting: job.posting,
+        description: job.description,
+        responsibilities: job.responsibilities,
+        qualifications: job.qualifications,
+        type: job.type,
+        experience: job.experience,
+        payRangeMin: job.payRangeMin,
+        payRangeMax: job.payRangeMax,
+        payRangeTimeFrame: job.payRangeTimeFrame,
+        equityRangeMin: job.equityRangeMin,
+        equityRangeMax: job.equityRangeMax,
+        company: {
+          connectOrCreate: {
+            where: { username: job.company.username },
+            create: {
+              name: job.company.name,
+              username: job.company.username,
+              logo: job.company.logo,
+              mission: job.company.mission,
+              overview: job.company.overview,
+            },
+          },
+        },
         locations: {
-          connect: locations.map((locationId: number) => ({ id: locationId })),
+          connectOrCreate: job.locations.map((location) => ({
+            where: { id: location.id ? location.id : 0 }, // 0 passed in for new locations
+            create: {
+              headquarters: location.headquarters,
+              country: location.country,
+              administrativeArea: location.administrativeArea,
+              locality: location.locality,
+              postalCode: parseInt(`${location.postalCode}`), // change zip to string
+              thoroughfare: location.thoroughfare,
+              premise: location.premise,
+              latitude: location.latitude,
+              longitude: location.longitude,
+              company: {
+                connectOrCreate: {
+                  where: { username: job.company.username },
+                  create: {
+                    name: job.company.name,
+                    username: job.company.username,
+                    logo: job.company.logo,
+                    mission: job.company.mission,
+                    overview: job.company.overview,
+                  },
+                },
+              },
+            },
+          })),
         },
       },
+      include: {
+        company: true,
+        locations: true,
+      },
     });
-
     return {
       status: 201,
       data: response,

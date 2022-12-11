@@ -1,7 +1,8 @@
 /* small and under */
 .home {
   padding-bottom: 0;
-  height: calc(100vh - 4rem); /* 5rem = header + top/bottom padding */
+  padding-top: 0;
+  height: calc(100vh - 5rem); /* 5rem = header + top/bottom padding */
 }
 
 .home_content {
@@ -24,10 +25,12 @@
 .home_content.both > .home_content_mapCard {
   display: initial;
   height: 50%;
+  margin-bottom: 0.25rem;
 }
 .home_content.both > .home_content_jobList {
   display: initial;
   height: 50%;
+  margin-top: 0.25rem;
 }
 
 .home_content.map > .home_content_mapCard {

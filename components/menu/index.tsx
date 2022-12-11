@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useStore } from "../../store";
+import { Button } from "../button";
 import { Card } from "../card";
 import styles from "./menu.module.css";
 
@@ -20,6 +21,13 @@ export function Menu() {
               <Link href="/companies" onClick={() => setIsMenuVisible(false)}>
                 <p className={styles["menu-item"]}>Companies</p>
               </Link>
+            </li>
+            <li>
+              <Button>
+                <Link href="/jobs/post" onClick={() => setIsMenuVisible(false)}>
+                  <p className={styles["menu-item"]}>Post a Job</p>
+                </Link>
+              </Button>
             </li>
           </ul>
         </nav>

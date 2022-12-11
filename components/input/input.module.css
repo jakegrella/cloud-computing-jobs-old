@@ -1,0 +1,15 @@
+/*  mimicking the card styles */
+.inputComponent {
+  border-radius: 10px;
+  border: 1px solid var(--dark-gray);
+  background: var(--card-gray);
+  margin: 0 0.75rem 0.75rem 0.75rem;
+  width: 100%;
+}
+
+@media (prefers-color-scheme: light) {
+  .inputComponent {
+    border: 1px solid var(--gray);
+    background: var(--white);
+  }
+}

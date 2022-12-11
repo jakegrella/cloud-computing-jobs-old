@@ -7,17 +7,13 @@
 }
 
 .search_bar {
+  width: 100%;
   margin-right: 0.5rem;
   height: 100%;
   position: relative;
 }
 
 .search_bar input {
-  height: 100%;
-  width: 100%;
-  background: var(--card-gray);
-  border: none;
-  border-radius: 10px;
   z-index: 2;
   position: relative;
 }
@@ -26,7 +22,7 @@
   background-color: var(--card-gray);
   position: absolute;
   top: 0.5rem;
-  padding-top: 2.75rem;
+  padding: 2.75rem 0.5rem 0.75rem;
   z-index: 1;
   width: 100%;
 }
