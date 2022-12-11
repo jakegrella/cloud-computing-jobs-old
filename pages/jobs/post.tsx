@@ -62,11 +62,6 @@ export default function PostAJob() {
     }
   }, []);
 
-  // used for testing only
-  useEffect(() => {
-    console.log("locations ue", previewJob.locations);
-  }, [previewJob.locations]);
-
   useEffect(() => {
     const isFormValid = validateForm(previewJob, displayCompensationInfo);
 
@@ -74,7 +69,6 @@ export default function PostAJob() {
   }, [previewJob, displayCompensationInfo]);
 
   function handleInputChange(e) {
-    console.log(e);
     setPreviewJob({ ...previewJob, [e.target.name]: e.target.value });
   }
 
@@ -144,12 +138,9 @@ export default function PostAJob() {
 
   function handleExistingCompanyLocationClick(l: ILocation) {
     const locations = previewJob.locations;
-    console.log("locations 1", locations);
 
     if (!previewJob.locations.some((el) => el.id === l.id)) {
-      console.log("hit");
       locations.push(l);
-      console.log("locations 2", locations);
       setPreviewJob({ ...previewJob, locations: locations });
     } else {
       // else button says selected
@@ -396,7 +387,7 @@ export default function PostAJob() {
                 <label htmlFor="salary">Display Compensation Info</label>
               </div>
               {displayCompensationInfo && (
-                <div>
+                <div className={styles.compensationGroup}>
                   <h3>Pay Range</h3>
                   <Input
                     type={"text"}
@@ -433,12 +424,12 @@ export default function PostAJob() {
             </Card>
 
             <Card>
-              <p>Locations</p>
+              <h2>Locations</h2>
               {similarCompanySelected && (
                 <h3>Other locations for {previewJob.companyName}</h3>
               )}
               {companyLocationOptions.map((l: ILocation) => (
-                <Card key={l.id}>
+                <Card key={l.id} className={styles.companyLocation}>
                   <h2>{l.locality}</h2>
                   <p>
                     {l.thoroughfare}, {l.locality}, {l.administrativeArea}

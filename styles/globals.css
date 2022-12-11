@@ -22,7 +22,7 @@ h1 {
 
 h2 {
   font-size: 0.875rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 h3 {
@@ -92,7 +92,7 @@ main {
 }
 
 .cardChild {
-  padding: 0.75rem 0.75rem 0 0.75rem;
+  padding: 0 0.75rem 0.75rem 0.75rem;
 }
 
 @media (prefers-color-scheme: light) {

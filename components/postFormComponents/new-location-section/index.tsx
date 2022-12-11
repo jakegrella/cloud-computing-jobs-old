@@ -32,7 +32,6 @@ export function NewLocationSection() {
   const [newLocation, setNewLocation] = useState(initNewLocation);
 
   function handleNewLocationInputChange(e) {
-    console.log(e);
     setNewLocation({ ...newLocation, [e.target.name]: e.target.value });
   }
 

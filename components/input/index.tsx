@@ -5,7 +5,9 @@ export function Input({
   type = "text",
   label,
   value,
+  ref = undefined,
   onChange,
+  onFocus = undefined,
   onBlur = undefined,
   required = false,
   disabled = false,
@@ -18,7 +20,9 @@ export function Input({
         name={name}
         placeholder={label}
         value={value}
+        ref={ref}
         onChange={onChange}
+        onFocus={onFocus}
         onBlur={onBlur}
         required={required}
         disabled={disabled}

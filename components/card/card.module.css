@@ -5,7 +5,6 @@
   background: var(--card-gray);
   margin-bottom: 0.5rem;
   /* padding: 0.75rem 0.75rem 0 0.75rem; added to .cardChild in global */
-  padding-bottom: 0.75rem;
 }
 
 @media (prefers-color-scheme: light) {

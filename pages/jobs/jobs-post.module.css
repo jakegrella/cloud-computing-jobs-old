@@ -26,13 +26,18 @@
   display: initial;
 }
 
+.compensationGroup div {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .form textarea {
   padding-top: 0.5rem;
 }
 
 .form .similarCompanyContainer {
   display: flex;
-  padding: 0.75rem 0;
+  padding: 0.75rem 0 0.25rem 0;
 }
 
 .similarCompaniesFormSection {
@@ -44,6 +49,10 @@
 .similarCompaniesFormSection > div > div {
   margin: 0;
   padding: 0;
+}
+
+.similarCompaniesFormSection > div > button {
+  margin: 0.75rem 0;
 }
 
 /* similar company card */
@@ -72,6 +81,16 @@
 
 .similarCompany button {
   margin: 0;
+}
+
+.companyLocation {
+  margin: 0 0.75rem 0.75rem 0.75rem;
+  width: auto;
+}
+
+.companyLocation h2,
+.companyLocation p {
+  padding-left: 0;
 }
 
 /* large */

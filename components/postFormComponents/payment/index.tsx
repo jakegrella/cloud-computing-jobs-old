@@ -18,12 +18,8 @@ export function Payment() {
   const setStripeState = useStore((state) => state.setStripeState);
 
   useEffect(() => {
-    console.log("preview job:", previewJob);
-  }, []);
-
-  useEffect(() => {
     if (!stripe) {
-      console.log("!stripe payment");
+      // console.log("!stripe");
       return;
     }
 
@@ -32,7 +28,7 @@ export function Payment() {
     );
 
     if (!clientSecret) {
-      console.log("!clientSecret payment");
+      // console.log("!clientSecret");
       return;
     }
 
@@ -64,7 +60,7 @@ export function Payment() {
     e.preventDefault();
 
     if (!stripe || !elements) {
-      console.log("!stripe || !elements payment");
+      console.log("!stripe || !elements");
 
       // Stripe.js has not yet loaded
       // TODO: disable form submission until Stripe.js has loaded
