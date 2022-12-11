@@ -1,30 +1,7 @@
 import { prisma } from "../../../prisma/prismaClient";
 import { IJob } from "../../types";
 
-interface IRequestBody {
-  title: string;
-  posting: string;
-  // open: boolean;
-  // published: boolean;
-  description: string;
-  responsibilities: string;
-  qualifications: string;
-  type: string;
-  experience: string;
-  equityRangeMax: number | undefined;
-  equityRangeMin: number | undefined;
-  payRangeMax: number | undefined;
-  payRangeMin: number | undefined;
-  payRangeTimeFrame: string | undefined;
-  locations: number[];
-  companyName: string;
-  companyUsername: string;
-  companyLogo: string;
-  companyMission: string;
-  companyOverview: string;
-}
-
-export async function addJob(job: IJob) {
+export async function addJob(job: any /* IJob */) {
   try {
     const response = await prisma.job.create({
       data: {
@@ -95,5 +72,6 @@ export async function addJob(job: IJob) {
       status: 500,
       data: { message: err.message },
     };
+    // throw error instead?
   }
 }
