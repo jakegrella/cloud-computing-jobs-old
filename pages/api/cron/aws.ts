@@ -22,9 +22,7 @@ export default async function handler(
 
   try {
     // TODO check if job already exists in DB
-    // console.log("req.body", req.body);
-    const response = await aws(req.body.jobs);
-    console.log("response:", response);
+    await aws(req.body.jobs);
 
     res.status(201).json({ success: true });
   } catch (err) {

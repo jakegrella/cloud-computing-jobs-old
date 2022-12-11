@@ -142,7 +142,6 @@ export async function aws(jobs: IAWSJob[]) {
   formattedJobs.forEach(async (job) => {
     try {
       const response = await addJob(job);
-      console.log("addJob response", response);
       return response;
     } catch (err) {
       throw new Error();
