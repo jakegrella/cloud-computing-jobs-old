@@ -1,100 +1,80 @@
 /* small and under */
 .home {
-  /* margin: 1rem 0; */
-  /* padding: 0; */
-}
-
-.home_search {
+  padding-bottom: 0;
+  padding-top: 0;
+  height: calc(100vh - 5rem); /* 5rem = header + top/bottom padding */
 }
 
 .home_content {
+  height: 100%;
   width: 100%;
-}
-
-.home_primaryContent {
-  height: 80vh;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: flex-start;
 }
 
-.home_primaryContent_mapCard {
-  height: 50%;
+.home_content_mapCard {
+  margin: 0;
 }
 
-.home_primaryContent_jobList {
-  height: 50%;
+.home_content_jobList {
   overflow-y: auto;
 }
 
-/* medium */
-@media only screen and (min-width: 25em) {
-  .home {
-  }
+.home_content.both > .home_content_mapCard {
+  display: initial;
+  height: 50%;
+  margin-bottom: 0.25rem;
+}
+.home_content.both > .home_content_jobList {
+  display: initial;
+  height: 50%;
+  margin-top: 0.25rem;
+}
+
+.home_content.map > .home_content_mapCard {
+  display: initial;
+  height: 100%;
+}
+.home_content.map > .home_content_jobList {
+  display: none;
+}
+
+.home_content.list > .home_content_mapCard {
+  display: none;
+}
+.home_content.list > .home_content_jobList {
+  display: initial;
+  height: 100%;
 }
 
 /* large */
 @media only screen and (min-width: 48em) {
-  .home {
-  }
-
-  .home_primaryContent {
+  .home_content {
     flex-flow: row nowrap;
-    margin-bottom: 0.5rem;
+    height: 100%;
   }
 
-  .home_primaryContent_mapCard {
-    height: 100%;
+  .home_content_mapCard {
+    width: 65%;
     margin-right: 0.25rem;
   }
 
-  .home_primaryContent_jobList {
-    height: 100%;
+  .home_content_jobList {
+    display: initial;
+    width: 35%;
     overflow-y: auto;
     margin-left: 0.25rem;
   }
-}
 
-/* xlarge */
-@media only screen and (min-width: 64em) {
-  .home {
-  }
-}
-
-/* huge */
-@media only screen and (min-width: 80em) {
-  .home {
-  }
-}
-
-/* xhuge and up */
-@media only screen and (min-width: 90em) {
-  .home {
-    height: 94vh;
-  }
-
-  .home_content {
-    display: flex;
-    flex-flow: row nowrap;
+  .home_content.both > .home_content_mapCard,
+  .home_content.map > .home_content_mapCard,
+  .home_content.list > .home_content_mapCard,
+  .home_content.both > .home_content_jobList,
+  .home_content.map > .home_content_jobList,
+  .home_content.list > .home_content_jobList {
+    display: initial;
     height: 100%;
-    overflow-y: hidden;
-  }
-
-  .home_primaryContent {
-    width: 66%;
-    height: 100%;
-    /* flex-grow: 1; */
-    /* height: 90vh; */
-    /* margin: 0 0 1rem 0; */
-  }
-
-  .home_secondaryContent {
-    width: 34%;
-    height: 100%;
-    margin-left: 0.5rem;
-    /* flex-grow: 1; */
-    /* height: 90vh; */
-    /* margin: 0 0 1rem 0; */
   }
 }

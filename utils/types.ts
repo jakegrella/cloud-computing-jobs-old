@@ -49,6 +49,7 @@ export interface ILocation {
 
 export interface IMapMarker {
   center: { lat: number; lng: number };
+  job: IJob;
 }
 
 interface IInitMap {
@@ -56,7 +57,18 @@ interface IInitMap {
   zoom: number;
 }
 
+interface IStripeState {
+  clientSecret: string;
+  isLoading: boolean;
+  message: string | null;
+}
+
 export interface IState {
+  stripeState: IStripeState;
+  setStripeState: (stripe: IStripeState) => void;
+
+  previewJob: any;
+  setPreviewJob: (previewJob: any) => void;
   isMenuVisible: boolean;
   setIsMenuVisible: (isVisible: boolean) => void;
   jobs: IJob[];
@@ -69,4 +81,13 @@ export interface IState {
   setMapBounds: (mapBounds: any) => void;
   mapMarkers: IMapMarker[];
   setMapMarkers: (mapMarkers: IMapMarker[]) => void;
+  homePageView: "map" | "list" | "both";
+  setHomePageView: (homePageView: "map" | "list" | "both") => void;
+
+  showPaymentForm: boolean;
+  setShowPaymentForm: (showPaymentForm: boolean) => void;
+
+  // location options from job posting form
+  companyLocationOptions: any[];
+  setCompanyLocationOptions: (companyLocationOptions) => void;
 }

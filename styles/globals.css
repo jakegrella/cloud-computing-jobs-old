@@ -22,7 +22,7 @@ h1 {
 
 h2 {
   font-size: 0.875rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 h3 {
@@ -43,8 +43,43 @@ a:hover {
   background: var(--gray);
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 ul {
   padding-left: 1.25rem;
+}
+
+label {
+  font-size: 0.75rem;
+  display: none;
+}
+
+input {
+  background: var(--card-gray);
+  border: none;
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  font-size: 0.875rem;
+  padding: 0 0 0 0.5rem;
+}
+input:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
+
+select,
+option,
+textarea {
+  background: var(--card-gray);
+  border: 1px solid var(--dark-gray);
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  font-size: 0.875rem;
+  padding: 0 0 0 0.5rem;
 }
 
 main {
@@ -57,7 +92,7 @@ main {
 }
 
 .cardChild {
-  padding: 0.75rem 0.75rem;
+  padding: 0 0.75rem 0.75rem 0.75rem;
 }
 
 @media (prefers-color-scheme: light) {
