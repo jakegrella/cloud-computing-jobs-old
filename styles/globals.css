@@ -82,6 +82,10 @@ textarea {
   padding: 0 0 0 0.5rem;
 }
 
+form * {
+  margin: 0.125rem 0;
+}
+
 main {
   padding: 1rem 0;
   flex: 1;

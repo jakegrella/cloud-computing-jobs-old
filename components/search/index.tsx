@@ -63,25 +63,17 @@ export function Search({ className = undefined, placeholder = "Search" }) {
     <div className={styles.search}>
       {dropdownVisible ? (
         <div className={`${styles.search_bar} ${className ?? ""}`}>
-          <input
-            type="text"
-            ref={searchInput}
-            placeholder={placeholder}
-            value={searchInputValue}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-            onChange={handleSearchInputValueChange}
-          />
-          {/* <Input
+          <Input
             type="text"
             name="search"
             label={placeholder}
             value={searchInputValue}
-            ref={searchInput}
+            forwardRef={searchInput}
             onChange={handleSearchInputValueChange}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
-          /> */}
+            autoComplete="off"
+          />
           <Card className={styles.dropdown}>
             <button onClick={handleDropdownFilterClick}>city:</button>
             <button onClick={handleDropdownFilterClick}>company:</button>
@@ -90,21 +82,16 @@ export function Search({ className = undefined, placeholder = "Search" }) {
         </div>
       ) : (
         <div className={`${styles.search_bar} ${className ?? ""}`}>
-          <input
-            type="text"
-            placeholder={placeholder}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-          />
-          {/* <Input
+          <Input
             type="text"
             name="search"
             label={placeholder}
             value={searchInputValue}
+            forwardRef={searchInput}
             onChange={handleSearchInputValueChange}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
-          /> */}
+          />
         </div>
       )}
       {width < 768 && <ButtonGroup />}

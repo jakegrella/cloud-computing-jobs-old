@@ -171,6 +171,7 @@ export default function PostAJob() {
             <Card>
               <h2>Company Information</h2>
               <Input
+                bordered
                 type="text"
                 name="companyName"
                 label="Company Name"
@@ -234,6 +235,7 @@ export default function PostAJob() {
                       Undo
                     </Button>
                     <Input
+                      bordered
                       type="text"
                       name="companyUsername"
                       label="Company Username"
@@ -246,6 +248,7 @@ export default function PostAJob() {
               </div>
 
               <Input
+                bordered
                 type={"text"}
                 name={"companyMission"}
                 label={"Company Mission"}
@@ -255,6 +258,7 @@ export default function PostAJob() {
                 disabled={disableLinkedFields}
               />
               <Input
+                bordered
                 type={"text"}
                 name={"companyLogo"}
                 label={"Company Logo"}
@@ -283,6 +287,7 @@ export default function PostAJob() {
             <Card>
               <h2>Job Information</h2>
               <Input
+                bordered
                 type={"text"}
                 name={"title"}
                 label={"Job Title"}
@@ -362,6 +367,7 @@ export default function PostAJob() {
               </div>
 
               <Input
+                bordered
                 type={"text"}
                 name={"posting"}
                 label={"Posting Link"}
@@ -374,7 +380,8 @@ export default function PostAJob() {
             <Card>
               <h2>Compensation</h2>
               <div className={styles.compensationCheckbox}>
-                <input
+                <Input
+                  bordered
                   type="checkbox"
                   name="salary"
                   onChange={handleCompensationDisplay}
@@ -385,6 +392,7 @@ export default function PostAJob() {
                 <div className={styles.compensationGroup}>
                   <h3>Pay Range</h3>
                   <Input
+                    bordered
                     type={"text"}
                     name={"payRangeMin"}
                     label={"Minimum"}
@@ -392,6 +400,7 @@ export default function PostAJob() {
                     onChange={handleInputChange}
                   />
                   <Input
+                    bordered
                     type={"text"}
                     name={"payRangeMax"}
                     label={"Maximum"}
@@ -401,6 +410,7 @@ export default function PostAJob() {
 
                   <h3>Equity Range</h3>
                   <Input
+                    bordered
                     type={"text"}
                     name={"equityRangeMin"}
                     label={"Minimum"}
@@ -408,6 +418,7 @@ export default function PostAJob() {
                     onChange={handleInputChange}
                   />
                   <Input
+                    bordered
                     type={"text"}
                     name={"equityRangeMax"}
                     label={"Maximum"}

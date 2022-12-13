@@ -80,5 +80,6 @@
   .home_content.list > .home_content_jobList {
     display: initial;
     height: 100%;
+    margin-top: 0;
   }
 }
