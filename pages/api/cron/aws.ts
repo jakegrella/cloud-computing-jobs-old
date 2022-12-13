@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { aws } from "../../../utils/api/cron/aws";
+import { aws } from "../../../utils/api";
 
 export default async function handler(
   req: NextApiRequest,

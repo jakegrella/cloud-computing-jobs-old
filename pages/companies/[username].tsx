@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { Card } from "../../components";
-import { companyMetaDescription, ICompany, jobsPlurality } from "../../utils";
+import { companyMetaDescription, jobsPlurality } from "../../utils";
+import { ICompany } from "../../types";
 import styles from "./company.module.css";
 
 export default function Company() {
@@ -74,7 +75,7 @@ export default function Company() {
         <Card>
           <div>
             <h2>About {company.name}</h2>
-            <div className={styles.companyInfo}>
+            <div>
               <div>
                 <h3>Overview</h3>
                 <p>{company.overview}</p>
@@ -85,12 +86,6 @@ export default function Company() {
               </div>
             </div>
           </div>
-        </Card>
-        {/* <Card className={styles.company_mapCard}>
-          <Map />
-        </Card> */}
-        <Card>
-          <h2>{company.name} In The News</h2>
         </Card>
       </main>
     </div>

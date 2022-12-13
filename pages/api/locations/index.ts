@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addLocation } from "../../../utils/api/locations/addLocation";
-import { getAllLocations } from "../../../utils/api/locations/getAllLocations";
+import { addLocation, getAllLocations } from "../../../utils/api";
 
 export default async function handler(
   req: NextApiRequest,

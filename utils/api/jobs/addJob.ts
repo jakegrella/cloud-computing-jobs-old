@@ -1,5 +1,5 @@
 import { prisma } from "../../../prisma/prismaClient";
-import { IJob } from "../../types";
+import { IJob } from "../../../types";
 
 export async function addJob(job: any /* IJob */) {
   try {

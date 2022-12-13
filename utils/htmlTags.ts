@@ -1,4 +1,4 @@
-import { ICompany, IJob } from "./types";
+import { ICompany, IJob } from "../types";
 import { jobsPlurality } from "./words";
 
 export function companyMetaDescription(company: ICompany) {

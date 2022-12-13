@@ -1,9 +1,8 @@
-import { Card } from "../card";
+import { useRef, useState } from "react";
+import { Card, Input } from "../../components";
 import { useStore } from ".././../store";
 import { useWindowDimensions } from "../../utils/hooks";
 import styles from "./search.module.css";
-import { useEffect, useRef, useState } from "react";
-// import { Input } from "../input";
 
 function ButtonGroup() {
   const homePageView = useStore((state) => state.homePageView);

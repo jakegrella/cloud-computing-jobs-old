@@ -1,7 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getAllCompanies } from "../../../utils/api/companies/getAllCompanies";
-import { addCompany } from "../../../utils/api/companies/addCompany";
-import { getSimilarCompanies } from "../../../utils/api/companies/getSimilarCompanies";
+import {
+  addCompany,
+  getAllCompanies,
+  getSimilarCompanies,
+} from "../../../utils/api";
 
 async function getRequests(req: NextApiRequest) {
   if (req.query.similar) {

@@ -4,9 +4,9 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { useEffect } from "react";
+import { Button } from "../../button";
 import { useStore } from "../../../store";
 import { addJob } from "../../../utils/httpRequests";
-import { Button } from "../../button";
 
 // ERRORS ARE NOT HANDLED CORRECTLY
 export function Payment() {

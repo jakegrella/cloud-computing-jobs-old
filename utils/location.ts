@@ -1,4 +1,4 @@
-import { ILocation } from "./types";
+import { ILocation } from "../types";
 
 export function locationHelper(locations: ILocation[]) {
   let l = "";

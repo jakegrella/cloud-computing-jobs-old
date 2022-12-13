@@ -1,23 +1,18 @@
-import Head from "next/head";
 import { useEffect, useState } from "react";
-import { Button, Card } from "../../components";
-import { ICompany, ILocation } from "../../utils";
+import Head from "next/head";
+import { Button, Card, Input } from "../../components";
+import { validateForm } from "../../utils/postFormHelpers/validateForm";
+import { CheckoutForm } from "../../components/postFormComponents/checkout-form";
+import { NewLocationSection } from "../../components/postFormComponents/new-location-section";
+import { useStore } from "../../store";
 import {
   createPaymentIntent,
   fetchSimilarCompanies,
 } from "../../utils/httpRequests";
-import { useStore } from "../../store";
+import { ICompany, ILocation } from "../../types";
 import styles from "./jobs-post.module.css";
-import { validateForm } from "../../utils/postFormHelpers/validateForm";
-import { CheckoutForm } from "../../components/postFormComponents/checkout-form";
-import { NewLocationSection } from "../../components/postFormComponents/new-location-section";
-import { Input } from "../../components/input";
 
 export default function PostAJob() {
-  // const stripePromise = loadStripe(
-  //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  // );
-
   const previewJob = useStore((state) => state.previewJob);
   const setPreviewJob = useStore((state) => state.setPreviewJob);
 

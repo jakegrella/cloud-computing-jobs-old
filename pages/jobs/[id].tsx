@@ -1,16 +1,16 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { Button, Card } from "../../components";
 import {
   formatEquity,
   formatPay,
-  IJob,
   jobMetaDescription,
   metaKeywords,
   relativeDate,
 } from "../../utils";
+import { IJob } from "../../types";
 
 // TODO: using ". " as a separator will break as a splitter if there are acronyms like "U.S. " in the string
 

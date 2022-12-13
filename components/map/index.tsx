@@ -1,9 +1,8 @@
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { useState } from "react";
-import { useStore } from "../../store";
+import { Card, ListItem } from "../../components";
 import { useWindowDimensions } from "../../utils/hooks";
-import { Card } from "../card";
-import { ListItem } from "../list-item";
+import { useStore } from "../../store";
 import styles from "./map.module.css";
 
 let boundsChangedTimeout;

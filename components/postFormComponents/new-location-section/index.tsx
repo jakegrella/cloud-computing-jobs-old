@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Button, Input } from "../../../components";
 import { useStore } from "../../../store";
-import { Button } from "../../button";
-import { Input } from "../../input";
 import styles from "./new-location-section.module.css";
 
 export function NewLocationSection() {

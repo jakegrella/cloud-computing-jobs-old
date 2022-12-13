@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addJob } from "../../../utils/api/jobs/addJob";
-import { getAllJobs } from "../../../utils/api/jobs/getAllJobs";
+import { addJob, getAllJobs } from "../../../utils/api";
 
 export default async function handler(
   req: NextApiRequest,

@@ -1,16 +1,2 @@
-.company a {
-  font-size: 0.875rem;
-}
-
-.companyInfo div {
-  margin-bottom: 0.5rem;
-}
-
-.companyInfo h3 {
-  color: var(--gray);
-}
-
-.company_mapCard {
-  height: 300px;
-  /* margin-right: 0.25rem; */
+.company {
 }

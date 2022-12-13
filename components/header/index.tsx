@@ -1,7 +1,5 @@
+import { Logo, Menu, MenuIcon } from "../../components";
 import { useStore } from "../../store";
-import { Logo } from "../logo";
-import { Menu } from "../menu";
-import { MenuIcon } from "../menu-icon";
 import styles from "./header.module.css";
 
 export function Header() {

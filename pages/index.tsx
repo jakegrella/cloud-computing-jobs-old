@@ -1,5 +1,5 @@
-import Head from "next/head";
 import { useEffect, useState } from "react";
+import Head from "next/head";
 import { Card, ListItem, Map, Search } from "../components";
 import { useStore } from "../store";
 import { useWindowDimensions } from "../utils/hooks";
