@@ -22,7 +22,7 @@ h1 {
 
 h2 {
   font-size: 0.875rem;
-  margin-top: 0.5rem;
+  padding: 0.25rem 0;
 }
 
 h3 {
@@ -91,9 +91,9 @@ main {
   align-items: flex-start;
 }
 
-.cardChild {
+/* .cardChild {
   padding: 0 0.75rem 0.75rem 0.75rem;
-}
+} */
 
 @media (prefers-color-scheme: light) {
   html {

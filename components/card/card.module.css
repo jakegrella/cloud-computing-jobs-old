@@ -1,10 +1,12 @@
 .card {
   width: 100%; /* will likely change */
   border-radius: 10px;
-  border: 1px solid var(--dark-gray);
   background: var(--card-gray);
   margin-bottom: 0.5rem;
-  /* padding: 0.75rem 0.75rem 0 0.75rem; added to .cardChild in global */
+  padding: 0.5rem 0.75rem 0.75rem 0.75rem;
+}
+.card.unpadded {
+  padding: 0;
 }
 
 @media (prefers-color-scheme: light) {

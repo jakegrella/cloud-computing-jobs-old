@@ -1,7 +1,16 @@
 import React, { Children, cloneElement, ReactElement } from "react";
 import styles from "./card.module.css";
 
-export function Card({ children, className = null }) {
+interface ICardProps
+  extends React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLDivElement>,
+      HTMLDivElement
+    >,
+    React.AriaAttributes {
+  unpadded?: boolean;
+}
+
+export function Card({ children, className, unpadded = false }: ICardProps) {
   const clonedChild = Children.map(children, (child: ReactElement) => {
     return child === null
       ? child
@@ -13,6 +22,12 @@ export function Card({ children, className = null }) {
   });
 
   return (
-    <div className={`${styles.card} ${className || ""}`}>{clonedChild}</div>
+    <div
+      className={`${styles.card} ${unpadded && styles.unpadded} ${
+        className && className
+      }`}
+    >
+      {clonedChild}
+    </div>
   );
 }

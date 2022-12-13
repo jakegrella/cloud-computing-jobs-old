@@ -1,7 +1,8 @@
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, ListItem, Map, Search } from "../components";
 import { useStore } from "../store";
+import { useWindowDimensions } from "../utils/hooks";
 import { fetchMappableJobs } from "../utils/httpRequests";
 import styles from "./home.module.css";
 
@@ -14,6 +15,9 @@ export default function Home() {
   const homePageView = useStore((state) => state.homePageView);
   const jobs = useStore((state) => state.jobs);
   const setJobs = useStore((state) => state.setJobs);
+  const [searchPlaceholder, setSearchPlaceholder] = useState("Search");
+
+  const { width } = useWindowDimensions();
 
   /** on page load
    * request user location
@@ -86,6 +90,14 @@ export default function Home() {
     setMapMarkers(markerPositions);
   }, [jobs]);
 
+  useEffect(() => {
+    if (width > 768) {
+      setSearchPlaceholder("Search by location, company, job title, etc.");
+    } else {
+      setSearchPlaceholder("Search");
+    }
+  }, [width]);
+
   return (
     <div>
       <Head>
@@ -97,16 +109,16 @@ export default function Home() {
       </Head>
 
       <main className={styles.home}>
-        <Search placeholder="Search by location, company, job title, etc" />
+        <Search placeholder={searchPlaceholder} />
         <div className={`${styles.home_content} ${styles[homePageView]}`}>
-          <Card className={styles.home_content_mapCard}>
+          <Card unpadded className={styles.home_content_mapCard}>
             <Map />
           </Card>
-          <Card className={styles.home_content_jobList}>
-            {jobs && jobs.length ? (
+          <Card unpadded className={styles.home_content_jobList}>
+            {jobs.length ? (
               jobs.map((i) => <ListItem key={i.id} job={i} />)
             ) : (
-              <p>
+              <p className={styles.noneFound}>
                 No jobs found in mapped region. Try searching in a larger area
                 or changing filters.
               </p>

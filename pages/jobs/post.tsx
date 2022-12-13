@@ -434,10 +434,7 @@ export default function PostAJob() {
                   <p>
                     {l.thoroughfare}, {l.locality}, {l.administrativeArea}
                   </p>
-                  <Button
-                    className="active"
-                    onClick={() => handleExistingCompanyLocationClick(l)}
-                  >
+                  <Button onClick={() => handleExistingCompanyLocationClick(l)}>
                     {previewJob.locations.length &&
                     previewJob.locations.some((el) => el.id === l.id)
                       ? "Selected"

@@ -6,6 +6,7 @@ import {
 import { useEffect } from "react";
 import { useStore } from "../../../store";
 import { addJob } from "../../../utils/httpRequests";
+import { Button } from "../../button";
 
 // ERRORS ARE NOT HANDLED CORRECTLY
 export function Payment() {
@@ -110,10 +111,11 @@ export function Payment() {
   return (
     <div className="payment">
       <PaymentElement id="payment-element" />
-      <button
+      <Button
         disabled={stripeState.isLoading || !stripe || !elements}
         id="submit"
         onClick={handleSubmit}
+        type="submit"
       >
         <span id="button-text">
           {stripeState.isLoading ? (
@@ -122,7 +124,7 @@ export function Payment() {
             "Pay now"
           )}
         </span>
-      </button>
+      </Button>
       {/* Show any error or success messages */}
       {stripeState.message && (
         <div id="payment-message">{stripeState.message}</div>
