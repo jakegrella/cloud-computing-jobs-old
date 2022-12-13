@@ -12,9 +12,9 @@ export default async function handler(
   }
 
   // if unauthorized
-  if (req.headers.authorization !== `Bearer ${process.env.API_SECRET_KEY}`) {
-    return res.status(401).json({ success: false });
-  }
+  // if (req.headers.authorization !== `Bearer ${process.env.API_SECRET_KEY}`) {
+  //   return res.status(401).json({ success: false });
+  // }
 
   if (!req.body.jobs || !req.body.jobs.length) {
     return res.status(500).json({ success: false, message: "0 Jobs Received" });
