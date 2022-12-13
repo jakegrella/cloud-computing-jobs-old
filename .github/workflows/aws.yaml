@@ -8,6 +8,5 @@ jobs:
     steps:
       - name: Fetch today's AWS jobs, then call CCJ API route to format jobs and add to DB
         run: |
-          response="$(curl --header "Content-Type: application/json" --request GET "https://www.amazon.jobs/en/search.json?normalized_country_code%5B%5D=USA&business_category%5B%5D=amazon-web-services&result_limit=10")"
-          data="(jq "{specification: .}" <<< "$response")"
+          data=$(curl "https://www.amazon.jobs/en/search.json?normalized_country_code%5B%5D=USA&business_category%5B%5D=amazon-web-services&result_limit=10")
           curl -L --header "Content-Type: application/json" --header "Authorization: Bearer ${{ secrets.API_SECRET_KEY }}" --request POST --data "$data" "https://cloudcomputingjobs.com/api/cron/aws"

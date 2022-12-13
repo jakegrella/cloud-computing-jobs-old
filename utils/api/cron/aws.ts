@@ -79,7 +79,7 @@ export async function aws(jobs: IAWSJob[]) {
     let headquarters = false;
     let thoroughfare = "";
     let premise = "";
-    let postalCode = ""; // pass as string because we parseInt in addJob
+    let postalCode = "00000"; // pass as string because we parseInt in addJob
 
     if (job.city === "Seattle" && job.state === "WA") {
       headquarters = true;
@@ -141,10 +141,11 @@ export async function aws(jobs: IAWSJob[]) {
 
   formattedJobs.forEach(async (job) => {
     try {
-      const response = await addJob(job);
-      return response;
+      await addJob(job);
     } catch (err) {
       throw new Error();
     }
   });
+
+  return;
 }
