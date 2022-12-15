@@ -1,2 +1,49 @@
+/* /companies page */
+.companiesContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+@media only screen and (min-width: 25em /* medium */) {
+  .companyCard {
+    max-width: 20rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+
+  .companyCard:first-of-type {
+    margin-left: 0;
+  }
+
+  .companyCard:last-of-type {
+    margin-right: 0;
+  }
+}
+
+/* /[username] */
 .company {
+}
+
+.company_header {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0.5rem 0;
+}
+
+.company_header h1 {
+  margin: 0 0.5rem;
+}
+
+.company_job {
+  margin: 0.25rem 0;
+}
+
+.company_job:hover {
+  color: var(--primary);
+}
+
+.company_info > div {
+  margin: 0.5rem 0;
 }

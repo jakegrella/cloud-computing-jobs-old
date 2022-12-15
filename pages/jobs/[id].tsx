@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Button, Card } from "../../components";
+import { Button, Card, Head } from "../../components";
 import {
   formatEquity,
   formatPay,
@@ -10,35 +9,30 @@ import {
   metaKeywords,
   relativeDate,
 } from "../../utils";
+import { fetchJob } from "../../utils/httpRequests";
 import { IJob } from "../../types";
-
-// TODO: using ". " as a separator will break as a splitter if there are acronyms like "U.S. " in the string
+import styles from "./job.module.css";
+import Image from "next/image";
 
 export default function Job() {
   const router = useRouter();
   const { id } = router.query;
 
-  const [job, setJob] = useState<IJob | undefined>();
+  const [job, setJob] = useState<IJob | undefined>(undefined);
   const [showAllLocations, setShowAllLocations] = useState<boolean>(false);
 
+  // fetch company when job updates (on page load)
   useEffect(() => {
-    async function fetchCompany() {
+    async function init() {
       if (id) {
         // don't run when id is undefined
-        const response = await fetch(`/api/jobs/${id}`, {
-          method: "get",
-          headers: new Headers({
-            Authorization: "Bearer " + process.env.API_SECRET_KEY,
-          }),
-        });
-        const data: IJob = await response.json();
-        setJob(data);
+        setJob(await fetchJob(id));
       }
     }
-    fetchCompany();
+    init();
   }, [id]);
 
-  const locations = () => {
+  function locations() {
     const multipleLocations = job.locations.length > 1;
 
     return (
@@ -62,20 +56,31 @@ export default function Job() {
 
                 const content = `${l.locality}, ${l.administrativeArea}`;
 
-                return <h2 key={key}>{content}</h2>;
+                return <p key={key}>{content}</p>;
               })
             ) : (
-              <h2>{`${job.locations[0].locality}, ${
+              <p>{`${job.locations[0].locality}, ${
                 job.locations[0].administrativeArea
-              } +${job.locations.length - 1}`}</h2>
+              } +${job.locations.length - 1}`}</p>
             )
           ) : (
-            <h2>{`${job.locations[0].locality}, ${job.locations[0].administrativeArea}`}</h2>
+            <p>{`${job.locations[0].locality}, ${job.locations[0].administrativeArea}`}</p>
           )}
         </div>
       </div>
     );
-  };
+  }
+
+  function detailSection(title: string, content: string) {
+    if (content) {
+      return (
+        <Card>
+          <h2>{title}</h2>
+          <p dangerouslySetInnerHTML={{ __html: content }} />
+        </Card>
+      );
+    }
+  }
 
   return !job ? (
     <div>
@@ -83,87 +88,62 @@ export default function Job() {
     </div>
   ) : (
     <div>
-      <Head>
-        <title>
-          {job.title} at {job.company.name} - Cloud Computing Jobs
-        </title>
-        <meta name="description" content={jobMetaDescription(job)} />
-        <meta name="keywords" content={metaKeywords(job)} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Head
+        title={`${job.title} at ${job.company.name} - Cloud Computing Jobs`}
+        description={jobMetaDescription(job)}
+        keywords={metaKeywords(job)}
+      />
 
       <main>
         <h1>{job.title}</h1>
-        <h2>
-          at{" "}
+        <div className={styles.job_company}>
+          <h2>at</h2>
           <Link href={`/companies/${job.company.username}`}>
-            {job.company.name}
+            <Image
+              src={job.company.logo}
+              alt={`logo of ${job.company.name}`}
+              height={24}
+              width={24}
+            />
+            <h2>{job.company.name}</h2>
           </Link>
-        </h2>
-        <Card>
+        </div>
+
+        <Card className={styles.job_info}>
+          <h2>Quick Info</h2>
           <div>
-            <h2>Quick Info</h2>
-            <div>
-              <div>
-                <h3>Posted</h3>
-                <h2>{relativeDate(job.datePublished)}</h2>
-              </div>
-              <div>
-                <h3>Type</h3>
-                <h2>{job.type}</h2>
-              </div>
-              <div>
-                <h3>Experience</h3>
-                <h2>{job.experience}</h2>
-              </div>
-              <div>
-                <h3>Pay</h3>
-                <h2>
-                  {formatPay(
-                    job.payRangeMin,
-                    job.payRangeMax,
-                    job.payRangeTimeFrame
-                  )}
-                </h2>
-              </div>
-              <div>
-                <h3>Equity</h3>
-                <h2>{formatEquity(job.equityRangeMin, job.equityRangeMax)}</h2>
-              </div>
-              {locations()}
-            </div>
+            <h3>Posted</h3>
+            <p>{relativeDate(job.datePublished)}</p>
           </div>
-        </Card>
-        <Card>
           <div>
-            <h2>Description</h2>
-            <p>{job.description}</p>
+            <h3>Type</h3>
+            <p>{job.type}</p>
           </div>
-        </Card>
-        <Card>
           <div>
-            <h2>Responsibilities</h2>
-            <ul>
-              {job.responsibilities.split(". ").map((r) => (
-                <li key={r}>
-                  <p>{r}</p>
-                </li>
-              ))}
-            </ul>
+            <h3>Experience</h3>
+            <p>{job.experience}</p>
           </div>
-        </Card>
-        <Card>
           <div>
-            <h2>Qualifications</h2>
-            <ul>
-              {job.qualifications.split(". ").map((q) => (
-                <li key={q}>
-                  <p>{q}</p>
-                </li>
-              ))}
-            </ul>
+            <h3>Pay</h3>
+            <p>
+              {formatPay(
+                job.payRangeMin,
+                job.payRangeMax,
+                job.payRangeTimeFrame
+              )}
+            </p>
           </div>
+          <div>
+            <h3>Equity</h3>
+            <p>{formatEquity(job.equityRangeMin, job.equityRangeMax)}</p>
+          </div>
+          {locations()}
         </Card>
+
+        {detailSection("Description", job.description)}
+        {detailSection("Responsibilities", job.responsibilities)}
+        {detailSection("Qualifications", job.qualifications)}
+
         <Button>
           <Link href={job.posting}>Apply at {job.company.name}</Link>
         </Button>

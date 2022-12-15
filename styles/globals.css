@@ -28,6 +28,7 @@ h2 {
 h3 {
   font-size: 0.75rem;
   font-weight: 400;
+  color: var(--gray);
 }
 
 p {
@@ -40,7 +41,7 @@ a {
 }
 
 a:hover {
-  background: var(--gray);
+  background: var(--dark-gray);
 }
 
 button:hover {
@@ -95,9 +96,9 @@ main {
   align-items: flex-start;
 }
 
-/* .cardChild {
-  padding: 0 0.75rem 0.75rem 0.75rem;
-} */
+img {
+  border-radius: 5px;
+}
 
 @media (prefers-color-scheme: light) {
   html {

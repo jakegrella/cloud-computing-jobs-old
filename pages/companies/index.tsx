@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, Head, ListItem } from "../../components";
 import { fetchCompanies } from "../../utils/httpRequests";
 import { ICompany } from "../../types";
+import styles from "./company.module.css";
 
 export default function Companies() {
   const [companies, setCompanies] = useState<ICompany[]>([]);
@@ -9,8 +10,7 @@ export default function Companies() {
   // fetch companies on page load
   useEffect(() => {
     async function init() {
-      const fetchedCompanies = await fetchCompanies();
-      setCompanies(fetchedCompanies);
+      setCompanies(await fetchCompanies());
     }
     init();
   }, []);
@@ -20,16 +20,17 @@ export default function Companies() {
       <Head
         title="Companies - Cloud Computing Jobs"
         description="The best job board for cloud-focused software engineers"
-        faviconHref="/favicon.ico"
       />
 
       <main>
         <h1>Companies</h1>
-        <Card unpadded>
+        <div className={styles.companiesContainer}>
           {companies.map((i) => (
-            <ListItem key={i.id} company={i} />
+            <Card key={i.id} unpadded className={styles.companyCard}>
+              <ListItem company={i} />
+            </Card>
           ))}
-        </Card>
+        </div>
       </main>
     </div>
   );

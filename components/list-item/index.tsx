@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { ListItemHeader } from "./list-item-header";
 import styles from "./list-item.module.css";
 
 export function ListItem({ job = undefined, company = undefined }) {
@@ -8,38 +8,27 @@ export function ListItem({ job = undefined, company = undefined }) {
 
   return (
     <Link href={job ? `/jobs/${job.id}` : `/companies/${company.username}`}>
-      <div className={styles["list-item"]}>
-        <div className={styles["top"]}>
-          <Image
-            src={company.logo}
-            className={styles["list-item_company-logo"]}
-            alt={`logo of ${company.name}`}
-            width={36}
-            height={36}
-          />
-          {job ? (
-            <div>
-              <h3>{company.name}</h3>
-              <h2>{job.title}</h2>
-            </div>
-          ) : (
-            <div>
-              <h2>{company.name}</h2>
-              <h3>{company.jobs.length ?? "0"} Open Jobs</h3>{" "}
-            </div>
-          )}
-        </div>
+      <div className={styles.listItem}>
+        <ListItemHeader
+          imageSrc={company.logo}
+          imageAlt={`logo of ${company.name}`}
+          title={company.name}
+          subtitle={job ? job.title : `${company.jobs.length} Open Jobs`}
+        />
+
         <h3>{company.mission}</h3>
-        {company && (
-          <div className={styles["list-item_job-list"]}>
-            {company.jobs &&
-              company.jobs.map((job) => (
-                // <Link href="/"> // nested Links causing errors
-                <h2 key={job.id}>{job.title}</h2>
-                // </Link>
-              ))}
+
+        {company.jobs?.length && (
+          <div className={styles.listItem_newJobs}>
+            <h3>New Jobs</h3>
+            {company.jobs.slice(0, 3).map((job) => (
+              // <Link href="/"> // nested Links causing errors
+              <p key={job.id}>{job.title}</p>
+              // </Link>
+            ))}
           </div>
         )}
+
         <hr />
       </div>
     </Link>

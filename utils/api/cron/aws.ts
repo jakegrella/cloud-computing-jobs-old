@@ -101,7 +101,7 @@ export async function aws(jobs: IAWSJob[]) {
 
     const formattedJob = {
       title: job.title,
-      posting: `https://amazon.jobs/${job.job_path}`,
+      posting: `https://amazon.jobs${job.job_path}`,
       description: job.description,
       responsibilities: "",
       qualifications,

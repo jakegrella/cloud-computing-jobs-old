@@ -10,7 +10,12 @@ interface ICardProps
   unpadded?: boolean;
 }
 
-export function Card({ children, className, unpadded = false }: ICardProps) {
+export function Card({
+  children,
+  dangerouslySetInnerHTML,
+  className,
+  unpadded = false,
+}: ICardProps) {
   const clonedChild = Children.map(children, (child: ReactElement) => {
     return child === null
       ? child
@@ -26,6 +31,7 @@ export function Card({ children, className, unpadded = false }: ICardProps) {
       className={`${styles.card} ${unpadded && styles.unpadded} ${
         className && className
       }`}
+      dangerouslySetInnerHTML={dangerouslySetInnerHTML}
     >
       {clonedChild}
     </div>

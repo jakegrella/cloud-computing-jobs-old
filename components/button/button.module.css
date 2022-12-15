@@ -7,6 +7,6 @@
 }
 
 .button:disabled {
-  background: var(--gray);
+  background: var(--dark-gray);
   cursor: not-allowed;
 }
