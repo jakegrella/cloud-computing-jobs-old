@@ -16,7 +16,6 @@ async function locationSetup(locations: ILocation[]) {
     const geo = await geolocation(locationInput);
     newLocations.push({ ...location, geo });
   }
-  og("newLocations", newLocations);
   return newLocations;
 }
 
