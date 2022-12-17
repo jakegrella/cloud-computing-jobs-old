@@ -46,7 +46,7 @@
   background: var(--card-gray);
   padding: 0 0.25rem;
   border-radius: 10px;
-  border: 1px solid var(--dark-gray);
+  border: none;
   z-index: 0;
 }
 

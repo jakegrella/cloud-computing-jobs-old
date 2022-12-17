@@ -1,23 +1,19 @@
-import Head from "next/head";
 import { useEffect, useState } from "react";
-import { Button, Card } from "../../components";
-import { ICompany, ILocation } from "../../utils";
+import Head from "next/head";
+import { Button, Card, Input } from "../../components";
+import { validateForm } from "../../utils/postFormHelpers/validateForm";
+import { CheckoutForm } from "../../components/postFormComponents/checkout-form";
+import { NewLocationSection } from "../../components/postFormComponents/new-location-section";
+import { useStore } from "../../store";
 import {
   createPaymentIntent,
   fetchSimilarCompanies,
 } from "../../utils/httpRequests";
-import { useStore } from "../../store";
+import { ICompany, ILocation } from "../../types";
 import styles from "./jobs-post.module.css";
-import { validateForm } from "../../utils/postFormHelpers/validateForm";
-import { CheckoutForm } from "../../components/postFormComponents/checkout-form";
-import { NewLocationSection } from "../../components/postFormComponents/new-location-section";
-import { Input } from "../../components/input";
+import { formatLocation } from "../../utils/formatLocation";
 
 export default function PostAJob() {
-  // const stripePromise = loadStripe(
-  //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  // );
-
   const previewJob = useStore((state) => state.previewJob);
   const setPreviewJob = useStore((state) => state.setPreviewJob);
 
@@ -72,6 +68,13 @@ export default function PostAJob() {
     setPreviewJob({ ...previewJob, [e.target.name]: e.target.value });
   }
 
+  function handleCompanyInputChange(e) {
+    setPreviewJob({
+      ...previewJob,
+      company: { ...previewJob.company, [e.target.name]: e.target.value },
+    });
+  }
+
   async function handleCompanyNameBlur(e) {
     if (e.target.value) {
       const response = await fetchSimilarCompanies(e.target.value);
@@ -84,11 +87,14 @@ export default function PostAJob() {
   function handleSimilarCompanyButtonClick(sc: ICompany) {
     setPreviewJob({
       ...previewJob,
-      companyName: sc.name,
-      companyMission: sc.mission,
-      companyLogo: sc.logo,
-      companyOverview: sc.overview,
-      companyUsername: sc.username,
+      company: {
+        id: sc.id,
+        name: sc.name,
+        username: sc.username,
+        mission: sc.mission,
+        logo: sc.logo,
+        overview: sc.overview,
+      },
       // locations: sc.locations,
     });
     setCompanyLocationOptions(sc.locations);
@@ -124,7 +130,7 @@ export default function PostAJob() {
       payRangeMax: undefined,
       equityRangeMin: undefined,
       equityRangeMax: undefined,
-      payRangeTimeFrame: "",
+      payRangeTimeFrame: undefined,
     });
     // }
 
@@ -176,18 +182,19 @@ export default function PostAJob() {
             <Card>
               <h2>Company Information</h2>
               <Input
+                bordered
                 type="text"
-                name="companyName"
+                name="name"
                 label="Company Name"
-                value={previewJob.companyName}
-                onChange={handleInputChange}
+                value={previewJob.company.name}
+                onChange={handleCompanyInputChange}
                 onBlur={handleCompanyNameBlur}
                 disabled={disableLinkedFields}
                 required={true}
               />
 
               <div className={styles.similarCompaniesFormSection}>
-                {showSimilarCompanies && (
+                {showSimilarCompanies && similarCompanies.length > 0 && (
                   <div>
                     <p>We found these companies with similar names:</p>
                     <div className={styles.similarCompanyContainer}>
@@ -233,17 +240,18 @@ export default function PostAJob() {
                   similarCompanyIncorrect) && (
                   <div className={styles.companyUsernameContainer}>
                     <p>
-                      {previewJob.companyName} will be added as a new company
+                      {previewJob.company.name} will be added as a new company
                     </p>
                     <Button onClick={handleUndoNoSimilarCompanyButtonClick}>
                       Undo
                     </Button>
                     <Input
+                      bordered
                       type="text"
-                      name="companyUsername"
+                      name="username"
                       label="Company Username"
-                      value={previewJob.companyUsername}
-                      onChange={handleInputChange}
+                      value={previewJob.company.username}
+                      onChange={handleCompanyInputChange}
                       required={true}
                     />
                   </div>
@@ -251,46 +259,47 @@ export default function PostAJob() {
               </div>
 
               <Input
-                type={"text"}
-                name={"companyMission"}
-                label={"Company Mission"}
-                value={previewJob.companyMission}
-                onChange={handleInputChange}
+                bordered
+                type="text"
+                name="mission"
+                label="Company Mission"
+                value={previewJob.company.mission}
+                onChange={handleCompanyInputChange}
                 required={true}
                 disabled={disableLinkedFields}
               />
               <Input
-                type={"text"}
-                name={"companyLogo"}
-                label={"Company Logo"}
-                value={previewJob.companyLogo}
-                onChange={handleInputChange}
+                bordered
+                type="text"
+                name="logo"
+                label="Company Logo"
+                value={previewJob.company.logo}
+                onChange={handleCompanyInputChange}
                 required={true}
                 disabled={disableLinkedFields}
               />
 
               <div>
                 <label htmlFor="companyOverview">Company Overview</label>
-                {/* <Card> */}
                 <textarea
-                  name="companyOverview"
+                  name="overview"
                   rows={4}
                   placeholder="Company Overview"
-                  value={previewJob.companyOverview}
-                  onChange={handleInputChange}
+                  value={previewJob.company.overview}
+                  onChange={handleCompanyInputChange}
                   disabled={disableLinkedFields}
                   required
                 />
-                {/* </Card> */}
               </div>
             </Card>
 
             <Card>
               <h2>Job Information</h2>
               <Input
-                type={"text"}
-                name={"title"}
-                label={"Job Title"}
+                bordered
+                type="text"
+                name="title"
+                label="Job Title"
                 value={previewJob.title}
                 onChange={handleInputChange}
                 required={true}
@@ -367,9 +376,10 @@ export default function PostAJob() {
               </div>
 
               <Input
-                type={"text"}
-                name={"posting"}
-                label={"Posting Link"}
+                bordered
+                type="text"
+                name="posting"
+                label="Posting Link"
                 value={previewJob.posting}
                 onChange={handleInputChange}
                 required={true}
@@ -379,7 +389,8 @@ export default function PostAJob() {
             <Card>
               <h2>Compensation</h2>
               <div className={styles.compensationCheckbox}>
-                <input
+                <Input
+                  bordered
                   type="checkbox"
                   name="salary"
                   onChange={handleCompensationDisplay}
@@ -390,32 +401,36 @@ export default function PostAJob() {
                 <div className={styles.compensationGroup}>
                   <h3>Pay Range</h3>
                   <Input
-                    type={"text"}
-                    name={"payRangeMin"}
-                    label={"Minimum"}
+                    bordered
+                    type="text"
+                    name="payRangeMin"
+                    label="Minimum"
                     value={previewJob.payRangeMin}
                     onChange={handleInputChange}
                   />
                   <Input
-                    type={"text"}
-                    name={"payRangeMax"}
-                    label={"Maximum"}
+                    bordered
+                    type="text"
+                    name="payRangeMax"
+                    label="Maximum"
                     value={previewJob.payRangeMax}
                     onChange={handleInputChange}
                   />
 
                   <h3>Equity Range</h3>
                   <Input
-                    type={"text"}
-                    name={"equityRangeMin"}
-                    label={"Minimum"}
+                    bordered
+                    type="text"
+                    name="equityRangeMin"
+                    label="Minimum"
                     value={previewJob.equityRangeMin}
                     onChange={handleInputChange}
                   />
                   <Input
-                    type={"text"}
-                    name={"equityRangeMax"}
-                    label={"Maximum"}
+                    bordered
+                    type="text"
+                    name="equityRangeMax"
+                    label="Maximum"
                     value={previewJob.equityRangeMax}
                     onChange={handleInputChange}
                   />
@@ -426,18 +441,13 @@ export default function PostAJob() {
             <Card>
               <h2>Locations</h2>
               {similarCompanySelected && (
-                <h3>Other locations for {previewJob.companyName}</h3>
+                <h3>Other locations for {previewJob.company.name}</h3>
               )}
               {companyLocationOptions.map((l: ILocation) => (
                 <Card key={l.id} className={styles.companyLocation}>
                   <h2>{l.locality}</h2>
-                  <p>
-                    {l.thoroughfare}, {l.locality}, {l.administrativeArea}
-                  </p>
-                  <Button
-                    className="active"
-                    onClick={() => handleExistingCompanyLocationClick(l)}
-                  >
+                  <p>{formatLocation(l)}</p>
+                  <Button onClick={() => handleExistingCompanyLocationClick(l)}>
                     {previewJob.locations.length &&
                     previewJob.locations.some((el) => el.id === l.id)
                       ? "Selected"

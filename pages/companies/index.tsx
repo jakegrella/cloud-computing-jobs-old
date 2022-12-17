@@ -1,45 +1,36 @@
-import Head from "next/head";
 import { useEffect, useState } from "react";
-import { Card, ListItem } from "../../components";
-import { ICompany } from "../../utils";
+import { Card, Head, ListItem } from "../../components";
+import { fetchCompanies } from "../../utils/httpRequests";
+import { ICompany } from "../../types";
+import styles from "./company.module.css";
 
 export default function Companies() {
-  const [companies, setCompanies] = useState<ICompany[] | undefined>();
+  const [companies, setCompanies] = useState<ICompany[]>([]);
 
+  // fetch companies on page load
   useEffect(() => {
-    async function fetchCompanies() {
-      const response = await fetch("/api/companies", {
-        method: "get",
-        headers: new Headers({
-          Authorization: "Bearer " + process.env.API_SECRET_KEY,
-        }),
-      });
-      const data = await response.json();
-      setCompanies(data);
+    async function init() {
+      setCompanies(await fetchCompanies());
     }
-    fetchCompanies();
+    init();
   }, []);
 
   return (
     <div>
-      <Head>
-        <title>Companies - Cloud Computing Jobs</title>
-        <meta
-          name="description"
-          content="The best job board for cloud-focused software engineers"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Head
+        title="Companies - Cloud Computing Jobs"
+        description="The best job board for cloud-focused software engineers"
+      />
 
       <main>
         <h1>Companies</h1>
-        {companies && (
-          <Card>
-            {companies.map((i) => (
-              <ListItem key={i.id} company={i} />
-            ))}
-          </Card>
-        )}
+        <div className={styles.companiesContainer}>
+          {companies.map((i) => (
+            <Card key={i.id} unpadded className={styles.companyCard}>
+              <ListItem company={i} />
+            </Card>
+          ))}
+        </div>
       </main>
     </div>
   );

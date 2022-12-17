@@ -35,7 +35,10 @@ export function formatPay(
   )} - ${formatter.format(payRangeMax)}${timeFrame(payRangeTimeFrame)}`;
 }
 
-export function formatEquity(equityRangeMin: number, equityRangeMax: number) {
+export function formatEquity(
+  equityRangeMin: number | null,
+  equityRangeMax: number | null
+) {
   // if no min or max
   if (!equityRangeMin && !equityRangeMax) return "Equity Not Given";
   // if min and max = 0

@@ -22,6 +22,10 @@
   overflow-y: auto;
 }
 
+.home_content_jobList .noneFound {
+  margin: 0.5rem;
+}
+
 .home_content.both > .home_content_mapCard {
   display: initial;
   height: 50%;
@@ -76,5 +80,6 @@
   .home_content.list > .home_content_jobList {
     display: initial;
     height: 100%;
+    margin-top: 0;
   }
 }

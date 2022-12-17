@@ -1,4 +1,4 @@
-import { prisma } from "../../../prisma/prismaClient";
+import { prisma } from "../../prisma/prismaClient";
 
 // GET - get mappable jobs
 export async function fetchMappableJobs(latBound, lngBound) {

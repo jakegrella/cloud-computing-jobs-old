@@ -1,4 +1,4 @@
-import { prisma } from "../../../prisma/prismaClient";
+import { prisma } from "../../prisma/prismaClient";
 
 // GET - get all companies
 export async function getAllCompanies() {

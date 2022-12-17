@@ -1,6 +1,4 @@
-// import { addCompany } from "../companies/addCompany";
-// call add job
-
+import { JobExperience, JobType } from "../../types";
 import { addJob } from "../jobs/addJob";
 
 interface IAWSJob {
@@ -57,14 +55,10 @@ interface IAWSJob {
 }
 
 export async function aws(jobs: IAWSJob[]) {
-  // incoming = [{}]
-  // format them to fit database
-  // add to database
-
   const formattedJobs = jobs.map((job) => {
     const qualifications = `Basic Qualifications\u003cbr/\u003e \u003cbr/\u003e${job.basic_qualifications}\u003cbr/\u003e \u003cbr/\u003ePreferred Qualifications\u003cbr/\u003e \u003cbr/\u003e${job.preferred_qualifications}`;
 
-    let type: string;
+    let type: JobType;
     switch (job.job_schedule_type) {
       case "full-time":
         type = "Full Time";
@@ -78,8 +72,7 @@ export async function aws(jobs: IAWSJob[]) {
 
     let headquarters = false;
     let thoroughfare = "";
-    let premise = "";
-    let postalCode = "00000"; // pass as string because we parseInt in addJob
+    let postalCode = "";
 
     if (job.city === "Seattle" && job.state === "WA") {
       headquarters = true;
@@ -100,19 +93,16 @@ export async function aws(jobs: IAWSJob[]) {
     }
 
     const formattedJob = {
+      id: 0, // 0 will not exist in database
       title: job.title,
-      posting: `https://amazon.jobs/${job.job_path}`,
+      posting: `https://amazon.jobs${job.job_path}`,
       description: job.description,
       responsibilities: "",
       qualifications,
       type,
-      experience: "",
-      payRangeMin: undefined,
-      payRangeMax: undefined,
-      payRangeTimeFrame: "",
-      equityRangeMin: undefined,
-      equityRangeMax: undefined,
+      experience: "" as JobExperience,
       company: {
+        id: 0, // wrong but doesn't matter. company checked by username
         username: "amazon-web-services",
         name: "Amazon Web Services",
         logo: "https://pbs.twimg.com/profile_images/1599829788369113089/FrdYoQ1o_400x400.jpg",
@@ -120,18 +110,21 @@ export async function aws(jobs: IAWSJob[]) {
           "AWS provides a massive global cloud infrastructure that allows you to quickly innovate, experiment and iterate.",
         overview:
           "In 2006, Amazon Web Services (AWS) began offering IT infrastructure services to businesses in the form of web services -- now commonly known as cloud computing. One of the key benefits of cloud computing is the opportunity to replace up-front capital infrastructure expenses with low variable costs that scale with your business. With the Cloud, businesses no longer need to plan for and procure servers and other IT infrastructure weeks or months in advance. Instead, they can instantly spin up hundreds or thousands of servers in minutes and deliver results faster. Today, Amazon Web Services provides a highly reliable, scalable, low-cost infrastructure platform in the cloud that powers hundreds of thousands of businesses in 190 countries around the world.",
+        jobs: [], // needed for typescript, do not use
+        locations: [], // needed for typescript, do not use
       },
       locations: [
         {
+          id: 0, // update
           headquarters,
           thoroughfare,
-          premise,
           locality: job.city,
           administrativeArea: job.state,
           postalCode,
           country: job.country_code,
-          latitude: 0.0,
-          longitude: 0.0,
+          latitude: null,
+          longitude: null,
+          companyId: 0, // wrong
         },
       ],
     };
@@ -143,7 +136,7 @@ export async function aws(jobs: IAWSJob[]) {
     try {
       await addJob(job);
     } catch (err) {
-      throw new Error();
+      throw new Error(`Error adding aws job: ${err.message}`);
     }
   });
 
