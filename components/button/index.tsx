@@ -1,20 +1,18 @@
 import styles from "./button.module.css";
 
-interface IButton {
-  children: any;
-  className?: any;
-  disabled?: boolean;
-  onClick?: any;
-  type?: "button" | "submit" | "reset";
-}
+interface IButtonProps
+  extends React.DetailedHTMLProps<
+      React.ButtonHTMLAttributes<HTMLButtonElement>,
+      HTMLButtonElement
+    >,
+    React.AriaAttributes {}
 
 export function Button({
   children,
-  className,
   disabled = false,
   onClick = undefined,
   type = "button",
-}: IButton) {
+}: IButtonProps) {
   return (
     <button
       type={type}

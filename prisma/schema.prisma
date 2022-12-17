@@ -14,9 +14,6 @@ model Job {
   open              Boolean    @default(true)
   published         Boolean    @default(false)
   datePublished     DateTime?  // needs to be stored in UTC
-  company           Company    @relation(fields: [companyId], references: [id])
-  companyId         Int
-  locations         Location[]
   description       String     @db.Text
   responsibilities  String     @db.Text
   qualifications    String     @db.Text
@@ -27,6 +24,9 @@ model Job {
   payRangeTimeFrame String?
   equityRangeMin    Decimal?
   equityRangeMax    Decimal?
+  company           Company    @relation(fields: [companyId], references: [id])
+  companyId         Int
+  locations         Location[]
 }
 
 model Company {
@@ -49,9 +49,10 @@ model Location {
   country             String    // 2 character ISO code
   administrativeArea  String    // state, province, region (ISO code where available)
   locality            String    // city, town
-  postalCode          Int       // zip code
-  thoroughfare        String    // street address
-  premise             String    // apartment, suite, po box, etc
+  postalCode          String?   // zip code
+  thoroughfare        String?   // street address
+  premise             String?   // apartment, suite, po box, etc
+  neighborhood        String?
   latitude            Float
   longitude           Float
 }

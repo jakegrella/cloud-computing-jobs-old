@@ -1,7 +1,6 @@
 import Link from "next/link";
+import { Button, Card } from "../../components";
 import { useStore } from "../../store";
-import { Button } from "../button";
-import { Card } from "../card";
 import styles from "./menu.module.css";
 
 export function Menu() {

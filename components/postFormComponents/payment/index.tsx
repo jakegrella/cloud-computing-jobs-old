@@ -4,6 +4,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { useEffect } from "react";
+import { Button } from "../../button";
 import { useStore } from "../../../store";
 import { addJob } from "../../../utils/httpRequests";
 
@@ -93,7 +94,7 @@ export function Payment() {
       setStripeState({ ...stripeState, message: error.message });
       // TODO delete or unpublish job from db
     } else {
-      console.log("e", error);
+      // console.log("e", error);
       setStripeState({
         ...stripeState,
         message: "An unexpected error occurred.",
@@ -110,10 +111,11 @@ export function Payment() {
   return (
     <div className="payment">
       <PaymentElement id="payment-element" />
-      <button
+      <Button
         disabled={stripeState.isLoading || !stripe || !elements}
         id="submit"
         onClick={handleSubmit}
+        type="submit"
       >
         <span id="button-text">
           {stripeState.isLoading ? (
@@ -122,7 +124,7 @@ export function Payment() {
             "Pay now"
           )}
         </span>
-      </button>
+      </Button>
       {/* Show any error or success messages */}
       {stripeState.message && (
         <div id="payment-message">{stripeState.message}</div>

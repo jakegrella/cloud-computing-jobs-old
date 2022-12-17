@@ -1,26 +1,30 @@
 import create from "zustand";
-import { IState } from "./utils";
+import { IState } from "./types";
 
 export const useStore = create<IState>((set) => ({
   previewJob: {
-    companyName: "",
-    companyUsername: "",
+    id: 0,
     title: "",
-    type: "Select Job Type",
-    experience: "Select Experience Level",
-    locations: [],
-    companyMission: "",
-    companyLogo: "",
-    companyOverview: "",
+    posting: "",
+    type: "Full Time",
+    experience: "Entry",
     description: "",
     qualifications: "",
     responsibilities: "",
-    posting: "",
     payRangeMin: undefined,
     payRangeMax: undefined,
-    payRangeTimeFrame: "",
+    payRangeTimeFrame: "Hour",
     equityRangeMin: undefined,
     equityRangeMax: undefined,
+    company: {
+      id: 0,
+      name: "",
+      username: "",
+      logo: "",
+      mission: "",
+      overview: "",
+    },
+    locations: [],
   },
   setPreviewJob: (previewJob) => set(() => ({ previewJob })),
   isMenuVisible: false,

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { fetchMappableJobs } from "../../../utils/api/jobs/fetchMappableJobs";
+import { fetchMappableJobs } from "../../../backend-utils";
 
 export default async function handler(
   req: NextApiRequest,

@@ -5,51 +5,57 @@ export interface ICompany {
   logo: string;
   mission: string;
   overview: string;
-  jobs: IJob[];
-  locations: ILocation[];
+  jobs?: IJob[];
+  locations?: ILocation[];
 }
+
+export type JobType = "Full Time" | "Part Time" | "Internship" | "Contract";
+export type JobExperience = "Entry" | "Mid" | "Senior" | "";
+export type JobPayRangeTimeFrame = "Year" | "Hour" | undefined;
 
 export interface IJob {
   id: number;
   title: string;
   posting: string;
-  open: boolean;
-  published: boolean;
-  datePublished?: Date;
-  company: ICompany;
-  companyId: number;
-  locations: ILocation[];
   description: string;
   responsibilities: string;
   qualifications: string;
-  type: "Full Time" | "Part Time" | "Internship" | "Contract";
-  experience: "Entry" | "Mid" | "Senior";
-  payRangeMin: number;
-  payRangeMax: number;
-  payRangeTimeFrame: "Year" | "Hour";
-  equityRangeMax: number;
-  equityRangeMin: number;
+  type: JobType;
+  experience: JobExperience;
+  open?: boolean; // db default = true
+  published?: boolean; // db default = false
+  datePublished?: Date;
+  payRangeMin?: number;
+  payRangeMax?: number;
+  payRangeTimeFrame?: JobPayRangeTimeFrame;
+  equityRangeMax?: number;
+  equityRangeMin?: number;
+  company?: ICompany;
+  companyId?: number; // used by prisma for relation
+  locations?: ILocation[];
 }
 
 export interface ILocation {
   id: number;
-  company: ICompany;
-  companyId: number;
   headquarters: boolean;
-  jobs: IJob[];
   country: string;
   administrativeArea: string;
   locality: string;
-  postalCode: number;
-  thoroughfare: string;
-  premise: string;
   latitude: number;
   longitude: number;
+  companyId: number;
+  company?: ICompany;
+  jobs?: IJob[];
+  postalCode?: string;
+  thoroughfare?: string;
+  premise?: string;
+  neighborhood?: string;
 }
 
 export interface IMapMarker {
   center: { lat: number; lng: number };
   job: IJob;
+  id: string;
 }
 
 interface IInitMap {
@@ -67,8 +73,8 @@ export interface IState {
   stripeState: IStripeState;
   setStripeState: (stripe: IStripeState) => void;
 
-  previewJob: any;
-  setPreviewJob: (previewJob: any) => void;
+  previewJob: IJob;
+  setPreviewJob: (previewJob: IJob) => void;
   isMenuVisible: boolean;
   setIsMenuVisible: (isVisible: boolean) => void;
   jobs: IJob[];

@@ -22,12 +22,13 @@ h1 {
 
 h2 {
   font-size: 0.875rem;
-  margin-top: 0.5rem;
+  padding: 0.25rem 0;
 }
 
 h3 {
   font-size: 0.75rem;
   font-weight: 400;
+  color: var(--gray);
 }
 
 p {
@@ -40,7 +41,7 @@ a {
 }
 
 a:hover {
-  background: var(--gray);
+  background: var(--dark-gray);
 }
 
 button:hover {
@@ -82,6 +83,10 @@ textarea {
   padding: 0 0 0 0.5rem;
 }
 
+form * {
+  margin: 0.125rem 0;
+}
+
 main {
   padding: 1rem 0;
   flex: 1;
@@ -91,8 +96,8 @@ main {
   align-items: flex-start;
 }
 
-.cardChild {
-  padding: 0 0.75rem 0.75rem 0.75rem;
+img {
+  border-radius: 5px;
 }
 
 @media (prefers-color-scheme: light) {

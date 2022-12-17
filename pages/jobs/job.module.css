@@ -1,0 +1,22 @@
+.job {
+}
+
+.job_company {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.job_company a {
+  display: flex;
+  align-items: center;
+}
+
+.job_company img {
+  margin: 0 0.5rem;
+}
+
+.job_info > div {
+  margin: 0.5rem 0;
+}

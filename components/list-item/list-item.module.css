@@ -1,42 +1,32 @@
-.list-item {
+.listItem {
   width: 100%;
   padding: 0.75rem 0.75rem 0 0.75rem;
   border-radius: 10px;
 }
 
-.list-item h2 {
-  margin: 0;
+.listItem:hover {
+  background: var(--dark-gray);
 }
 
-.list-item hr {
+.listItem hr {
   /* divider line */
   margin: 0.5rem 0 0 0;
   border: 0;
   height: 1px;
-  background: var(--gray);
+  background: var(--dark-gray);
 }
 
-.list-item:hover {
-  background: var(--gray);
+.listItem_newJobs {
+  margin-top: 0.5rem;
 }
 
-.list-item_company-logo {
-  border-radius: 5px;
-}
-
-.list-item_job-list {
-  margin: 0.5rem 0 0 1.5rem;
-}
-
-.list-item_job-list h2 {
-  padding: 0.25rem 0;
-}
-
-.top {
+/* list item header */
+.listItem_header {
   display: flex;
+  align-items: center;
   margin: 0 0 0.5rem 0;
 }
 
-.top div {
-  margin: 0 0 0 0.5rem;
+.listItem_header_image {
+  margin-right: 0.5rem;
 }
