@@ -5,23 +5,33 @@
 }
 
 .inputComponent input {
+  border: 1px solid var(--dark-gray);
   border-radius: 10px;
-  border: none;
-  background: var(--card-gray);
+  background: var(--dark-gray);
+  color: var(--black);
   position: relative;
   height: 100%;
+  width: 100%;
+  font-size: 0.875rem;
+  padding: 0 0 0 0.5rem;
+}
+
+.inputComponent input:disabled {
+  cursor: not-allowed;
+  color: var(--gray);
 }
 
 .inputComponent.bordered input {
-  border: 1px solid var(--dark-gray);
+  border: 1px solid var(--gray);
 }
 
 @media (prefers-color-scheme: light) {
   .inputComponent input {
     background: var(--white);
+    border: 1px solid var(--light-gray);
   }
 
   .inputComponent.bordered input {
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--light-gray);
   }
 }

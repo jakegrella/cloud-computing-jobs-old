@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Card, Input } from "../../components";
+import { Button, Card, Input } from "../../components";
 import { useStore } from ".././../store";
 import { useWindowDimensions } from "../../utils/hooks";
 import styles from "./search.module.css";
@@ -75,9 +75,9 @@ export function Search({ className = undefined, placeholder = "Search" }) {
             autoComplete="off"
           />
           <Card className={styles.dropdown}>
-            <button onClick={handleDropdownFilterClick}>city:</button>
-            <button onClick={handleDropdownFilterClick}>company:</button>
-            <button onClick={handleDropdownFilterClick}>job title:</button>
+            <Button onClick={handleDropdownFilterClick}>city:</Button>
+            <Button onClick={handleDropdownFilterClick}>company:</Button>
+            <Button onClick={handleDropdownFilterClick}>job title:</Button>
           </Card>
         </div>
       ) : (

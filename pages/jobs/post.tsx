@@ -14,21 +14,25 @@ import styles from "./jobs-post.module.css";
 import { formatLocation } from "../../utils/formatLocation";
 
 export default function PostAJob() {
-  const previewJob = useStore((state) => state.previewJob);
-  const setPreviewJob = useStore((state) => state.setPreviewJob);
-
-  const stripeState = useStore((state) => state.stripeState);
-  const setStripeState = useStore((state) => state.setStripeState);
-
-  const showPaymentForm = useStore((state) => state.showPaymentForm);
-  const setShowPaymentForm = useStore((state) => state.setShowPaymentForm);
-
-  const companyLocationOptions = useStore(
-    (state) => state.companyLocationOptions
-  );
-  const setCompanyLocationOptions = useStore(
-    (state) => state.setCompanyLocationOptions
-  );
+  const [
+    previewJob,
+    setPreviewJob,
+    stripeState,
+    setStripeState,
+    showPaymentForm,
+    setShowPaymentForm,
+    companyLocationOptions,
+    setCompanyLocationOptions,
+  ] = useStore((state) => [
+    state.previewJob,
+    state.setPreviewJob,
+    state.stripeState,
+    state.setStripeState,
+    state.showPaymentForm,
+    state.setShowPaymentForm,
+    state.companyLocationOptions,
+    state.setCompanyLocationOptions,
+  ]);
 
   const [showSimilarCompanies, setShowSimilarCompanies] = useState(false);
   const [similarCompanies, setSimilarCompanies] = useState([]);
