@@ -28,7 +28,7 @@ h2 {
 h3 {
   font-size: 0.75rem;
   font-weight: 400;
-  color: var(--gray);
+  color: var(--light-gray);
 }
 
 p {
@@ -57,25 +57,11 @@ label {
   display: none;
 }
 
-input {
-  background: var(--card-gray);
-  border: none;
-  border-radius: 10px;
-  height: 100%;
-  width: 100%;
-  font-size: 0.875rem;
-  padding: 0 0 0 0.5rem;
-}
-input:disabled,
-textarea:disabled {
-  cursor: not-allowed;
-}
-
 select,
 option,
 textarea {
-  background: var(--card-gray);
-  border: 1px solid var(--dark-gray);
+  background: var(--dark-gray);
+  border: 1px solid var(--gray);
   border-radius: 10px;
   height: 100%;
   width: 100%;
@@ -104,8 +90,20 @@ img {
   html {
     color-scheme: light;
   }
+
   body {
     color: var(--black);
+    background: var(--dark-white);
+  }
+
+  h3 {
+    color: var(--gray);
+  }
+
+  select,
+  option,
+  textarea {
     background: var(--white);
+    border: 1px solid var(--light-gray);
   }
 }

@@ -1,12 +1,13 @@
 :root {
   /* colors */
   --black: #000000;
-  --card-gray: #1d1d1f;
-  --dark-gray: #333336;
-  --gray: #9d9da8;
+  --dark-gray: #1d1d1f;
+  --gray: #4a4a4b;
+  --light-gray: #e2e2e2;
+  --dark-white: #f5f5f7;
   --white: #ffffff;
-  --primary: #5c7cff;
-  --primary-light: #7692ff;
+  --primary: #0171e3;
+  --primary-light: #208ffe;
 
   /* breakpoints */
   --small: 25em; /* 400px */

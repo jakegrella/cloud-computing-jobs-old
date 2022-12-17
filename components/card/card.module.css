@@ -1,17 +1,19 @@
 .card {
-  width: 100%; /* will likely change */
+  width: 100%;
+  border: 1px solid var(--dark-gray);
   border-radius: 10px;
-  background: var(--card-gray);
+  background: var(--dark-gray);
   margin-bottom: 0.5rem;
   padding: 0.5rem 0.75rem 0.75rem 0.75rem;
 }
+
 .card.unpadded {
   padding: 0;
 }
 
 @media (prefers-color-scheme: light) {
   .card {
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--light-gray);
     background: var(--white);
   }
 }

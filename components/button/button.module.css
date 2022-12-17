@@ -1,12 +1,25 @@
 .button {
   background: var(--primary);
+  color: var(--white);
   border: none;
   border-radius: 10px;
   padding: 0.25rem 0.75rem;
   margin: 0.5rem 0;
 }
 
+.button:hover {
+  background: var(--primary-light);
+}
+
 .button:disabled {
   background: var(--dark-gray);
+  color: var(--gray);
   cursor: not-allowed;
+}
+
+@media (prefers-color-scheme: light) {
+  .button:disabled {
+    background: var(--light-gray);
+    color: var(--gray);
+  }
 }

@@ -5,7 +5,7 @@
 }
 
 .listItem:hover {
-  background: var(--dark-gray);
+  background: var(--gray);
 }
 
 .listItem hr {
@@ -13,7 +13,7 @@
   margin: 0.5rem 0 0 0;
   border: 0;
   height: 1px;
-  background: var(--dark-gray);
+  background: var(--gray);
 }
 
 .listItem_newJobs {
@@ -29,4 +29,14 @@
 
 .listItem_header_image {
   margin-right: 0.5rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .listItem:hover {
+    background: var(--light-gray);
+  }
+
+  .listItem hr {
+    background: var(--light-gray);
+  }
 }
