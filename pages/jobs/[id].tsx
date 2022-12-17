@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { Button, Card, Head } from "../../components";
 import {
   formatEquity,
+  formatLocation,
   formatPay,
   jobMetaDescription,
   metaKeywords,
@@ -47,21 +48,12 @@ export default function Job() {
         <div>
           {multipleLocations ? (
             showAllLocations ? (
-              job.locations.map((l) => {
-                const key = `${l.locality
-                  .toLowerCase()
-                  .replace(/ /g, "_")}-${l.administrativeArea
-                  .toLowerCase()
-                  .replace(/ /g, "_")}`;
-
-                const content = `${l.locality}, ${l.administrativeArea}`;
-
-                return <p key={key}>{content}</p>;
-              })
+              job.locations.map((l) => <p key={l.id}>{formatLocation(l)}</p>)
             ) : (
-              <p>{`${job.locations[0].locality}, ${
-                job.locations[0].administrativeArea
-              } +${job.locations.length - 1}`}</p>
+              <p>
+                {formatLocation(job.locations[0]) +
+                  ` +${job.locations.length - 1} more`}
+              </p>
             )
           ) : (
             <p>{`${job.locations[0].locality}, ${job.locations[0].administrativeArea}`}</p>

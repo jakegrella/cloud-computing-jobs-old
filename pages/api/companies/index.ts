@@ -3,7 +3,7 @@ import {
   addCompany,
   getAllCompanies,
   getSimilarCompanies,
-} from "../../../utils/api";
+} from "../../../backend-utils";
 
 async function getRequests(req: NextApiRequest) {
   if (req.query.similar) {

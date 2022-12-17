@@ -1,22 +1,31 @@
 import { useEffect, useState } from "react";
-import Head from "next/head";
-import { Card, ListItem, Map, Search } from "../components";
+import { Card, Head, ListItem, Map, Search } from "../components";
 import { useStore } from "../store";
 import { useWindowDimensions } from "../utils/hooks";
 import { fetchMappableJobs } from "../utils/httpRequests";
 import styles from "./home.module.css";
 
-let timeout;
+let timeout: NodeJS.Timeout;
 
 export default function Home() {
-  const setInitMap = useStore((state) => state.setInitMap);
-  const mapBounds = useStore((state) => state.mapBounds);
-  const setMapMarkers = useStore((state) => state.setMapMarkers);
-  const homePageView = useStore((state) => state.homePageView);
-  const jobs = useStore((state) => state.jobs);
-  const setJobs = useStore((state) => state.setJobs);
+  const [
+    setInitMap,
+    mapBounds,
+    mapMarkers,
+    setMapMarkers,
+    homePageView,
+    jobs,
+    setJobs,
+  ] = useStore((state) => [
+    state.setInitMap,
+    state.mapBounds,
+    state.mapMarkers,
+    state.setMapMarkers,
+    state.homePageView,
+    state.jobs,
+    state.setJobs,
+  ]);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search");
-
   const { width } = useWindowDimensions();
 
   /** on page load
@@ -41,6 +50,7 @@ export default function Home() {
         });
       }
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** on update to map region
@@ -74,20 +84,39 @@ export default function Home() {
    * store as array in state
    */
   useEffect(() => {
-    let markerPositions = [];
+    if (!jobs.length) setMapMarkers([]);
+    else {
+      let markerPositions = [];
 
-    if (jobs && jobs.length) {
       jobs.forEach((job) => {
         job.locations.forEach((location) => {
           markerPositions.push({
             center: { lat: location.latitude, lng: location.longitude },
             job,
+            id: `${job.id}-${job.companyId}-${location.id}`,
           });
         });
       });
-    }
 
-    setMapMarkers(markerPositions);
+      const objectsEqual = (o1, o2) => {
+        return o1 !== null &&
+          typeof o1 === "object" &&
+          Object.keys(o1).length > 0
+          ? Object.keys(o1).length === Object.keys(o2).length &&
+              Object.keys(o1).every((p) => objectsEqual(o1[p], o2[p]))
+          : o1 === o2;
+      };
+
+      const arraysEqual = (a1, a2) => {
+        return (
+          a1.length === a2.length &&
+          a1.every((o, idx) => objectsEqual(o, a2[idx]))
+        );
+      };
+
+      if (!arraysEqual(markerPositions, mapMarkers))
+        setMapMarkers(markerPositions);
+    }
   }, [jobs]);
 
   useEffect(() => {
@@ -100,13 +129,10 @@ export default function Home() {
 
   return (
     <div>
-      <Head>
-        <title>Cloud Computing Jobs</title>
-        <meta
-          name="description"
-          content="The best job board for cloud-focused software engineers"
-        />
-      </Head>
+      <Head
+        title="Cloud Computing Jobs"
+        description="The best job board for cloud-focused software engineers"
+      />
 
       <main className={styles.home}>
         <Search placeholder={searchPlaceholder} />

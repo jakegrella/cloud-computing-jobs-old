@@ -94,7 +94,7 @@ export function Payment() {
       setStripeState({ ...stripeState, message: error.message });
       // TODO delete or unpublish job from db
     } else {
-      console.log("e", error);
+      // console.log("e", error);
       setStripeState({
         ...stripeState,
         message: "An unexpected error occurred.",

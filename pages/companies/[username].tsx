@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Card, Head, ListItem } from "../../components";
+import { Card, Head } from "../../components";
 import { companyMetaDescription, jobsPlurality } from "../../utils";
 import { fetchCompany } from "../../utils/httpRequests";
 import { ICompany } from "../../types";
@@ -26,7 +26,10 @@ export default function Company() {
         const headquarters = fetchedCompany.locations.find(
           (location) => location.headquarters === true
         );
-        setHq(`${headquarters.locality}, ${headquarters.administrativeArea}`);
+
+        if (headquarters) {
+          setHq(`${headquarters.locality}, ${headquarters.administrativeArea}`);
+        }
       }
     }
     init();

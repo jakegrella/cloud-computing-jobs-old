@@ -1,8 +1,29 @@
-import { prisma } from "../../../prisma/prismaClient";
-import { IJob } from "../../../types";
+import { prisma } from "../../prisma/prismaClient";
+import { IJob, ILocation } from "../../types";
+import { formatLocation } from "../../utils";
+import { geolocation } from "../locations";
 
-export async function addJob(job: any /* IJob */) {
+interface INewLocations extends ILocation {
+  geo: any;
+}
+
+async function locationSetup(locations: ILocation[]) {
+  // add geocode info to each location
+  const newLocations: INewLocations[] = [];
+
+  for (const location of locations) {
+    const locationInput = formatLocation(location);
+    const geo = await geolocation(locationInput);
+    newLocations.push({ ...location, geo });
+  }
+  og("newLocations", newLocations);
+  return newLocations;
+}
+
+export async function addJob(job: IJob) {
   try {
+    const newLocations = await locationSetup(job.locations);
+
     const response = await prisma.job.create({
       data: {
         title: job.title,
@@ -30,18 +51,19 @@ export async function addJob(job: any /* IJob */) {
           },
         },
         locations: {
-          connectOrCreate: job.locations.map((location) => ({
-            where: { id: location.id ? location.id : 0 }, // 0 passed in for new locations
+          connectOrCreate: newLocations.map((location) => ({
+            where: { id: location.id },
             create: {
               headquarters: location.headquarters,
-              country: location.country,
-              administrativeArea: location.administrativeArea,
-              locality: location.locality,
-              postalCode: parseInt(`${location.postalCode}`), // change zip to string
-              thoroughfare: location.thoroughfare,
-              premise: location.premise,
-              latitude: location.latitude,
-              longitude: location.longitude,
+              country: location.geo.country,
+              administrativeArea: location.geo.administrativeArea,
+              locality: location.geo.locality,
+              postalCode: location.geo.postalCode,
+              thoroughfare: location.geo.thoroughfare,
+              premise: location.geo.premise,
+              latitude: location.geo.latitude,
+              longitude: location.geo.longitude,
+              neighborhood: location.geo.neighborhood,
               company: {
                 connectOrCreate: {
                   where: { username: job.company.username },
@@ -63,6 +85,7 @@ export async function addJob(job: any /* IJob */) {
         locations: true,
       },
     });
+
     return {
       status: 201,
       data: response,
@@ -72,6 +95,5 @@ export async function addJob(job: any /* IJob */) {
       status: 500,
       data: { message: err.message },
     };
-    // throw error instead?
   }
 }

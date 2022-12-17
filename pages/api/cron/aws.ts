@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { aws } from "../../../utils/api";
+import { aws } from "../../../backend-utils";
 
 export default async function handler(
   req: NextApiRequest,
