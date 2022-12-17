@@ -16,10 +16,10 @@
 .search_bar input {
   z-index: 2;
   position: relative;
+  color: var(--white);
 }
 
 .search_bar .dropdown {
-  background-color: var(--card-gray);
   position: absolute;
   top: 0.5rem;
   padding: 2.75rem 0.5rem 0.75rem;
@@ -29,11 +29,8 @@
 
 .dropdown button {
   font-size: 0.875rem;
-  padding: 0.25rem 0.5rem;
   margin-right: 0.5rem;
-  background: var(--dark-gray);
-  border: none;
-  border-radius: 5px;
+  /* background: var(--gray); */
 }
 
 .buttonGroup {
@@ -43,7 +40,7 @@
   justify-content: center;
   align-items: center;
   height: 2.75rem;
-  background: var(--card-gray);
+  background: var(--dark-gray);
   padding: 0 0.25rem;
   border-radius: 10px;
   border: none;
@@ -51,6 +48,7 @@
 }
 
 .buttonGroup button {
+  color: var(--white);
   background: none;
   border: none;
   height: 2rem;
@@ -62,12 +60,7 @@
   position: absolute;
   height: 1.75rem;
   width: 2.75rem;
-  background: rgb(92, 124, 255);
-  background: linear-gradient(
-    110deg,
-    rgba(92, 124, 255, 1) 0%,
-    rgba(118, 146, 255, 1) 100%
-  );
+  background: var(--primary);
   border-radius: 5px;
   z-index: 1;
   transition: left 0.15s;
@@ -90,5 +83,20 @@
 @media only screen and (min-width: 48em) {
   .search_bar {
     margin-right: 0;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .search_bar input {
+    color: var(--black);
+  }
+
+  .buttonGroup {
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+  }
+
+  .buttonGroup button {
+    color: var(--black);
   }
 }
