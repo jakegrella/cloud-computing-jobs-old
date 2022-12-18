@@ -2,6 +2,7 @@ import { prisma } from "../../prisma/prismaClient";
 import { IJob, ILocation } from "../../types";
 import { formatLocation } from "../../utils";
 import { geolocation } from "../locations";
+import { tweet } from "./tweet";
 
 interface INewLocations extends ILocation {
   geo: any;
@@ -84,6 +85,9 @@ export async function addJob(job: IJob) {
         locations: true,
       },
     });
+
+    // every time a job is added, also tweet out the job
+    await tweet(response);
 
     return {
       status: 201,
