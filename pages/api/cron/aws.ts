@@ -21,11 +21,12 @@ export default async function handler(
   }
 
   try {
-    // TODO check if job already exists in DB
     await aws(req.body.jobs);
 
-    res.status(201).json({ success: true });
+    res
+      .status(201)
+      .json({ success: true, message: "Successfully added AWS jobs" });
   } catch (err) {
-    res.status(500).json({ statusCode: 500, message: err.message });
+    res.status(500).json({ success: false, message: err.message });
   }
 }
