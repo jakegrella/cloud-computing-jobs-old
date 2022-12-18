@@ -23,7 +23,7 @@ export function Map() {
       state.mapMarkers,
       state.jobs,
     ]);
-  const [activeMarker, setActiveMarker] = useState(undefined);
+  const [activeMarkerJobs, setActiveMarkerJobs] = useState([]);
 
   function onBoundsChanged() {
     clearTimeout(boundsChangedTimeout);
@@ -34,13 +34,23 @@ export function Map() {
     }, 500);
   }
 
-  // function handleMarkerClick(e) {
-  //   const job = jobs.find(
-  //     (job) =>
-  //       job.id.toString() === e.domEvent.srcElement.attributes.title.value
-  //   );
-  //   setActiveMarker({ e, job });
-  // }
+  function handleMarkerClick(e) {
+    const jobsAtSelectedMarker = [];
+
+    jobs.forEach((job) => {
+      if (
+        job.locations.some(
+          (location) =>
+            location.longitude === e.latLng.lng() &&
+            location.latitude === e.latLng.lat()
+        )
+      ) {
+        jobsAtSelectedMarker.push(job);
+      }
+    });
+
+    setActiveMarkerJobs(jobsAtSelectedMarker);
+  }
 
   return (
     isLoaded && (
@@ -50,12 +60,14 @@ export function Map() {
         zoom={initMap.zoom} // init
         onLoad={(e) => setMap(e)}
         onBoundsChanged={onBoundsChanged}
-        onClick={() => setActiveMarker(undefined)}
+        onClick={() => setActiveMarkerJobs([])}
       >
-        {width < 768 && activeMarker && homePageView === "map" && (
+        {width < 768 && activeMarkerJobs.length && homePageView === "map" && (
           <div className={styles.activeMarkerPreviewContainer}>
             <Card unpadded>
-              <ListItem job={activeMarker.job} />
+              {activeMarkerJobs.map((job) => (
+                <ListItem key={job.id} job={job} />
+              ))}
             </Card>
           </div>
         )}
@@ -74,7 +86,7 @@ export function Map() {
                   lng: parseFloat(m.center.lng),
                 }}
                 title={m.job.id.toString()}
-                // onClick={handleMarkerClick}
+                onClick={handleMarkerClick}
               />
             );
           }
@@ -83,7 +95,7 @@ export function Map() {
               key={m.id}
               position={{ lat: m.center.lat, lng: m.center.lng }}
               title={m.job.id.toString()}
-              // onClick={handleMarkerClick}
+              onClick={handleMarkerClick}
             />
           );
         })}
