@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -11,11 +13,7 @@ function timeFrame(payRangeTimeFrame: string) {
   else return `/${payRangeTimeFrame.toLowerCase()}`;
 }
 
-export function formatPay(
-  payRangeMin: number,
-  payRangeMax: number,
-  payRangeTimeFrame: string
-) {
+export function formatPay(payRangeMin, payRangeMax, payRangeTimeFrame: string) {
   // if no min and max
   if (!payRangeMin && !payRangeMax) return "Pay Not Given";
   // if only min
@@ -35,10 +33,7 @@ export function formatPay(
   )} - ${formatter.format(payRangeMax)}${timeFrame(payRangeTimeFrame)}`;
 }
 
-export function formatEquity(
-  equityRangeMin: number | null,
-  equityRangeMax: number | null
-) {
+export function formatEquity(equityRangeMin, equityRangeMax) {
   // if no min or max
   if (!equityRangeMin && !equityRangeMax) return "Equity Not Given";
   // if min and max = 0

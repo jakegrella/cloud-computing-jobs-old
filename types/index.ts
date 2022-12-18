@@ -1,4 +1,4 @@
-import { Decimal } from "@prisma/client/runtime";
+import { Prisma } from "@prisma/client";
 
 export interface ICompany {
   id: number;
@@ -32,11 +32,11 @@ export interface IJob {
   open?: boolean; // db default = true
   published?: boolean; // db default = false
   datePublished?: Date;
-  payRangeMin?: Decimal;
-  payRangeMax?: Decimal;
+  payRangeMin?: Prisma.Decimal;
+  payRangeMax?: Prisma.Decimal;
   payRangeTimeFrame?: JobPayRangeTimeFrame;
-  equityRangeMax?: Decimal;
-  equityRangeMin?: Decimal;
+  equityRangeMax?: Prisma.Decimal;
+  equityRangeMin?: Prisma.Decimal;
   company?: ICompany;
   companyId?: number; // used by prisma for relation
   locations?: ILocation[];
