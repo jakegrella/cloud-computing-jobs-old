@@ -409,7 +409,7 @@ export default function PostAJob() {
                     type="text"
                     name="payRangeMin"
                     label="Minimum"
-                    value={previewJob.payRangeMin}
+                    value={previewJob.payRangeMin?.toString()}
                     onChange={handleInputChange}
                   />
                   <Input
@@ -417,7 +417,7 @@ export default function PostAJob() {
                     type="text"
                     name="payRangeMax"
                     label="Maximum"
-                    value={previewJob.payRangeMax}
+                    value={previewJob.payRangeMax?.toString()}
                     onChange={handleInputChange}
                   />
 
@@ -427,7 +427,7 @@ export default function PostAJob() {
                     type="text"
                     name="equityRangeMin"
                     label="Minimum"
-                    value={previewJob.equityRangeMin}
+                    value={previewJob.equityRangeMin?.toString()}
                     onChange={handleInputChange}
                   />
                   <Input
@@ -435,7 +435,7 @@ export default function PostAJob() {
                     type="text"
                     name="equityRangeMax"
                     label="Maximum"
-                    value={previewJob.equityRangeMax}
+                    value={previewJob.equityRangeMax?.toString()}
                     onChange={handleInputChange}
                   />
                 </div>

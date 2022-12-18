@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export interface ICompany {
   id: number;
   name: string;
@@ -9,9 +11,14 @@ export interface ICompany {
   locations?: ILocation[];
 }
 
-export type JobType = "Full Time" | "Part Time" | "Internship" | "Contract";
-export type JobExperience = "Entry" | "Mid" | "Senior" | "";
-export type JobPayRangeTimeFrame = "Year" | "Hour" | undefined;
+export type JobType =
+  | "Full Time"
+  | "Part Time"
+  | "Internship"
+  | "Contract"
+  | string;
+export type JobExperience = "Entry" | "Mid" | "Senior" | "" | string;
+export type JobPayRangeTimeFrame = "Year" | "Hour" | undefined | string;
 
 export interface IJob {
   id: number;
@@ -25,11 +32,11 @@ export interface IJob {
   open?: boolean; // db default = true
   published?: boolean; // db default = false
   datePublished?: Date;
-  payRangeMin?: number;
-  payRangeMax?: number;
+  payRangeMin?: Prisma.Decimal;
+  payRangeMax?: Prisma.Decimal;
   payRangeTimeFrame?: JobPayRangeTimeFrame;
-  equityRangeMax?: number;
-  equityRangeMin?: number;
+  equityRangeMax?: Prisma.Decimal;
+  equityRangeMin?: Prisma.Decimal;
   company?: ICompany;
   companyId?: number; // used by prisma for relation
   locations?: ILocation[];

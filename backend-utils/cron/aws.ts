@@ -115,7 +115,7 @@ export async function aws(jobs: IAWSJob[]) {
       },
       locations: [
         {
-          id: 0, // update
+          id: 0,
           headquarters,
           thoroughfare,
           locality: job.city,
@@ -124,7 +124,7 @@ export async function aws(jobs: IAWSJob[]) {
           country: job.country_code,
           latitude: null,
           longitude: null,
-          companyId: 0, // wrong
+          companyId: 0,
         },
       ],
     };
@@ -134,6 +134,7 @@ export async function aws(jobs: IAWSJob[]) {
 
   formattedJobs.forEach(async (job) => {
     try {
+      // TODO: add check to determine if job already exists in DB
       await addJob(job);
     } catch (err) {
       throw new Error(`Error adding aws job: ${err.message}`);
