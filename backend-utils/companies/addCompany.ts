@@ -1,7 +1,8 @@
 import { prisma } from "../../prisma/prismaClient";
+import { ICompany } from "../../types";
 
 // POST - add company
-export async function addCompany(body: any) {
+export async function addCompany(body: ICompany) {
   const { locations, logo, mission, name, overview, username } = body;
 
   try {

@@ -3,6 +3,7 @@ import {
   addCompany,
   getAllCompanies,
   getSimilarCompanies,
+  updateCompany,
 } from "../../../backend-utils";
 
 async function getRequests(req: NextApiRequest) {
@@ -31,6 +32,9 @@ export default async function handler(
         break;
       case "POST":
         response = await addCompany(req.body);
+        break;
+      case "PUT":
+        response = await updateCompany(req.body);
         break;
       default:
         break;
