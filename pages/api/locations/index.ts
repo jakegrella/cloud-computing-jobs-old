@@ -1,5 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addLocation, getAllLocations } from "../../../backend-utils";
+import {
+  addLocation,
+  getAllLocations,
+  updateLocation,
+} from "../../../backend-utils";
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,6 +21,9 @@ export default async function handler(
         break;
       case "POST":
         response = await addLocation(req.body);
+        break;
+      case "PUT":
+        response = await updateLocation(req.body);
         break;
       default:
         break;

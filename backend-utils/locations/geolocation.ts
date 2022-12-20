@@ -22,7 +22,7 @@ export async function geolocation(loc: string) {
 
     return {
       thoroughfare: thoroughfare(res), // street address
-      premise: res.extra.premise, // apt #
+      premise: res.extra.subpremise, // apt #
       locality: res.city,
       administrativeArea: res.administrativeLevels.level1short, // state code
       postalCode: res.zipcode,

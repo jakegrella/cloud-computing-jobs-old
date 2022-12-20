@@ -1,36 +1,28 @@
 import { prisma } from "../../prisma/prismaClient";
 import { ILocation } from "../../types";
+import { formatLocation } from "../../utils";
+import { geolocation } from "./geolocation";
 
 export async function addLocation(body: ILocation) {
   try {
-    // right now, assume headquarters and locations have valid ids
-    const {
-      companyId,
-      headquarters,
-      country,
-      administrativeArea,
-      locality,
-      postalCode,
-      thoroughfare,
-      premise,
-      latitude,
-      longitude,
-    } = body;
+    const locationInput = formatLocation(body);
+    const geo = await geolocation(locationInput);
 
     const response = await prisma.location.create({
       data: {
         company: {
-          connect: { id: companyId },
+          connect: { id: body.companyId },
         },
-        headquarters,
-        country,
-        administrativeArea,
-        locality,
-        postalCode,
-        thoroughfare,
-        premise,
-        latitude,
-        longitude,
+        headquarters: body.headquarters,
+        country: geo.country,
+        administrativeArea: geo.administrativeArea,
+        locality: geo.locality,
+        postalCode: geo.postalCode,
+        thoroughfare: geo.thoroughfare,
+        premise: geo.premise,
+        latitude: geo.latitude,
+        longitude: geo.longitude,
+        neighborhood: geo.neighborhood,
       },
     });
 

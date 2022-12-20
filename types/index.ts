@@ -46,17 +46,17 @@ export interface ILocation {
   id: number;
   headquarters: boolean;
   country: string;
-  administrativeArea: string;
-  locality: string;
+  administrativeArea: string; // state, province, region (ISO code where available)
+  locality: string; // city, town
   latitude: number;
   longitude: number;
+  postalCode?: string;
+  thoroughfare?: string; // street address
+  premise?: string; // apartment, suite, po box, etc
+  neighborhood?: string;
   companyId: number;
   company?: ICompany;
   jobs?: IJob[];
-  postalCode?: string;
-  thoroughfare?: string;
-  premise?: string;
-  neighborhood?: string;
 }
 
 export interface IMapMarker {
