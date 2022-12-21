@@ -5,6 +5,7 @@ interface ICompanyInfo {
   logo?: string;
   mission?: string;
   overview?: string;
+  twitter?: string;
 }
 
 export async function updateCompany({
@@ -14,6 +15,7 @@ export async function updateCompany({
   logo,
   mission,
   overview,
+  twitter,
 }: ICompanyInfo) {
   try {
     const response = await prisma.company.update({
@@ -24,6 +26,7 @@ export async function updateCompany({
         logo,
         mission,
         overview,
+        twitter,
       },
     });
 

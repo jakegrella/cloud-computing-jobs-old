@@ -36,6 +36,7 @@ model Company {
   logo            String
   mission         String
   overview        String     @db.Text
+  twitter         String?
   jobs            Job[]
   locations       Location[]
 }

@@ -6,6 +6,7 @@ import { Card, Head } from "../../components";
 import { companyMetaDescription, jobsPlurality } from "../../utils";
 import { fetchCompany } from "../../utils/httpRequests";
 import { ICompany } from "../../types";
+import { TwitterLogo } from "phosphor-react";
 import styles from "./company.module.css";
 
 export default function Company() {
@@ -48,13 +49,24 @@ export default function Company() {
 
       <main className={styles.company}>
         <div className={styles.company_header}>
-          <Image
-            src={company.logo}
-            alt={`logo of ${company.name}`}
-            width={36}
-            height={36}
-          />
-          <h1>{company.name}</h1>
+          <div className={styles.company_header_left}>
+            <Image
+              src={company.logo}
+              alt={`logo of ${company.name}`}
+              width={36}
+              height={36}
+            />
+            <h1>{company.name}</h1>
+          </div>
+          {company.twitter && (
+            <a
+              href={`https://twitter.com/${company.twitter}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <TwitterLogo />
+            </a>
+          )}
         </div>
 
         <Card>

@@ -7,6 +7,7 @@ export interface ICompany {
   logo: string;
   mission: string;
   overview: string;
+  twitter?: string;
   jobs?: IJob[];
   locations?: ILocation[];
 }
