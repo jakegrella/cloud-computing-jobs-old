@@ -20,3 +20,12 @@
 .job_info > div {
   margin: 0.5rem 0;
 }
+
+.job_info_locationsHeader {
+  display: flex;
+  align-items: center;
+}
+
+.job_info_locationsHeader h3 {
+  margin-right: 0.25rem;
+}

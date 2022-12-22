@@ -1,50 +1,41 @@
 import { useEffect, useState } from "react";
 import { Card, Head, ListItem, Map, Search } from "../components";
 import { useStore } from "../store";
+import { ILocation } from "../types";
 import { useWindowDimensions } from "../utils/hooks";
-import { fetchMappableJobs } from "../utils/httpRequests";
+import { httpGetMappableLocations } from "../utils/httpRequests";
 import styles from "./home.module.css";
 
 let timeout: NodeJS.Timeout;
 
 export default function Home() {
-  const [
-    setInitMap,
-    mapBounds,
-    mapMarkers,
-    setMapMarkers,
-    homePageView,
-    jobs,
-    setJobs,
-  ] = useStore((state) => [
-    state.setInitMap,
-    state.mapBounds,
-    state.mapMarkers,
-    state.setMapMarkers,
-    state.homePageView,
-    state.jobs,
-    state.setJobs,
-  ]);
-  const [searchPlaceholder, setSearchPlaceholder] = useState("Search");
+  const [initHomeMap, setInitHomeMap, mapBounds, homePageView, jobs, setJobs] =
+    useStore((state) => [
+      state.initHomeMap,
+      state.setInitHomeMap,
+      state.mapBounds,
+      state.homePageView,
+      state.jobs,
+      state.setJobs,
+    ]);
   const { width } = useWindowDimensions();
+  const [locations, setLocations] = useState<ILocation[]>([]);
 
-  /** on page load
-   * request user location
-   * if location provided set init map region to user location
-   * else set init map region to NYC
-   */
+  // on page load
   useEffect(() => {
+    // request user location
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-
-        setInitMap({
+        // set map center to user location
+        setInitHomeMap({
           center: { lat: latitude, lng: longitude },
           zoom: 12,
         });
       },
       () => {
-        setInitMap({
+        // set map center to NYC
+        setInitHomeMap({
           center: { lat: 40.741895, lng: -73.989308 },
           zoom: 12,
         });
@@ -53,79 +44,36 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /** on update to map region
-   * fetch jobs in current map region
-   */
+  // on update to map region
   useEffect(() => {
     if (mapBounds !== undefined) {
       // use timeout to prevent multiple fetches
       clearTimeout(timeout);
       timeout = setTimeout(() => {
-        const latBound = {
-          min: mapBounds.south,
-          max: mapBounds.north,
-        };
-        const lngBound = {
-          min: mapBounds.west,
-          max: mapBounds.east,
+        const bounds = {
+          latMin: mapBounds.south,
+          latMax: mapBounds.north,
+          lngMin: mapBounds.west,
+          lngMax: mapBounds.east,
         };
 
-        async function getJobs() {
-          const response = await fetchMappableJobs(latBound, lngBound);
-          setJobs(response);
+        async function getMappableLocations() {
+          // fetch jobs in current map region
+          const mappableLocations = await httpGetMappableLocations(bounds);
+          setLocations(mappableLocations);
+
+          let mappableJobs = [];
+          if (mappableLocations.length) {
+            mappableLocations.forEach((location) =>
+              mappableJobs.push(...location.jobs)
+            );
+          }
+          setJobs(mappableJobs);
         }
-        getJobs();
+        getMappableLocations();
       }, 500);
     }
   }, [mapBounds]);
-
-  /** on update to jobs
-   * pull data from jobs for map markers
-   * store as array in state
-   */
-  useEffect(() => {
-    if (!jobs.length) setMapMarkers([]);
-    else {
-      let markerPositions = [];
-
-      jobs.forEach((job) => {
-        job.locations.forEach((location) => {
-          markerPositions.push({
-            center: { lat: location.latitude, lng: location.longitude },
-            job,
-            id: `${job.id}-${job.companyId}-${location.id}`,
-          });
-        });
-      });
-
-      const objectsEqual = (o1, o2) => {
-        return o1 !== null &&
-          typeof o1 === "object" &&
-          Object.keys(o1).length > 0
-          ? Object.keys(o1).length === Object.keys(o2).length &&
-              Object.keys(o1).every((p) => objectsEqual(o1[p], o2[p]))
-          : o1 === o2;
-      };
-
-      const arraysEqual = (a1, a2) => {
-        return (
-          a1.length === a2.length &&
-          a1.every((o, idx) => objectsEqual(o, a2[idx]))
-        );
-      };
-
-      if (!arraysEqual(markerPositions, mapMarkers))
-        setMapMarkers(markerPositions);
-    }
-  }, [jobs]);
-
-  useEffect(() => {
-    if (width > 768) {
-      setSearchPlaceholder("Search by location, company, job title, etc.");
-    } else {
-      setSearchPlaceholder("Search");
-    }
-  }, [width]);
 
   return (
     <div>
@@ -135,11 +83,25 @@ export default function Home() {
       />
 
       <main className={styles.home}>
-        <Search placeholder={searchPlaceholder} />
+        <Search
+          placeholder={
+            width > 768
+              ? "Search by location, company, job title, etc."
+              : "Search"
+          }
+        />
+
         <div className={`${styles.home_content} ${styles[homePageView]}`}>
-          <Card unpadded className={styles.home_content_mapCard}>
-            <Map />
-          </Card>
+          <Map
+            center={initHomeMap.center}
+            zoom={initHomeMap.zoom}
+            cardClassName={styles.home_content_mapCard}
+            locations={locations}
+            showMarkerInfoOverlay={
+              width < 768 && homePageView === "map" ? true : false
+            }
+          />
+
           <Card unpadded className={styles.home_content_jobList}>
             {jobs.length ? (
               jobs.map((i) => <ListItem key={i.id} job={i} />)

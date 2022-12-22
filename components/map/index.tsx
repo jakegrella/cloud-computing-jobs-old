@@ -1,29 +1,42 @@
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  GoogleMapProps,
+  MarkerF,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import { useState } from "react";
 import { Card, ListItem } from "../../components";
-import { useWindowDimensions } from "../../utils/hooks";
 import { useStore } from "../../store";
 import styles from "./map.module.css";
+import { ILocation } from "../../types";
 
 let boundsChangedTimeout: NodeJS.Timeout;
+interface IMapProps extends GoogleMapProps {
+  cardClassName?: string;
+  locations?: ILocation[];
+  showMarkerInfoOverlay?: boolean;
+}
 
-export function Map() {
+export function Map({
+  center,
+  zoom,
+  cardClassName,
+  // mapContainerClassName,
+  locations,
+  showMarkerInfoOverlay = false,
+}: IMapProps) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
-  const { width } = useWindowDimensions();
-  const [homePageView, initMap, map, setMap, setMapBounds, mapMarkers, jobs] =
-    useStore((state) => [
-      state.homePageView,
-      state.initMap,
-      state.map,
-      state.setMap,
-      state.setMapBounds,
-      state.mapMarkers,
-      state.jobs,
-    ]);
-  const [activeMarkerJobs, setActiveMarkerJobs] = useState([]);
+
+  const [map, setMap, setMapBounds] = useStore((state) => [
+    state.map,
+    state.setMap,
+    state.setMapBounds,
+  ]);
+
+  const [activeMarkerItems, setActiveMarkerItems] = useState([]);
 
   function onBoundsChanged() {
     clearTimeout(boundsChangedTimeout);
@@ -35,71 +48,58 @@ export function Map() {
   }
 
   function handleMarkerClick(e) {
-    const jobsAtSelectedMarker = [];
+    const itemsAtSelectedMarker = [];
 
-    jobs.forEach((job) => {
+    locations.forEach((location) => {
       if (
-        job.locations.some(
-          (location) =>
-            location.longitude === e.latLng.lng() &&
-            location.latitude === e.latLng.lat()
-        )
+        location.longitude === e.latLng.lng() &&
+        location.latitude === e.latLng.lat()
       ) {
-        jobsAtSelectedMarker.push(job);
+        itemsAtSelectedMarker.push(...location.jobs);
       }
     });
 
-    setActiveMarkerJobs(jobsAtSelectedMarker);
+    setActiveMarkerItems(itemsAtSelectedMarker);
   }
 
   return (
-    isLoaded && (
-      <GoogleMap
-        mapContainerClassName={styles.map}
-        center={initMap.center} // init
-        zoom={initMap.zoom} // init
-        onLoad={(e) => setMap(e)}
-        onBoundsChanged={onBoundsChanged}
-        onClick={() => setActiveMarkerJobs([])}
-      >
-        {width < 768 && activeMarkerJobs.length && homePageView === "map" && (
-          <div className={styles.activeMarkerPreviewContainer}>
-            <Card unpadded>
-              {activeMarkerJobs.map((job) => (
-                <ListItem key={job.id} job={job} />
-              ))}
-            </Card>
-          </div>
-        )}
+    <Card unpadded className={cardClassName}>
+      {isLoaded && (
+        <GoogleMap
+          mapContainerClassName={styles.map}
+          center={center} // init
+          zoom={zoom} // init
+          onLoad={(e) => setMap(e)}
+          onBoundsChanged={onBoundsChanged}
+          onClick={() => setActiveMarkerItems([])} // acting as onBlur for marker
+          clickableIcons={false}
+        >
+          {showMarkerInfoOverlay && activeMarkerItems.length && (
+            <div className={styles.activeMarkerPreviewContainer}>
+              <Card unpadded>
+                {activeMarkerItems.map((job) => (
+                  <ListItem key={job.id} job={job} />
+                ))}
+              </Card>
+            </div>
+          )}
 
-        {mapMarkers?.map((m) => {
-          if (
-            // check type of lat + lng, discrepancy between environments
-            typeof m.center.lat === "string" &&
-            typeof m.center.lng === "string"
-          ) {
-            return (
-              <Marker
-                key={m.id}
-                position={{
-                  lat: parseFloat(m.center.lat),
-                  lng: parseFloat(m.center.lng),
-                }}
-                title={m.job.id.toString()}
-                onClick={handleMarkerClick}
-              />
-            );
-          }
-          return (
-            <Marker
-              key={m.id}
-              position={{ lat: m.center.lat, lng: m.center.lng }}
-              title={m.job.id.toString()}
-              onClick={handleMarkerClick}
-            />
-          );
-        })}
-      </GoogleMap>
-    )
+          {locations.length
+            ? locations.map((location) => (
+                <MarkerF
+                  key={location.id}
+                  position={{ lat: location.latitude, lng: location.longitude }}
+                  title={location.id.toString()}
+                  onClick={
+                    showMarkerInfoOverlay ? handleMarkerClick : undefined
+                  }
+                  clickable={showMarkerInfoOverlay ? true : false}
+                />
+              ))
+            : undefined}
+        </GoogleMap>
+      )}
+    </Card>
   );
 }
+// end map fns

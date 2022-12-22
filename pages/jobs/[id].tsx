@@ -14,6 +14,7 @@ import { fetchJob } from "../../utils/httpRequests";
 import { IJob } from "../../types";
 import styles from "./job.module.css";
 import Image from "next/image";
+import { CaretDown, CaretUp } from "phosphor-react";
 
 export default function Job() {
   const router = useRouter();
@@ -39,9 +40,13 @@ export default function Job() {
     return (
       <div>
         {multipleLocations ? (
-          <h3 onClick={() => setShowAllLocations(!showAllLocations)}>
-            {showAllLocations ? "Locations ⬇️" : "Locations ⬆️"}
-          </h3>
+          <div
+            className={styles.job_info_locationsHeader}
+            onClick={() => setShowAllLocations(!showAllLocations)}
+          >
+            <h3>Locations</h3>
+            {showAllLocations ? <CaretUp /> : <CaretDown />}
+          </div>
         ) : (
           <h3>Location</h3>
         )}

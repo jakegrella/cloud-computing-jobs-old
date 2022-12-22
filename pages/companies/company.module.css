@@ -55,3 +55,11 @@
 .company_info > div {
   margin: 0.5rem 0;
 }
+
+.company_officeMap {
+  height: 20rem;
+}
+
+.map {
+  height: 100%;
+}

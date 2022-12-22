@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Card, Head } from "../../components";
+import { Card, Head, Map } from "../../components";
 import { companyMetaDescription, jobsPlurality } from "../../utils";
 import { fetchCompany } from "../../utils/httpRequests";
 import { ICompany } from "../../types";
@@ -35,6 +35,11 @@ export default function Company() {
     }
     init();
   }, [username]);
+
+  const initMap = {
+    center: { lat: 39.8283, lng: -98.5795 }, // geographic center of us
+    zoom: 3,
+  };
 
   return !company ? (
     <div>
@@ -100,6 +105,14 @@ export default function Company() {
             <p>{hq}</p>
           </div>
         </Card>
+
+        <Map
+          center={initMap.center}
+          zoom={initMap.zoom}
+          cardClassName={styles.company_officeMap}
+          mapContainerClassName={styles.map}
+          locations={company.locations}
+        />
       </main>
     </div>
   );
