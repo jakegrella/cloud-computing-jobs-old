@@ -4,6 +4,7 @@ export * from "./head";
 export * from "./header";
 export * from "./input";
 export * from "./list-item";
+export * from "./loading-icon";
 export * from "./logo";
 export * from "./map";
 export * from "./menu";

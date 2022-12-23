@@ -96,9 +96,6 @@ export async function addJob(job: IJob) {
       data: response,
     };
   } catch (err: any) {
-    return {
-      status: 500,
-      data: { message: err.message },
-    };
+    throw new Error(`Error adding job: ${err.message}`);
   }
 }

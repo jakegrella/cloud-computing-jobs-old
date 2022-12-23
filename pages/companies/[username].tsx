@@ -63,7 +63,7 @@ export default function Company() {
             />
             <h1>{company.name}</h1>
           </div>
-          {company.twitter && (
+          {!!company.twitter && (
             <a
               href={`https://twitter.com/${company.twitter}`}
               rel="noopener noreferrer"

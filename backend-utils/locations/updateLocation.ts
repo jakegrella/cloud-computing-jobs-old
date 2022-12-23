@@ -52,7 +52,6 @@ export async function updateLocation({
       data: response,
     };
   } catch (err: any) {
-    console.error(err);
     throw new Error(err.message);
   }
 }
