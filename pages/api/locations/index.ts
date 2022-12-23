@@ -1,5 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addLocation, getAllLocations } from "../../../backend-utils";
+import {
+  addLocation,
+  getAllLocations,
+  getMappableLocations,
+  updateLocation,
+} from "../../../backend-utils";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,17 +15,27 @@ export default async function handler(
     data: { message: "unknown error" },
   };
 
+  const { method, query } = req;
+
   try {
-    switch (req.method) {
-      case "GET":
+    if (method === "GET") {
+      if (query.lat_min && query.lat_max && query.lng_min && query.lng_max) {
+        const { lat_min, lat_max, lng_min, lng_max } = query;
+        response = await getMappableLocations({
+          latMin: lat_min as string,
+          latMax: lat_max as string,
+          lngMin: lng_min as string,
+          lngMax: lng_max as string,
+        });
+      } else {
         response = await getAllLocations();
-        break;
-      case "POST":
-        response = await addLocation(req.body);
-        break;
-      default:
-        break;
+      }
+    } else if (method === "POST") {
+      response = await addLocation(req.body);
+    } else if (method === "PUT") {
+      response = await updateLocation(req.body);
     }
+
     return res.status(response.status).json(response.data);
   } catch (err) {
     return res.status(response.status).json(response.data);

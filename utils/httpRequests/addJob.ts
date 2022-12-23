@@ -1,6 +1,8 @@
 import { IJob } from "../../types";
 
 export async function addJob(job: IJob) {
+  // TODO: add validation middleware to make sure incoming data is valid
+
   try {
     const data = await (
       await fetch("/api/jobs", {
@@ -15,7 +17,6 @@ export async function addJob(job: IJob) {
 
     return data;
   } catch (err) {
-    console.error("error adding job: " + err);
     throw new Error(err.message);
   }
 }

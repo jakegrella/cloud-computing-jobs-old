@@ -23,6 +23,6 @@ export default async function handler(
     }
     return res.status(response.status).json(response.data);
   } catch (err) {
-    return res.status(response.status).json(response.data);
+    throw err;
   }
 }

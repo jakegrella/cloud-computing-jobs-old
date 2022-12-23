@@ -98,6 +98,7 @@ export default function PostAJob() {
         mission: sc.mission,
         logo: sc.logo,
         overview: sc.overview,
+        twitter: sc.twitter,
       },
       // locations: sc.locations,
     });

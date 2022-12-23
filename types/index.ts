@@ -7,6 +7,7 @@ export interface ICompany {
   logo: string;
   mission: string;
   overview: string;
+  twitter?: string;
   jobs?: IJob[];
   locations?: ILocation[];
 }
@@ -46,17 +47,17 @@ export interface ILocation {
   id: number;
   headquarters: boolean;
   country: string;
-  administrativeArea: string;
-  locality: string;
+  administrativeArea: string; // state, province, region (ISO code where available)
+  locality: string; // city, town
   latitude: number;
   longitude: number;
+  postalCode?: string;
+  thoroughfare?: string; // street address
+  premise?: string; // apartment, suite, po box, etc
+  neighborhood?: string;
   companyId: number;
   company?: ICompany;
   jobs?: IJob[];
-  postalCode?: string;
-  thoroughfare?: string;
-  premise?: string;
-  neighborhood?: string;
 }
 
 export interface IMapMarker {
@@ -86,14 +87,14 @@ export interface IState {
   setIsMenuVisible: (isVisible: boolean) => void;
   jobs: IJob[];
   setJobs: (jobs: IJob[]) => void;
-  initMap: IInitMap;
-  setInitMap: (initMap: IInitMap) => void;
+  initHomeMap: IInitMap;
+  setInitHomeMap: (initMap: IInitMap) => void;
   map: any;
   setMap: (map: any) => void;
   mapBounds: any;
   setMapBounds: (mapBounds: any) => void;
-  mapMarkers: IMapMarker[];
-  setMapMarkers: (mapMarkers: IMapMarker[]) => void;
+  mapMarkers: ILocation[];
+  setMapMarkers: (mapMarkers: ILocation[]) => void;
   homePageView: "map" | "list" | "both";
   setHomePageView: (homePageView: "map" | "list" | "both") => void;
 
@@ -103,4 +104,11 @@ export interface IState {
   // location options from job posting form
   companyLocationOptions: any[];
   setCompanyLocationOptions: (companyLocationOptions) => void;
+}
+
+export interface IMapBounds {
+  latMin: string;
+  latMax: string;
+  lngMin: string;
+  lngMax: string;
 }

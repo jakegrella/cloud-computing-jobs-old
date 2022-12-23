@@ -10,7 +10,6 @@ export async function fetchSimilarCompanies(companyName: string) {
     const data = await response.json();
     return data;
   } catch (err) {
-    console.error("error fetching similar companies: " + err);
     throw new Error(err.message);
   }
 }

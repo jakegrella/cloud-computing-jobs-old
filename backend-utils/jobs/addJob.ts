@@ -1,6 +1,6 @@
 import { prisma } from "../../prisma/prismaClient";
 import { IJob, ILocation } from "../../types";
-import { formatLocation } from "../../utils";
+import { formatLocation, inProd } from "../../utils";
 import { geolocation } from "../locations";
 import { tweet } from "./tweet";
 
@@ -47,6 +47,7 @@ export async function addJob(job: IJob) {
               logo: job.company.logo,
               mission: job.company.mission,
               overview: job.company.overview,
+              twitter: job.company.twitter,
             },
           },
         },
@@ -73,6 +74,7 @@ export async function addJob(job: IJob) {
                     logo: job.company.logo,
                     mission: job.company.mission,
                     overview: job.company.overview,
+                    twitter: job.company.twitter,
                   },
                 },
               },
@@ -87,16 +89,13 @@ export async function addJob(job: IJob) {
     });
 
     // every time a job is added, also tweet out the job
-    await tweet(response);
+    if (inProd()) await tweet(response);
 
     return {
       status: 201,
       data: response,
     };
   } catch (err: any) {
-    return {
-      status: 500,
-      data: { message: err.message },
-    };
+    throw new Error(`Error adding job: ${err.message}`);
   }
 }

@@ -28,8 +28,16 @@
 
 .company_header {
   display: flex;
+  flex-flow: row wrap;
   align-items: center;
+  justify-content: space-between;
   margin: 0 0 0.5rem 0;
+  width: 100%;
+}
+
+.company_header_left {
+  display: flex;
+  align-items: center;
 }
 
 .company_header h1 {
@@ -46,4 +54,12 @@
 
 .company_info > div {
   margin: 0.5rem 0;
+}
+
+.company_officeMap {
+  height: 20rem;
+}
+
+.map {
+  height: 100%;
 }

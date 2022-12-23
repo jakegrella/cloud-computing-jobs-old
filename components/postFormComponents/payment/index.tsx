@@ -7,81 +7,87 @@ import { useEffect } from "react";
 import { Button } from "../../button";
 import { useStore } from "../../../store";
 import { addJob } from "../../../utils/httpRequests";
+import { LoadingIcon } from "../../loading-icon";
 
-// ERRORS ARE NOT HANDLED CORRECTLY
 export function Payment() {
   const stripe = useStripe();
   const elements = useElements();
-
-  const previewJob = useStore((state) => state.previewJob);
-
-  const stripeState = useStore((state) => state.stripeState);
-  const setStripeState = useStore((state) => state.setStripeState);
+  const [previewJob, stripeState, setStripeState] = useStore((state) => [
+    state.previewJob,
+    state.stripeState,
+    state.setStripeState,
+  ]);
 
   useEffect(() => {
-    if (!stripe) {
-      // console.log("!stripe");
-      return;
-    }
+    async function stripeInit() {
+      if (!stripe) return;
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
+      const clientSecret = new URLSearchParams(window.location.search).get(
+        "payment_intent_client_secret"
+      );
 
-    if (!clientSecret) {
-      // console.log("!clientSecret");
-      return;
-    }
+      if (!clientSecret) return;
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
-        case "succeeded":
-          setStripeState({ ...stripeState, message: "Payment succeeded!" });
-          break;
-        case "processing":
-          setStripeState({
-            ...stripeState,
-            message: "Your payment is processing.",
-          });
-          break;
-        case "requires_payment_method":
-          setStripeState({
-            ...stripeState,
-            message: "Your payment was not successful, please try again.",
-          });
-          break;
-        default:
-          setStripeState({ ...stripeState, message: "Something went wrong." });
-          break;
+      try {
+        const { paymentIntent } = await stripe.retrievePaymentIntent(
+          clientSecret
+        );
+
+        switch (paymentIntent.status) {
+          case "succeeded":
+            setStripeState({ ...stripeState, message: "Payment succeeded!" });
+            break;
+          case "processing":
+            setStripeState({
+              ...stripeState,
+              message: "Your payment is processing.",
+            });
+            break;
+          case "requires_payment_method":
+            setStripeState({
+              ...stripeState,
+              message: "Your payment was not successful, please try again.",
+            });
+            break;
+          default:
+            setStripeState({
+              ...stripeState,
+              message: "Something went wrong.",
+            });
+            break;
+        }
+      } catch (err) {
+        setStripeState({
+          ...stripeState,
+          message: "Something went wrong.",
+        });
       }
-    });
+    }
+    stripeInit();
   }, [stripe]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!stripe || !elements) {
-      console.log("!stripe || !elements");
-
-      // Stripe.js has not yet loaded
-      // TODO: disable form submission until Stripe.js has loaded
-      return;
-    }
+    if (!stripe || !elements) return;
 
     setStripeState({ ...stripeState, isLoading: true });
 
     // add job to database
     try {
       await addJob(previewJob);
-    } catch (error) {
-      console.error({ message: "error adding job", error });
+    } catch (err) {
+      setStripeState({
+        ...stripeState,
+        message: "Unable to add job to database.",
+      });
+      return;
     }
 
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/payment-completed", // change away from localhost
+        return_url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/payment-completed`,
       },
     });
 
@@ -92,14 +98,13 @@ export function Payment() {
     // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
       setStripeState({ ...stripeState, message: error.message });
-      // TODO delete or unpublish job from db
+      // TODO: delete info from DB
     } else {
-      // console.log("e", error);
       setStripeState({
         ...stripeState,
         message: "An unexpected error occurred.",
       });
-      // TODO delete or unpublish job from db
+      // TODO: delete info from DB
     }
 
     setStripeState({
@@ -118,14 +123,10 @@ export function Payment() {
         type="submit"
       >
         <span id="button-text">
-          {stripeState.isLoading ? (
-            <div className="spinner" id="spinner"></div>
-          ) : (
-            "Pay now"
-          )}
+          {stripeState.isLoading ? <LoadingIcon /> : "Pay now"}
         </span>
       </Button>
-      {/* Show any error or success messages */}
+
       {stripeState.message && (
         <div id="payment-message">{stripeState.message}</div>
       )}

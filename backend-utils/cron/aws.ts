@@ -110,6 +110,7 @@ export async function aws(jobs: IAWSJob[]) {
           "AWS provides a massive global cloud infrastructure that allows you to quickly innovate, experiment and iterate.",
         overview:
           "In 2006, Amazon Web Services (AWS) began offering IT infrastructure services to businesses in the form of web services -- now commonly known as cloud computing. One of the key benefits of cloud computing is the opportunity to replace up-front capital infrastructure expenses with low variable costs that scale with your business. With the Cloud, businesses no longer need to plan for and procure servers and other IT infrastructure weeks or months in advance. Instead, they can instantly spin up hundreds or thousands of servers in minutes and deliver results faster. Today, Amazon Web Services provides a highly reliable, scalable, low-cost infrastructure platform in the cloud that powers hundreds of thousands of businesses in 190 countries around the world.",
+        twitter: "awscloud",
         jobs: [], // needed for typescript, do not use
         locations: [], // needed for typescript, do not use
       },

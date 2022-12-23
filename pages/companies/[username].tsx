@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Card, Head } from "../../components";
+import { Card, Head, Map } from "../../components";
 import { companyMetaDescription, jobsPlurality } from "../../utils";
 import { fetchCompany } from "../../utils/httpRequests";
 import { ICompany } from "../../types";
+import { TwitterLogo } from "phosphor-react";
 import styles from "./company.module.css";
 
 export default function Company() {
@@ -35,6 +36,11 @@ export default function Company() {
     init();
   }, [username]);
 
+  const initMap = {
+    center: { lat: 39.8283, lng: -98.5795 }, // geographic center of us
+    zoom: 3,
+  };
+
   return !company ? (
     <div>
       <p>loading</p>
@@ -48,13 +54,24 @@ export default function Company() {
 
       <main className={styles.company}>
         <div className={styles.company_header}>
-          <Image
-            src={company.logo}
-            alt={`logo of ${company.name}`}
-            width={36}
-            height={36}
-          />
-          <h1>{company.name}</h1>
+          <div className={styles.company_header_left}>
+            <Image
+              src={company.logo}
+              alt={`logo of ${company.name}`}
+              width={36}
+              height={36}
+            />
+            <h1>{company.name}</h1>
+          </div>
+          {!!company.twitter && (
+            <a
+              href={`https://twitter.com/${company.twitter}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <TwitterLogo />
+            </a>
+          )}
         </div>
 
         <Card>
@@ -88,6 +105,14 @@ export default function Company() {
             <p>{hq}</p>
           </div>
         </Card>
+
+        <Map
+          center={initMap.center}
+          zoom={initMap.zoom}
+          cardClassName={styles.company_officeMap}
+          mapContainerClassName={styles.map}
+          locations={company.locations}
+        />
       </main>
     </div>
   );

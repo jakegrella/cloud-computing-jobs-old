@@ -17,6 +17,7 @@
     "next": "13.0.0",
     "node-geocoder": "^4.2.0",
     "oauth-1.0a": "^2.2.6",
+    "phosphor-react": "^1.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sharp": "^0.31.2",

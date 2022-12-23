@@ -25,11 +25,12 @@ export default function Companies() {
       <main>
         <h1>Companies</h1>
         <div className={styles.companiesContainer}>
-          {companies.map((i) => (
-            <Card key={i.id} unpadded className={styles.companyCard}>
-              <ListItem company={i} />
-            </Card>
-          ))}
+          {!!companies.length &&
+            companies.map((i) => (
+              <Card key={i.id} unpadded className={styles.companyCard}>
+                <ListItem company={i} />
+              </Card>
+            ))}
         </div>
       </main>
     </div>
