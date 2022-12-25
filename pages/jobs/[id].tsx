@@ -38,33 +38,35 @@ export default function Job() {
     const multipleLocations = job.locations.length > 1;
 
     return (
-      <div>
-        {multipleLocations ? (
-          <div
-            className={styles.job_info_locationsHeader}
-            onClick={() => setShowAllLocations(!showAllLocations)}
-          >
-            <h3>Locations</h3>
-            {showAllLocations ? <CaretUp /> : <CaretDown />}
-          </div>
-        ) : (
-          <h3>Location</h3>
-        )}
+      !!job.locations.length && (
         <div>
           {multipleLocations ? (
-            showAllLocations ? (
-              job.locations.map((l) => <p key={l.id}>{formatLocation(l)}</p>)
-            ) : (
-              <p>
-                {formatLocation(job.locations[0]) +
-                  ` +${job.locations.length - 1} more`}
-              </p>
-            )
+            <div
+              className={styles.job_info_locationsHeader}
+              onClick={() => setShowAllLocations(!showAllLocations)}
+            >
+              <h3>Locations</h3>
+              {showAllLocations ? <CaretUp /> : <CaretDown />}
+            </div>
           ) : (
-            <p>{`${job.locations[0].locality}, ${job.locations[0].administrativeArea}`}</p>
+            <h3>Location</h3>
           )}
+          <div>
+            {multipleLocations ? (
+              showAllLocations ? (
+                job.locations.map((l) => <p key={l.id}>{formatLocation(l)}</p>)
+              ) : (
+                <p>
+                  {formatLocation(job.locations[0]) +
+                    ` +${job.locations.length - 1} more`}
+                </p>
+              )
+            ) : (
+              <p>{`${job.locations[0].locality}, ${job.locations[0].administrativeArea}`}</p>
+            )}
+          </div>
         </div>
-      </div>
+      )
     );
   }
 
