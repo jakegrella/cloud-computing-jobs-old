@@ -38,19 +38,19 @@ export default function Job() {
     const multipleLocations = job.locations.length > 1;
 
     return (
-      <div>
-        {multipleLocations ? (
-          <div
-            className={styles.job_info_locationsHeader}
-            onClick={() => setShowAllLocations(!showAllLocations)}
-          >
-            <h3>Locations</h3>
-            {showAllLocations ? <CaretUp /> : <CaretDown />}
-          </div>
-        ) : (
-          <h3>Location</h3>
-        )}
-        {!!job.locations.length && (
+      !!job.locations.length && (
+        <div>
+          {multipleLocations ? (
+            <div
+              className={styles.job_info_locationsHeader}
+              onClick={() => setShowAllLocations(!showAllLocations)}
+            >
+              <h3>Locations</h3>
+              {showAllLocations ? <CaretUp /> : <CaretDown />}
+            </div>
+          ) : (
+            <h3>Location</h3>
+          )}
           <div>
             {multipleLocations ? (
               showAllLocations ? (
@@ -65,8 +65,8 @@ export default function Job() {
               <p>{`${job.locations[0].locality}, ${job.locations[0].administrativeArea}`}</p>
             )}
           </div>
-        )}
-      </div>
+        </div>
+      )
     );
   }
 
