@@ -18,7 +18,7 @@ export function ListItem({ job = undefined, company = undefined }) {
 
         <h3>{company.mission}</h3>
 
-        {company.jobs?.length && (
+        {!!company.jobs?.length && (
           <div className={styles.listItem_newJobs}>
             <h3>New Jobs</h3>
             {company.jobs.slice(0, 3).map((job) => (
