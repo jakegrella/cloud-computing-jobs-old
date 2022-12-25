@@ -50,20 +50,22 @@ export default function Job() {
         ) : (
           <h3>Location</h3>
         )}
-        <div>
-          {multipleLocations ? (
-            showAllLocations ? (
-              job.locations.map((l) => <p key={l.id}>{formatLocation(l)}</p>)
+        {!!job.locations.length && (
+          <div>
+            {multipleLocations ? (
+              showAllLocations ? (
+                job.locations.map((l) => <p key={l.id}>{formatLocation(l)}</p>)
+              ) : (
+                <p>
+                  {formatLocation(job.locations[0]) +
+                    ` +${job.locations.length - 1} more`}
+                </p>
+              )
             ) : (
-              <p>
-                {formatLocation(job.locations[0]) +
-                  ` +${job.locations.length - 1} more`}
-              </p>
-            )
-          ) : (
-            <p>{`${job.locations[0].locality}, ${job.locations[0].administrativeArea}`}</p>
-          )}
-        </div>
+              <p>{`${job.locations[0].locality}, ${job.locations[0].administrativeArea}`}</p>
+            )}
+          </div>
+        )}
       </div>
     );
   }
