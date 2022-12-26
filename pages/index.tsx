@@ -57,20 +57,22 @@ export default function Home() {
           lngMax: mapBounds.east,
         };
 
-        async function getMappableLocations() {
+        async function getMappableLocationsWithJobs() {
           // fetch jobs in current map region
           const mappableLocations = await httpGetMappableLocations(bounds);
-          setLocations(mappableLocations);
+          // filter for only locations with jobs
+          const mappableLocationsWithJobs = mappableLocations.filter(
+            (location) => location.jobs.length
+          );
+          setLocations(mappableLocationsWithJobs);
 
           let mappableJobs = [];
-          if (mappableLocations.length) {
-            mappableLocations.forEach((location) =>
-              mappableJobs.push(...location.jobs)
-            );
-          }
+          mappableLocationsWithJobs.forEach((location) =>
+            mappableJobs.push(...location.jobs)
+          );
           setJobs(mappableJobs);
         }
-        getMappableLocations();
+        getMappableLocationsWithJobs();
       }, 500);
     }
   }, [mapBounds]);
