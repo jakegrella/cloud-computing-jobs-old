@@ -1,28 +1,37 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addJob, getAllJobs } from "../../../backend-utils";
+import { addJob, getAllJobs, tweet } from "../../../backend-utils";
+import { IApiResponse } from "../../../types";
+import { inProd } from "../../../utils";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  let response: { status: number; data: any } = {
+  let response: IApiResponse = {
     status: 500,
-    data: { message: "unknown error" },
+    data: {},
+    message: "unknown error",
   };
 
   try {
     switch (req.method) {
       case "GET":
-        response = await getAllJobs();
+        response = { status: 200, data: await getAllJobs() };
         break;
       case "POST":
-        response = await addJob(req.body);
+        response = { status: 201, data: await addJob(req.body) };
+        // create tweet every time a job is added in prod
+        if (inProd()) await tweet(response.data);
         break;
       default:
-        break;
+        response = { status: 405, message: "method not allowed" };
+        throw new Error("method not allowed");
     }
+
     return res.status(response.status).json(response.data);
   } catch (err) {
-    throw err;
+    return res
+      .status(response.status)
+      .json({ message: err.message || response.message });
   }
 }

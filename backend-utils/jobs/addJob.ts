@@ -1,70 +1,78 @@
 import { prisma } from "../../prisma/prismaClient";
 import { IJob, ILocation } from "../../types";
-import { formatLocation, inProd } from "../../utils";
+import { formatLocation } from "../../utils";
 import { geolocation } from "../locations";
-import { tweet } from "./tweet";
-
-interface INewLocations extends ILocation {
-  geo: any;
-}
 
 async function locationSetup(locations: ILocation[]) {
   // add geocode info to each location
-  const newLocations: INewLocations[] = [];
+  const updatedLocations: ILocation[] = [];
 
   for (const location of locations) {
-    const locationInput = formatLocation(location);
-    const geo = await geolocation(locationInput);
-    newLocations.push({ ...location, geo });
+    if (location.id === 0) {
+      const locationInput = formatLocation(location);
+      const geo = await geolocation(locationInput);
+      updatedLocations.push({
+        ...location,
+        thoroughfare: geo.thoroughfare,
+        premise: geo.premise,
+        locality: geo.locality,
+        administrativeArea: geo.administrativeArea,
+        postalCode: geo.postalCode,
+        country: geo.country,
+        neighborhood: geo.neighborhood,
+        latitude: geo.latitude,
+        longitude: geo.longitude,
+      });
+    } else {
+      updatedLocations.push(location);
+    }
   }
-  return newLocations;
+  return updatedLocations;
 }
 
 export async function addJob(job: IJob) {
-  try {
-    const newLocations = await locationSetup(job.locations);
-
-    const response = await prisma.job.create({
-      data: {
-        title: job.title,
-        posting: job.posting,
-        description: job.description,
-        responsibilities: job.responsibilities,
-        qualifications: job.qualifications,
-        type: job.type,
-        experience: job.experience,
-        payRangeMin: job.payRangeMin,
-        payRangeMax: job.payRangeMax,
-        payRangeTimeFrame: job.payRangeTimeFrame,
-        equityRangeMin: job.equityRangeMin,
-        equityRangeMax: job.equityRangeMax,
-        company: {
-          connectOrCreate: {
-            where: { username: job.company.username },
-            create: {
-              name: job.company.name,
-              username: job.company.username,
-              logo: job.company.logo,
-              mission: job.company.mission,
-              overview: job.company.overview,
-              twitter: job.company.twitter,
-            },
+  return prisma.job.create({
+    data: {
+      title: job.title,
+      posting: job.posting,
+      description: job.description,
+      responsibilities: job.responsibilities,
+      qualifications: job.qualifications,
+      type: job.type,
+      experience: job.experience,
+      payRangeMin: job.payRangeMin,
+      payRangeMax: job.payRangeMax,
+      payRangeTimeFrame: job.payRangeTimeFrame,
+      equityRangeMin: job.equityRangeMin,
+      equityRangeMax: job.equityRangeMax,
+      company: {
+        connectOrCreate: {
+          where: { username: job.company.username },
+          create: {
+            name: job.company.name,
+            username: job.company.username,
+            logo: job.company.logo,
+            mission: job.company.mission,
+            overview: job.company.overview,
+            twitter: job.company.twitter,
           },
         },
-        locations: {
-          connectOrCreate: newLocations.map((location) => ({
+      },
+      locations: {
+        connectOrCreate: (await locationSetup(job.locations)).map(
+          (location) => ({
             where: { id: location.id },
             create: {
               headquarters: location.headquarters,
-              country: location.geo.country,
-              administrativeArea: location.geo.administrativeArea,
-              locality: location.geo.locality,
-              postalCode: location.geo.postalCode,
-              thoroughfare: location.geo.thoroughfare,
-              premise: location.geo.premise,
-              latitude: location.geo.latitude,
-              longitude: location.geo.longitude,
-              neighborhood: location.geo.neighborhood,
+              country: location.country,
+              administrativeArea: location.administrativeArea,
+              locality: location.locality,
+              postalCode: location.postalCode,
+              thoroughfare: location.thoroughfare,
+              premise: location.premise,
+              latitude: location.latitude,
+              longitude: location.longitude,
+              neighborhood: location.neighborhood,
               company: {
                 connectOrCreate: {
                   where: { username: job.company.username },
@@ -79,23 +87,13 @@ export async function addJob(job: IJob) {
                 },
               },
             },
-          })),
-        },
+          })
+        ),
       },
-      include: {
-        company: true,
-        locations: true,
-      },
-    });
-
-    // every time a job is added, also tweet out the job
-    if (inProd()) await tweet(response);
-
-    return {
-      status: 201,
-      data: response,
-    };
-  } catch (err: any) {
-    throw new Error(`Error adding job: ${err.message}`);
-  }
+    },
+    include: {
+      company: true,
+      locations: true,
+    },
+  });
 }

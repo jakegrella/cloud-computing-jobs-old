@@ -112,3 +112,9 @@ export interface IMapBounds {
   lngMin: string;
   lngMax: string;
 }
+
+export interface IApiResponse {
+  status: number;
+  data?: any;
+  message?: string;
+}

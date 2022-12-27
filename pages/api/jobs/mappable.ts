@@ -16,7 +16,10 @@ export default async function handler(
     data: { message: "unknown error" },
   };
   try {
-    response = await fetchMappableJobs(latBound, lngBound);
+    response = {
+      status: 200,
+      data: await fetchMappableJobs(latBound, lngBound),
+    };
 
     return res.status(response.status).json(response.data);
   } catch (err) {
