@@ -1,17 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { addJob, getAllJobs, tweet } from "../../../backend-utils";
-import { IApiResponse } from "../../../types";
 import { inProd } from "../../../utils";
+import { initApiResponse } from "../../../utils/initApiResponse";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  let response: IApiResponse = {
-    status: 500,
-    data: {},
-    message: "unknown error",
-  };
+  let response = initApiResponse;
 
   try {
     switch (req.method) {

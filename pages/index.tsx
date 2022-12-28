@@ -75,6 +75,7 @@ export default function Home() {
         getMappableLocationsWithJobs();
       }, 500);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapBounds]);
 
   return (

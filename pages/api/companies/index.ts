@@ -5,42 +5,38 @@ import {
   getSimilarCompanies,
   updateCompany,
 } from "../../../backend-utils";
-
-async function getRequests(req: NextApiRequest) {
-  if (req.query.similar) {
-    const response = await getSimilarCompanies(req.query.similar);
-    return response;
-  }
-
-  const response = await getAllCompanies();
-  return response;
-}
+import { initApiResponse } from "../../../utils/initApiResponse";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  let response: { status: number; data: any } = {
-    status: 500,
-    data: { message: "unknown error" },
-  };
+  let response = initApiResponse;
 
   try {
     switch (req.method) {
       case "GET":
-        response = await getRequests(req);
+        response = {
+          status: 200,
+          data: req.query.similar
+            ? await getSimilarCompanies(req.query.similar as string)
+            : await getAllCompanies(),
+        };
         break;
       case "POST":
-        response = await addCompany(req.body);
+        response = { status: 201, data: await addCompany(req.body) };
         break;
       case "PUT":
-        response = await updateCompany(req.body);
+        response = { status: 200, data: await updateCompany(req.body) };
         break;
       default:
-        break;
+        response = { status: 405, message: "method not allowed" };
+        throw new Error("method not allowed");
     }
     return res.status(response.status).json(response.data);
   } catch (err) {
-    return res.status(500).json(response.data);
+    return res
+      .status(response.status)
+      .json({ message: err.message || response.message });
   }
 }
