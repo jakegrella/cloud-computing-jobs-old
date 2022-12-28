@@ -16,7 +16,7 @@ export default async function handler(
   //   return res.status(401).json({ success: false });
   // }
 
-  if (!req.body.jobs || !req.body.jobs.length) {
+  if (!req.body.jobs?.length) {
     return res.status(500).json({ success: false, message: "0 Jobs Received" });
   }
 
@@ -27,6 +27,8 @@ export default async function handler(
       .status(201)
       .json({ success: true, message: "Successfully added AWS jobs" });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res
+      .status(500)
+      .json({ success: false, message: err.message || "unknown error" });
   }
 }

@@ -1,4 +1,4 @@
-import { JobExperience, JobType } from "../../types";
+import { IJob, JobExperience, JobType } from "../../types";
 import { addJob } from "../jobs/addJob";
 
 interface IAWSJob {
@@ -56,8 +56,6 @@ interface IAWSJob {
 
 export async function aws(jobs: IAWSJob[]) {
   const formattedJobs = jobs.map((job) => {
-    const qualifications = `Basic Qualifications\u003cbr/\u003e \u003cbr/\u003e${job.basic_qualifications}\u003cbr/\u003e \u003cbr/\u003ePreferred Qualifications\u003cbr/\u003e \u003cbr/\u003e${job.preferred_qualifications}`;
-
     let type: JobType;
     switch (job.job_schedule_type) {
       case "full-time":
@@ -67,6 +65,7 @@ export async function aws(jobs: IAWSJob[]) {
         type = "Part Time";
         break;
       default:
+        type = "";
         break;
     }
 
@@ -92,13 +91,13 @@ export async function aws(jobs: IAWSJob[]) {
       postalCode = "37219";
     }
 
-    const formattedJob = {
+    const formattedJob: IJob = {
       id: 0, // 0 will not exist in database
       title: job.title,
       posting: `https://amazon.jobs${job.job_path}`,
       description: job.description,
       responsibilities: "",
-      qualifications,
+      qualifications: `Basic Qualifications\u003cbr/\u003e \u003cbr/\u003e${job.basic_qualifications}\u003cbr/\u003e \u003cbr/\u003ePreferred Qualifications\u003cbr/\u003e \u003cbr/\u003e${job.preferred_qualifications}`,
       type,
       experience: "" as JobExperience,
       company: {
@@ -111,8 +110,6 @@ export async function aws(jobs: IAWSJob[]) {
         overview:
           "In 2006, Amazon Web Services (AWS) began offering IT infrastructure services to businesses in the form of web services -- now commonly known as cloud computing. One of the key benefits of cloud computing is the opportunity to replace up-front capital infrastructure expenses with low variable costs that scale with your business. With the Cloud, businesses no longer need to plan for and procure servers and other IT infrastructure weeks or months in advance. Instead, they can instantly spin up hundreds or thousands of servers in minutes and deliver results faster. Today, Amazon Web Services provides a highly reliable, scalable, low-cost infrastructure platform in the cloud that powers hundreds of thousands of businesses in 190 countries around the world.",
         twitter: "awscloud",
-        jobs: [], // needed for typescript, do not use
-        locations: [], // needed for typescript, do not use
       },
       locations: [
         {
@@ -134,12 +131,8 @@ export async function aws(jobs: IAWSJob[]) {
   });
 
   formattedJobs.forEach(async (job) => {
-    try {
-      // TODO: add check to determine if job already exists in DB
-      await addJob(job);
-    } catch (err) {
-      throw new Error(`Error adding aws job: ${err.message}`);
-    }
+    // TODO: add check to determine if job already exists in DB
+    await addJob(job);
   });
 
   return;
