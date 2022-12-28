@@ -87,11 +87,9 @@ img {
 }
 
 @media (prefers-color-scheme: light) {
-  html {
-    color-scheme: light;
-  }
-
+  html,
   body {
+    color-scheme: light;
     color: var(--black);
     background: var(--dark-white);
   }
