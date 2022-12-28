@@ -28,10 +28,10 @@ export default async function handler(
       },
     });
 
-    res.send({
+    return res.send({
       clientSecret: paymentIntent.client_secret,
     });
   } catch (err) {
-    console.error(err.message);
+    return res.status(500).json({ message: err.message || "unknown error" });
   }
 }

@@ -29,29 +29,20 @@ export async function updateLocation({
   latitude,
   longitude,
 }: ILocationInfo) {
-  try {
-    const response = await prisma.location.update({
-      where: { id },
-      data: {
-        companyId,
-        headquarters,
-        thoroughfare,
-        premise,
-        locality,
-        administrativeArea,
-        postalCode,
-        country,
-        neighborhood,
-        latitude,
-        longitude,
-      },
-    });
-
-    return {
-      status: 200,
-      data: response,
-    };
-  } catch (err: any) {
-    throw new Error(err.message);
-  }
+  return prisma.location.update({
+    where: { id },
+    data: {
+      companyId,
+      headquarters,
+      thoroughfare,
+      premise,
+      locality,
+      administrativeArea,
+      postalCode,
+      country,
+      neighborhood,
+      latitude,
+      longitude,
+    },
+  });
 }

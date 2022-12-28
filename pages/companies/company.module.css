@@ -23,9 +23,6 @@
 }
 
 /* /[username] */
-.company {
-}
-
 .company_header {
   display: flex;
   flex-flow: row wrap;

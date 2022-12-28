@@ -1,3 +1,5 @@
+import { prisma } from "../../prisma/prismaClient";
+
 interface ICompanyInfo {
   id: number;
   name?: string;
@@ -8,6 +10,7 @@ interface ICompanyInfo {
   twitter?: string;
 }
 
+// PUT - update company by id
 export async function updateCompany({
   id,
   name,
@@ -17,24 +20,15 @@ export async function updateCompany({
   overview,
   twitter,
 }: ICompanyInfo) {
-  try {
-    const response = await prisma.company.update({
-      where: { id },
-      data: {
-        name,
-        username,
-        logo,
-        mission,
-        overview,
-        twitter,
-      },
-    });
-
-    return {
-      status: 200,
-      data: response,
-    };
-  } catch (err: any) {
-    throw new Error(err.message);
-  }
+  return prisma.company.update({
+    where: { id },
+    data: {
+      name,
+      username,
+      logo,
+      mission,
+      overview,
+      twitter,
+    },
+  });
 }

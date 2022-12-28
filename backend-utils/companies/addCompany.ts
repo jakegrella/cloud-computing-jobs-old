@@ -5,27 +5,15 @@ import { ICompany } from "../../types";
 export async function addCompany(body: ICompany) {
   const { locations, logo, mission, name, overview, username, twitter } = body;
 
-  try {
-    // right now, assume headquarters and locations have valid ids
-    const response = await prisma.company.create({
-      data: {
-        logo,
-        mission,
-        name,
-        overview,
-        username,
-        twitter,
-      },
-    });
-
-    return {
-      status: 201,
-      data: response,
-    };
-  } catch (err: any) {
-    return {
-      status: 500,
-      data: { message: err.message },
-    };
-  }
+  // right now, assume headquarters and locations have valid ids
+  return prisma.company.create({
+    data: {
+      logo,
+      mission,
+      name,
+      overview,
+      username,
+      twitter,
+    },
+  });
 }

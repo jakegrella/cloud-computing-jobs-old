@@ -1,10 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
 import { sign } from "jsonwebtoken";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(_req: any, res: NextApiResponse) {
   const header = {
     alg: "ES256",
     typ: "JWT",
@@ -19,7 +16,7 @@ export default async function handler(
   };
 
   var token = sign(payload, process.env.MAPKIT_PRIVATE_KEY, { header: header });
-  res.json({ token: token });
+  return res.json({ token: token });
 }
 
 // implement restricted API routes utilizing API key
