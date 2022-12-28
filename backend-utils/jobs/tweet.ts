@@ -30,7 +30,7 @@ export async function tweet(job: IJob) {
 
   const authHeader = oauth.toHeader(auth);
 
-  const twitterAccount = job.company.twitter && ` (${job.company.twitter})`;
+  const twitterAccount = job.company.twitter && ` (@${job.company.twitter})`;
 
   const url = "https://api.twitter.com/2/tweets";
   const data = await (
