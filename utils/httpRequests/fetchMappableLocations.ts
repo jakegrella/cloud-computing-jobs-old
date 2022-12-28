@@ -1,6 +1,6 @@
 import { IMapBounds } from "../../types";
 
-export async function httpGetMappableLocations(bounds: IMapBounds) {
+export async function fetchMappableLocations(bounds: IMapBounds) {
   try {
     const { latMin, latMax, lngMin, lngMax } = bounds;
     const url = `/api/locations?lat_min=${latMin}&lat_max=${latMax}&lng_min=${lngMin}&lng_max=${lngMax}`;

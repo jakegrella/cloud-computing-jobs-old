@@ -3,7 +3,7 @@ import { Card, Head, ListItem, Map, Search } from "../components";
 import { useStore } from "../store";
 import { ILocation } from "../types";
 import { useWindowDimensions } from "../utils/hooks";
-import { httpGetMappableLocations } from "../utils/httpRequests";
+import { fetchMappableLocations } from "../utils/httpRequests";
 import styles from "./home.module.css";
 
 let timeout: NodeJS.Timeout;
@@ -59,7 +59,7 @@ export default function Home() {
 
         async function getMappableLocationsWithJobs() {
           // fetch jobs in current map region
-          const mappableLocations = await httpGetMappableLocations(bounds);
+          const mappableLocations = await fetchMappableLocations(bounds);
           // filter for only locations with jobs
           const mappableLocationsWithJobs = mappableLocations.filter(
             (location) => location.jobs.length
