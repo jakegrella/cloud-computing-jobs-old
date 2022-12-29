@@ -61,39 +61,27 @@ export function Search({ className = undefined, placeholder = "Search" }) {
 
   return (
     <div className={styles.search}>
-      {dropdownVisible ? (
-        <div className={`${styles.search_bar} ${className ?? ""}`}>
-          <Input
-            type="text"
-            name="search"
-            label={placeholder}
-            value={searchInputValue}
-            forwardRef={searchInput}
-            onChange={handleSearchInputValueChange}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-            autoComplete="off"
-          />
+      <div className={`${styles.search_bar} ${className ?? ""}`}>
+        {/* <Input
+          type="text"
+          name="search"
+          label={placeholder}
+          value={searchInputValue}
+          forwardRef={searchInput}
+          onChange={handleSearchInputValueChange}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          autoComplete="off"
+        />
+        {dropdownVisible && (
           <Card className={styles.dropdown}>
             <Button onClick={handleDropdownFilterClick}>city:</Button>
             <Button onClick={handleDropdownFilterClick}>company:</Button>
             <Button onClick={handleDropdownFilterClick}>job title:</Button>
           </Card>
-        </div>
-      ) : (
-        <div className={`${styles.search_bar} ${className ?? ""}`}>
-          <Input
-            type="text"
-            name="search"
-            label={placeholder}
-            value={searchInputValue}
-            forwardRef={searchInput}
-            onChange={handleSearchInputValueChange}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-          />
-        </div>
-      )}
+        )} */}
+      </div>
+
       {width < 768 && <ButtonGroup />}
     </div>
   );
