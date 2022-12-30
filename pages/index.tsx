@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Card, Head, ListItem, Map, Search } from "../components";
 import { useStore } from "../store";
-import { ILocation } from "../types";
 import { useWindowDimensions } from "../utils/hooks";
 import { fetchMappableLocations } from "../utils/httpRequests";
 import styles from "./home.module.css";
@@ -9,17 +8,34 @@ import styles from "./home.module.css";
 let timeout: NodeJS.Timeout;
 
 export default function Home() {
-  const [initHomeMap, setInitHomeMap, mapBounds, homePageView, jobs, setJobs] =
-    useStore((state) => [
-      state.initHomeMap,
-      state.setInitHomeMap,
-      state.mapBounds,
-      state.homePageView,
-      state.jobs,
-      state.setJobs,
-    ]);
+  const [
+    initHomeMap,
+    setInitHomeMap,
+    mapBounds,
+    homePageView,
+    jobs,
+    setJobs,
+    homeMapLocations,
+    setHomeMapLocations,
+    homeMapLocationsWithJobs,
+    setHomeMapLocationsWithJobs,
+    homeMapLocationsWithoutJobs,
+    setHomeMapLocationsWithoutJobs,
+  ] = useStore((state) => [
+    state.initHomeMap,
+    state.setInitHomeMap,
+    state.mapBounds,
+    state.homePageView,
+    state.jobs,
+    state.setJobs,
+    state.homeMapLocations,
+    state.setHomeMapLocations,
+    state.homeMapLocationsWithJobs,
+    state.setHomeMapLocationsWithJobs,
+    state.homeMapLocationsWithoutJobs,
+    state.setHomeMapLocationsWithoutJobs,
+  ]);
   const { width } = useWindowDimensions();
-  const [locations, setLocations] = useState<ILocation[]>([]);
 
   // on page load
   useEffect(() => {
@@ -57,22 +73,32 @@ export default function Home() {
           lngMax: mapBounds.east,
         };
 
-        async function getMappableLocationsWithJobs() {
+        async function getMappableLocations() {
           // fetch jobs in current map region
           const mappableLocations = await fetchMappableLocations(bounds);
+
+          // set state for all mappable locations
+          setHomeMapLocations(mappableLocations);
+
           // filter for only locations with jobs
           const mappableLocationsWithJobs = mappableLocations.filter(
             (location) => location.jobs.length
           );
-          setLocations(mappableLocationsWithJobs);
-
+          setHomeMapLocationsWithJobs(mappableLocationsWithJobs);
+          // extract and update jobs
           let mappableJobs = [];
           mappableLocationsWithJobs.forEach((location) =>
             mappableJobs.push(...location.jobs)
           );
           setJobs(mappableJobs);
+
+          // filter for only locations without jobs
+          const mappableLocationsWithoutJobs = mappableLocations.filter(
+            (location) => !location.jobs.length
+          );
+          setHomeMapLocationsWithoutJobs(mappableLocationsWithoutJobs);
         }
-        getMappableLocationsWithJobs();
+        getMappableLocations();
       }, 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -99,7 +125,7 @@ export default function Home() {
             center={initHomeMap.center}
             zoom={initHomeMap.zoom}
             cardClassName={styles.home_content_mapCard}
-            locations={locations}
+            locations={homeMapLocations}
             showMarkerInfoOverlay={
               width < 768 && homePageView === "map" ? true : false
             }
