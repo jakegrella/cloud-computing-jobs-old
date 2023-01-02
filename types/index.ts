@@ -1,5 +1,36 @@
 import { Prisma } from "@prisma/client";
 
+export interface IState {
+  initHomeMap: IInitMap;
+  setInitHomeMap: (initMap: IInitMap) => void;
+  homeMapLocations: ILocation[];
+  setHomeMapLocations: (homeMapLocations: ILocation[]) => void;
+  homeMapLocationsWithJobs: ILocation[];
+  setHomeMapLocationsWithJobs: (homeMapLocationsWithJobs: ILocation[]) => void;
+  homeMapLocationsWithoutJobs: ILocation[];
+  setHomeMapLocationsWithoutJobs: (
+    homeMapLocationsWithoutJobs: ILocation[]
+  ) => void;
+  stripeState: IStripeState;
+  setStripeState: (stripe: IStripeState) => void;
+  previewJob: IJob;
+  setPreviewJob: (previewJob: IJob) => void;
+  isMenuVisible: boolean;
+  setIsMenuVisible: (isVisible: boolean) => void;
+  jobs: IJob[];
+  setJobs: (jobs: IJob[]) => void;
+  map: any;
+  setMap: (map: any) => void;
+  mapBounds: any;
+  setMapBounds: (mapBounds: any) => void;
+  homePageView: "map" | "list" | "both";
+  setHomePageView: (homePageView: "map" | "list" | "both") => void;
+  showPaymentForm: boolean;
+  setShowPaymentForm: (showPaymentForm: boolean) => void;
+  companyLocationOptions: any[];
+  setCompanyLocationOptions: (companyLocationOptions) => void;
+}
+
 export interface ICompany {
   id: number;
   name: string;
@@ -75,35 +106,6 @@ interface IStripeState {
   clientSecret: string;
   isLoading: boolean;
   message: string | null;
-}
-
-export interface IState {
-  stripeState: IStripeState;
-  setStripeState: (stripe: IStripeState) => void;
-
-  previewJob: IJob;
-  setPreviewJob: (previewJob: IJob) => void;
-  isMenuVisible: boolean;
-  setIsMenuVisible: (isVisible: boolean) => void;
-  jobs: IJob[];
-  setJobs: (jobs: IJob[]) => void;
-  initHomeMap: IInitMap;
-  setInitHomeMap: (initMap: IInitMap) => void;
-  map: any;
-  setMap: (map: any) => void;
-  mapBounds: any;
-  setMapBounds: (mapBounds: any) => void;
-  mapMarkers: ILocation[];
-  setMapMarkers: (mapMarkers: ILocation[]) => void;
-  homePageView: "map" | "list" | "both";
-  setHomePageView: (homePageView: "map" | "list" | "both") => void;
-
-  showPaymentForm: boolean;
-  setShowPaymentForm: (showPaymentForm: boolean) => void;
-
-  // location options from job posting form
-  companyLocationOptions: any[];
-  setCompanyLocationOptions: (companyLocationOptions) => void;
 }
 
 export interface IMapBounds {
