@@ -17,6 +17,9 @@ export async function getMappableLocations(mapBounds: IMapBounds) {
       jobs: {
         include: { company: true },
       },
+      company: {
+        include: { jobs: true },
+      },
     },
   });
 }

@@ -36,30 +36,27 @@ export function Map({
     state.setMapBounds,
   ]);
 
-  const [activeMarkerItems, setActiveMarkerItems] = useState([]);
+  const [activeMarkerLocation, setActiveMarkerLocation] =
+    useState<ILocation>(undefined);
 
   function onBoundsChanged() {
     clearTimeout(boundsChangedTimeout);
     boundsChangedTimeout = setTimeout(() => {
       if (map) {
         setMapBounds(map.getBounds().toJSON());
+        setActiveMarkerLocation(undefined);
       }
     }, 500);
   }
 
   function handleMarkerClick(e) {
-    const itemsAtSelectedMarker = [];
-
-    locations.forEach((location) => {
-      if (
-        location.longitude === e.latLng.lng() &&
-        location.latitude === e.latLng.lat()
-      ) {
-        itemsAtSelectedMarker.push(...location.jobs);
-      }
-    });
-
-    setActiveMarkerItems(itemsAtSelectedMarker);
+    setActiveMarkerLocation(
+      locations.find(
+        (location) =>
+          location.longitude === e.latLng.lng() &&
+          location.latitude === e.latLng.lat()
+      )
+    );
   }
 
   return (
@@ -71,35 +68,45 @@ export function Map({
           zoom={zoom} // init
           onLoad={(e) => setMap(e)}
           onBoundsChanged={onBoundsChanged}
-          onClick={() => setActiveMarkerItems([])} // acting as onBlur for marker
+          onClick={() => setActiveMarkerLocation(undefined)} // acting as onBlur for marker
           clickableIcons={false}
         >
-          {showMarkerInfoOverlay && activeMarkerItems.length && (
+          {showMarkerInfoOverlay && activeMarkerLocation && (
             <div className={styles.activeMarkerPreviewContainer}>
               <Card unpadded>
-                {activeMarkerItems.map((job) => (
-                  <ListItem key={job.id} job={job} />
-                ))}
+                <ListItem
+                  key={activeMarkerLocation.id}
+                  company={activeMarkerLocation.company}
+                  job={activeMarkerLocation.jobs}
+                  location={activeMarkerLocation}
+                />
               </Card>
             </div>
           )}
 
-          {locations.length
-            ? locations.map((location) => (
-                <MarkerF
-                  key={location.id}
-                  position={{ lat: location.latitude, lng: location.longitude }}
-                  title={location.id.toString()}
-                  onClick={
-                    showMarkerInfoOverlay ? handleMarkerClick : undefined
-                  }
-                  clickable={showMarkerInfoOverlay ? true : false}
-                />
-              ))
-            : undefined}
+          {!!locations.length &&
+            locations.map((location) => (
+              <MarkerF
+                key={location.id}
+                position={{
+                  lat: location.latitude,
+                  lng: location.longitude,
+                }}
+                title={location.id.toString()}
+                onClick={showMarkerInfoOverlay && handleMarkerClick}
+                clickable={showMarkerInfoOverlay ? true : false}
+                icon={{
+                  path: "M0 4C-2.25 4-4 2.25-4 0-4-2.25-2.25-4 0-4 2.25-4 4-2.25 4 0 4 2.25 2.25 4 0 4Z",
+                  fillColor: location.jobs.length ? "red" : "gray",
+                  fillOpacity: 1,
+                  scale: 1.25,
+                  strokeColor: location.jobs.length ? "red" : "gray",
+                  strokeWeight: 2,
+                }}
+              />
+            ))}
         </GoogleMap>
       )}
     </Card>
   );
 }
-// end map fns
