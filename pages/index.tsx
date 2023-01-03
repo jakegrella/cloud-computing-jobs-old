@@ -132,12 +132,14 @@ export default function Home() {
           />
 
           <Card unpadded className={styles.home_content_jobList}>
-            {jobs.length ? (
-              jobs.map((i) => <ListItem key={i.id} job={i} />)
+            {homeMapLocations.length ? (
+              [...homeMapLocationsWithJobs, ...homeMapLocationsWithoutJobs].map(
+                (l) => <ListItem key={l.id} location={l} />
+              )
             ) : (
               <p className={styles.noneFound}>
-                No jobs found in mapped region. Try searching in a larger area
-                or changing filters.
+                No companies found in mapped region. Try searching in a larger
+                area or changing filters.
               </p>
             )}
           </Card>
