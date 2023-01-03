@@ -8,7 +8,22 @@ export function ListItem({
   location = undefined,
 }) {
   // format depending on whether data is job or company
-  if (job && !company) company = job.company;
+  if (!location && job && !company) company = job.company;
+  else if (location && !company) company = location.company;
+
+  function getSubtitle() {
+    let subtitle = `${company.jobs?.length} Open Job${
+      company.jobs?.length !== 1 ? "s" : ""
+    }`;
+
+    if (!location?.jobs.length) {
+      subtitle += `${
+        location?.company.jobs?.length > 0 ? " (at another location)" : ""
+      }`;
+    }
+
+    return subtitle;
+  }
 
   return (
     <Link href={job ? `/jobs/${job.id}` : `/companies/${company.username}`}>
@@ -17,15 +32,7 @@ export function ListItem({
           imageSrc={company.logo}
           imageAlt={`logo of ${company.name}`}
           title={company.name}
-          subtitle={
-            location?.jobs.length
-              ? `${company.jobs?.length} Open Job${
-                  company.jobs?.length !== 1 ? "s" : ""
-                }`
-              : `${company.jobs?.length} Open Job${
-                  company.jobs?.length !== 1 ? "s" : ""
-                } ${company.jobs?.length > 0 ? " (at another location)" : ""}`
-          }
+          subtitle={getSubtitle()}
         />
 
         <h3>{company.mission}</h3>
