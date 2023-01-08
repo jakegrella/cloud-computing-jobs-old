@@ -1,7 +1,8 @@
+// JWT specifically for Apple MapKit JS
 import { NextApiResponse } from "next";
 import { sign } from "jsonwebtoken";
 
-export default async function handler(_req: any, res: NextApiResponse) {
+export default function handler(_req: any, res: NextApiResponse) {
   const header = {
     alg: "ES256",
     typ: "JWT",
@@ -16,7 +17,5 @@ export default async function handler(_req: any, res: NextApiResponse) {
   };
 
   var token = sign(payload, process.env.MAPKIT_PRIVATE_KEY, { header: header });
-  return res.json({ token: token });
+  return res.status(200).json({ token: token });
 }
-
-// implement restricted API routes utilizing API key

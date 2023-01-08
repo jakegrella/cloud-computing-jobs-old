@@ -7,5 +7,5 @@ interface IApiResponse {
 export const initApiResponse: IApiResponse = {
   status: 500,
   data: {},
-  message: "unknown error",
+  message: "Unknown Error",
 };

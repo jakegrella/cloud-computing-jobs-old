@@ -20,8 +20,8 @@ export default async function handler(
         if (inProd()) await tweet(response.data);
         break;
       default:
-        response = { status: 405, message: "method not allowed" };
-        throw new Error("method not allowed");
+        response = { status: 405, message: "Method Not Allowed" };
+        throw new Error("Method Not Allowed");
     }
 
     return res.status(response.status).json(response.data);
