@@ -13,7 +13,6 @@ export default function Home() {
     setInitHomeMap,
     mapBounds,
     homePageView,
-    jobs,
     setJobs,
     homeMapLocations,
     setHomeMapLocations,
@@ -26,7 +25,6 @@ export default function Home() {
     state.setInitHomeMap,
     state.mapBounds,
     state.homePageView,
-    state.jobs,
     state.setJobs,
     state.homeMapLocations,
     state.setHomeMapLocations,
@@ -75,7 +73,12 @@ export default function Home() {
 
         async function getMappableLocations() {
           // fetch jobs in current map region
-          const mappableLocations = await fetchMappableLocations(bounds);
+          let mappableLocations = [];
+          try {
+            mappableLocations = await fetchMappableLocations(bounds);
+          } catch (err) {
+            console.error(err.message);
+          }
 
           // set state for all mappable locations
           setHomeMapLocations(mappableLocations);

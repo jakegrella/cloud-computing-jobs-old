@@ -7,14 +7,8 @@ export default async function handler(
 ) {
   // if wrong HTTP method
   if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
-    return res.status(405).end("Method Not Allowed");
+    return res.status(405).json({ message: "Method Not Allowed" });
   }
-
-  // if unauthorized
-  // if (req.headers.authorization !== `Bearer ${process.env.API_SECRET_KEY}`) {
-  //   return res.status(401).json({ success: false });
-  // }
 
   if (!req.body.jobs?.length) {
     return res.status(500).json({ success: false, message: "0 Jobs Received" });
@@ -29,6 +23,6 @@ export default async function handler(
   } catch (err) {
     res
       .status(500)
-      .json({ success: false, message: err.message || "unknown error" });
+      .json({ success: false, message: err.message || "Unknown Error" });
   }
 }
