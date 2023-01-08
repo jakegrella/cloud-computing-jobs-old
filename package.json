@@ -13,6 +13,7 @@
     "@react-google-maps/api": "^2.17.0",
     "@stripe/react-stripe-js": "^1.15.0",
     "@stripe/stripe-js": "^1.44.1",
+    "jose": "^4.11.2",
     "jsonwebtoken": "^8.5.1",
     "next": "13.0.0",
     "node-geocoder": "^4.2.0",
