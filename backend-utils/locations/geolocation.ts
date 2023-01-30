@@ -35,3 +35,23 @@ export async function geolocation(loc: string) {
     throw new Error(`Error fetching location info — ${err.message}`);
   }
 }
+
+export async function simpleGeo(loc: string) {
+  // returns lat and lng from string location
+  try {
+    const options = {
+      provider: "google",
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_GEOLOCATION_API_KEY,
+    };
+
+    const geocoder = NodeGeocoder(options);
+    const res = await geocoder.geocode(loc);
+
+    if (res.length === 0) throw new Error("Location not found");
+
+    // res may return multiple results, just taking first for now
+    return { lat: res[0].latitude, lng: res[0].longitude };
+  } catch (err) {
+    throw new Error(err.message || "An error occurred");
+  }
+}

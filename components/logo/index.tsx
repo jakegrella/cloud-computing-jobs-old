@@ -3,14 +3,20 @@ import { useStore } from "../../store";
 import styles from "./logo.module.css";
 
 export function Logo() {
-  const setIsMenuVisible = useStore((state) => state.setIsMenuVisible);
+  const [setIsMenuVisible, setJobs, setHomeMapLocations] = useStore((state) => [
+    state.setIsMenuVisible,
+    state.setJobs,
+    state.setHomeMapLocations,
+  ]);
+
+  function handleLogoClick() {
+    setIsMenuVisible(false);
+    setJobs([]);
+    setHomeMapLocations([]);
+  }
 
   return (
-    <Link
-      className={styles.logo}
-      href="/"
-      onClick={() => setIsMenuVisible(false)}
-    >
+    <Link className={styles.logo} href="/" onClick={handleLogoClick}>
       <svg
         width="46"
         height="30"
