@@ -1,5 +1,6 @@
 export * from "./button";
 export * from "./card";
+export * from "./CompanyJobCard";
 export * from "./head";
 export * from "./header";
 export * from "./input";
@@ -10,3 +11,4 @@ export * from "./map";
 export * from "./menu";
 export * from "./menu-icon";
 export * from "./search";
+export * from "./SearchInput";

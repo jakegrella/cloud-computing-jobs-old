@@ -1,0 +1,19 @@
+.searchInput {
+  display: inline-flex;
+  background: var(--gray);
+  border-radius: 5px;
+  padding: 0 0.25rem 0 0.5rem;
+  height: 3rem;
+  width: 100%;
+}
+
+.searchInput_input {
+  background: none;
+  border: none;
+  flex-grow: 2;
+}
+
+.searchInput_button {
+  background: none;
+  border: none;
+}
