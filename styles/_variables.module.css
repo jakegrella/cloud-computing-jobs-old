@@ -1,10 +1,8 @@
 :root {
   /* colors */
   --black: #000000;
-  --dark-gray: #1d1d1f;
-  --gray: #4a4a4b;
-  --light-gray: #e2e2e2;
-  --dark-white: #f5f5f7;
+  --gray: #151718; /* Radix Slate 1 */
+  --light-gray: #9ba1a6; /* Radix Slate 11 */
   --white: #ffffff;
   --primary: #0171e3;
   --primary-light: #208ffe;
@@ -16,4 +14,31 @@
   --xlarge: 80em; /* 1280px */
   --huge: 90em; /* 1440px */
   --xhuge: 125em; /* 2000px */
+
+  /* font weights */
+  --regular: 400;
+
+  /* fonts */
+  --h1-size: 1.5rem; /* 24px */
+  --h1-weight: var(--regular);
+  --h2-size: 1rem; /* 16px */
+  --h2-weight: var(--regular);
+  --h3-size: 0.875rem; /* 14px */
+  --h3-weight: var(--regular);
+  --h4-size: 0.75rem; /* 12px */
+  --h4-weight: var(--regular);
+  --p-size: 0.75rem; /* 12px */
+  --p-weight: var(--regular);
+
+  --border-radius: 5px;
+}
+
+/* large */
+@media only screen and (min-width: 48em) {
+  :root {
+    --h1-size: 2.25rem; /* 36px */
+    --h2-size: 1.25rem; /* 20px */
+    --h3-size: 1rem; /* 16px */
+    --h4-size: 0.875rem; /* 14px */
+  }
 }

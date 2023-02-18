@@ -1,8 +1,8 @@
 .card {
   width: 100%;
-  border: 1px solid var(--dark-gray);
+  border: 1px solid var(--gray);
   border-radius: 10px;
-  background: var(--dark-gray);
+  background: var(--gray);
   margin-bottom: 0.5rem;
   padding: 0.5rem 0.75rem 0.75rem 0.75rem;
 }

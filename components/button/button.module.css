@@ -12,7 +12,7 @@
 }
 
 .button:disabled {
-  background: var(--dark-gray);
+  background: var(--gray);
   color: var(--gray);
   cursor: not-allowed;
 }
