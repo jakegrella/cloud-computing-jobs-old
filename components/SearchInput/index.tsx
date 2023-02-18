@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { MagnifyingGlass } from "phosphor-react";
 import { useStore } from "../../store";
 import styles from "./searchInput.module.css";
-import Link from "next/link";
 
 // Use Google Places API - Place Autocomplete to show user a list of possible locations
 async function fetchSearchSuggestions(searchInputValue: string) {
@@ -22,6 +21,7 @@ export function SearchInput() {
   const [setInitHomeMap] = useStore((state) => [state.setInitHomeMap]);
 
   const [searchInputValue, setSearchInputValue] = useState<string>("");
+  const [searchInputActive, setSearchInputActive] = useState<boolean>(false);
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
 
   const router = useRouter();
@@ -69,7 +69,6 @@ export function SearchInput() {
       }
 
       router.push(`/locations/${encodedLocation}`);
-      // TODO: send to map page
     } catch (err) {
       // TODO: give error message as tip under input
       console.error(err.message || "An error occurred");
@@ -85,17 +84,21 @@ export function SearchInput() {
     <form className={styles.searchInput} onSubmit={handleSearch}>
       <input
         className={styles.searchInput_input}
-        placeholder="Enter a neighborhood, city, or ZIP code"
-        value={searchInputValue}
-        onChange={(event) => setSearchInputValue(event.target.value)}
-        autoComplete="off"
         name="searchInput"
+        value={searchInputValue}
+        placeholder="Enter a neighborhood, city, or ZIP code"
+        autoComplete="off"
+        onChange={(event) => setSearchInputValue(event.target.value)}
+        onFocus={() => setSearchInputActive(true)}
+        onBlur={() => setSearchInputActive(false)}
       />
-      {!!searchSuggestions.length && (
+      {!!searchSuggestions.length && searchInputActive && (
         <ul className={styles.searchInput_searchSuggestions}>
           {searchSuggestions.map((searchSuggestion) => (
             <li key={searchSuggestion}>
-              <p onClick={handleSuggestionClick}>{searchSuggestion}</p>
+              <p onClick={handleSuggestionClick} className={styles.fakeLink}>
+                {searchSuggestion}
+              </p>
             </li>
           ))}
         </ul>
