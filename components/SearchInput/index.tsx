@@ -105,7 +105,8 @@ export function SearchInput() {
       {!!searchSuggestions.length && searchInputActive && (
         <ul className={styles.searchInput_searchSuggestions}>
           {searchSuggestions.map((searchSuggestion) => (
-            <li key={searchSuggestion}>
+            <li key={searchSuggestion} tabIndex={0}>
+              {/* add tabIndex to help with form onBlur*/}
               <p onClick={handleSuggestionClick} className={styles.fakeLink}>
                 {searchSuggestion}
               </p>
