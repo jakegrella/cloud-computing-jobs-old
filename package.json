@@ -10,6 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@next/font": "^13.1.6",
     "@react-google-maps/api": "^2.17.0",
     "@stripe/react-stripe-js": "^1.15.0",
     "@stripe/stripe-js": "^1.44.1",

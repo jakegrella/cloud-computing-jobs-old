@@ -5,9 +5,9 @@
 }
 
 .inputComponent input {
-  border: 1px solid var(--dark-gray);
+  border: 1px solid var(--gray);
   border-radius: 10px;
-  background: var(--dark-gray);
+  background: var(--gray);
   color: var(--white);
   position: relative;
   height: 100%;
