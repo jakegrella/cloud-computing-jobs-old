@@ -47,14 +47,13 @@ export function SearchInput() {
   async function handleSearch(event) {
     event.preventDefault();
 
-    const defaultLocation = "San Francisco";
-    const location = searchInputValue || defaultLocation;
-
-    if (!searchInputValue) setSearchInputValue(defaultLocation);
+    if (!searchInputValue) setSearchInputValue("San Francisco");
 
     // make call to api, send city string, receive coordinates
     try {
-      const encodedLocation = encodeURIComponent(location).trim().toLowerCase();
+      const encodedLocation = encodeURIComponent(searchInputValue)
+        .trim()
+        .toLowerCase();
 
       const res = await (
         await fetch(`/api/locations/geolocation?search=${encodedLocation}`)
@@ -77,6 +76,11 @@ export function SearchInput() {
     }
   }
 
+  function handleSuggestionClick(event) {
+    setSearchInputValue(event.target.innerText);
+    handleSearch(event);
+  }
+
   return (
     <form className={styles.searchInput} onSubmit={handleSearch}>
       <input
@@ -84,12 +88,14 @@ export function SearchInput() {
         placeholder="Enter a neighborhood, city, or ZIP code"
         value={searchInputValue}
         onChange={(event) => setSearchInputValue(event.target.value)}
+        autoComplete="off"
+        name="searchInput"
       />
       {!!searchSuggestions.length && (
         <ul className={styles.searchInput_searchSuggestions}>
           {searchSuggestions.map((searchSuggestion) => (
             <li key={searchSuggestion}>
-              <Link href="/">{searchSuggestion}</Link>
+              <p onClick={handleSuggestionClick}>{searchSuggestion}</p>
             </li>
           ))}
         </ul>
