@@ -2,20 +2,46 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { MagnifyingGlass } from "phosphor-react";
 import { useStore } from "../../store";
-// import { ILocation } from "../../types";
 import styles from "./searchInput.module.css";
+import Link from "next/link";
+
+// Use Google Places API - Place Autocomplete to show user a list of possible locations
+async function fetchSearchSuggestions(searchInputValue: string) {
+  const result = await (
+    await fetch(
+      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchInputValue}&components=country:us&region=us&types=neighborhood|locality|sublocality|administrative_area_level_1|postal_code&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_GEOLOCATION_API_KEY}`
+    )
+  ).json();
+
+  return result.predictions.map((prediction) => prediction.description);
+}
+
+let timeout: NodeJS.Timeout;
 
 export function SearchInput() {
   const [setInitHomeMap] = useStore((state) => [state.setInitHomeMap]);
 
   const [searchInputValue, setSearchInputValue] = useState<string>("");
-  //   const [searchSuggestions, setSearchSuggestions] = useState<ILocation[]>([]);
+  const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
 
   const router = useRouter();
 
   useEffect(() => {
     // update search suggestions
-    console.log(searchInputValue);
+    if (searchInputValue.length >= 3) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        (async () => {
+          // make request to API route
+          const results: string[] = await fetchSearchSuggestions(
+            searchInputValue
+          );
+          setSearchSuggestions(results);
+        })();
+      }, 250);
+    }
+
+    if (!searchInputValue) setSearchSuggestions([]);
   }, [searchInputValue]);
 
   async function handleSearch(event) {
@@ -53,13 +79,21 @@ export function SearchInput() {
 
   return (
     <form className={styles.searchInput} onSubmit={handleSearch}>
-      {/* TODO: search suggestions */}
       <input
         className={styles.searchInput_input}
-        placeholder="Enter a city"
+        placeholder="Enter a neighborhood, city, or ZIP code"
         value={searchInputValue}
         onChange={(event) => setSearchInputValue(event.target.value)}
       />
+      {!!searchSuggestions.length && (
+        <ul className={styles.searchInput_searchSuggestions}>
+          {searchSuggestions.map((searchSuggestion) => (
+            <li key={searchSuggestion}>
+              <Link href="/">{searchSuggestion}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
       <button type="submit" className={styles.searchInput_button}>
         <MagnifyingGlass />
       </button>
