@@ -26,13 +26,12 @@ export function SearchInput() {
 
   const router = useRouter();
 
+  // update search suggestions
   useEffect(() => {
-    // update search suggestions
     if (searchInputValue.length >= 3) {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         (async () => {
-          // make request to API route
           const results: string[] = await fetchSearchSuggestions(
             searchInputValue
           );
@@ -41,19 +40,21 @@ export function SearchInput() {
       }, 250);
     }
 
-    if (!searchInputValue) setSearchSuggestions([]);
+    if (!searchInputValue || searchInputValue.length < 3)
+      setSearchSuggestions([]);
   }, [searchInputValue]);
 
-  async function handleSearch(event) {
+  // make call to API, send location, receive geo coordinates
+  async function handleSearch(event, locationParam: string = "") {
     event.preventDefault();
 
-    if (!searchInputValue) setSearchInputValue("San Francisco");
+    const location =
+      locationParam ||
+      event.target.elements.searchInput.value ||
+      "San Francisco";
 
-    // make call to api, send city string, receive coordinates
     try {
-      const encodedLocation = encodeURIComponent(searchInputValue)
-        .trim()
-        .toLowerCase();
+      const encodedLocation = encodeURIComponent(location).trim().toLowerCase();
 
       const res = await (
         await fetch(`/api/locations/geolocation?search=${encodedLocation}`)
@@ -69,19 +70,30 @@ export function SearchInput() {
       }
 
       router.push(`/locations/${encodedLocation}`);
+      setSearchInputValue("");
     } catch (err) {
       // TODO: give error message as tip under input
       console.error(err.message || "An error occurred");
     }
   }
 
-  function handleSuggestionClick(event) {
+  async function handleSuggestionClick(event) {
     setSearchInputValue(event.target.innerText);
-    handleSearch(event);
+    handleSearch(event, event.target.innerText);
+  }
+
+  function handleFormBlur(event) {
+    if (!event.currentTarget.contains(event.relatedTarget))
+      setSearchInputActive(false);
   }
 
   return (
-    <form className={styles.searchInput} onSubmit={handleSearch}>
+    <form
+      className={styles.searchInput}
+      onSubmit={handleSearch}
+      onFocus={() => setSearchInputActive(true)}
+      onBlur={handleFormBlur}
+    >
       <input
         className={styles.searchInput_input}
         name="searchInput"
@@ -89,8 +101,6 @@ export function SearchInput() {
         placeholder="Enter a neighborhood, city, or ZIP code"
         autoComplete="off"
         onChange={(event) => setSearchInputValue(event.target.value)}
-        onFocus={() => setSearchInputActive(true)}
-        onBlur={() => setSearchInputActive(false)}
       />
       {!!searchSuggestions.length && searchInputActive && (
         <ul className={styles.searchInput_searchSuggestions}>
