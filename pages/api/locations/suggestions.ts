@@ -13,6 +13,9 @@ export default async function handler(
       )
     ).json();
 
+    if (response.error_message || response.status === "REQUEST_DENIED")
+      throw new Error(response.error_message || response.status);
+
     res
       .status(200)
       .json(response.predictions.map((prediction) => prediction.description));
