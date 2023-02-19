@@ -8,7 +8,9 @@ import styles from "./searchInput.module.css";
 async function fetchSearchSuggestions(searchInputValue: string) {
   const result = await (
     await fetch(
-      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchInputValue}&components=country:us&region=us&types=neighborhood|locality|sublocality|administrative_area_level_1|postal_code&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_GEOLOCATION_API_KEY}`
+      encodeURI(
+        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchInputValue}&components=country:us&region=us&types=neighborhood|locality|sublocality|administrative_area_level_1|postal_code&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_GEOLOCATION_API_KEY}`
+      )
     )
   ).json();
 
