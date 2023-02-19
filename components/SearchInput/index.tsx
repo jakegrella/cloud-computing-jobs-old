@@ -6,15 +6,11 @@ import styles from "./searchInput.module.css";
 
 // Use Google Places API - Place Autocomplete to show user a list of possible locations
 async function fetchSearchSuggestions(searchInputValue: string) {
-  const result = await (
-    await fetch(
-      encodeURI(
-        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchInputValue}&components=country:us&region=us&types=neighborhood|locality|sublocality|administrative_area_level_1|postal_code&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_GEOLOCATION_API_KEY}`
-      )
-    )
+  const res = await (
+    await fetch(`/api/locations/suggestions?input=${searchInputValue}`)
   ).json();
 
-  return result.predictions.map((prediction) => prediction.description);
+  return res;
 }
 
 let timeout: NodeJS.Timeout;
