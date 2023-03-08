@@ -104,7 +104,6 @@ export default function JobsByLocation() {
           <Map
             center={initHomeMap.center}
             zoom={initHomeMap.zoom}
-            cardClassName={styles.home_content_mapCard}
             locations={homeMapLocations}
             showMarkerInfoOverlay={
               width < 768 && homePageView === "map" ? true : false

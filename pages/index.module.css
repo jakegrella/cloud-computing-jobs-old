@@ -1,47 +1,25 @@
-/* small and under */
-.landing {
+.home {
   display: flex;
-  flex-flow: column nowrap;
-  margin-top: 3rem;
+  flex-flow: row nowrap;
+  height: calc(100vh - 4rem);
+  overflow: hidden;
 }
 
-.landing_search {
-  width: 100%;
+.dataContainer {
+  /* border: 2px solid red; */
+  width: 400px;
+  margin-right: 1rem;
+  max-height: 100%;
+  overflow-y: scroll;
 }
 
-.landing_newJobs {
+.jobsContainer {
+  margin-top: 1rem;
+}
+
+.mapContainer {
+  flex-grow: 1;
   height: 100%;
-  width: 100%;
-  margin-top: 2rem;
-}
-
-.landing_newJobs_jobs {
-  flex-direction: column;
-  overflow: auto;
-  height: 100%;
-}
-
-/* large */
-@media only screen and (min-width: 48em) {
-  .landing {
-    flex-flow: row nowrap;
-    margin-top: 7.5rem;
-    height: calc(100vh - 14.25rem); /* 5rem = header + top/bottom padding */
-  }
-
-  .landing_search {
-    flex-grow: 2;
-  }
-
-  .landing_newJobs {
-    flex: 1;
-    min-width: 20rem;
-    margin-left: 2rem;
-    margin-top: 1.5rem;
-  }
-
-  .landing_footer {
-    position: absolute;
-    bottom: 1.5rem;
-  }
+  position: relative;
+  padding-bottom: 1rem;
 }

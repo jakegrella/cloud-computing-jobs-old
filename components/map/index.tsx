@@ -12,7 +12,6 @@ import { ILocation } from "../../types";
 
 let boundsChangedTimeout: NodeJS.Timeout;
 interface IMapProps extends GoogleMapProps {
-  cardClassName?: string;
   locations?: ILocation[];
   showMarkerInfoOverlay?: boolean;
 }
@@ -20,8 +19,6 @@ interface IMapProps extends GoogleMapProps {
 export function Map({
   center,
   zoom,
-  cardClassName,
-  // mapContainerClassName,
   locations,
   showMarkerInfoOverlay = false,
 }: IMapProps) {
@@ -60,10 +57,9 @@ export function Map({
   }
 
   return (
-    <Card unpadded className={cardClassName}>
+    <div className={styles.mapContainer}>
       {isLoaded && (
         <GoogleMap
-          mapContainerClassName={styles.map}
           center={center} // init
           zoom={zoom} // init
           onLoad={(e) => setMap(e)}
@@ -107,6 +103,6 @@ export function Map({
             ))}
         </GoogleMap>
       )}
-    </Card>
+    </div>
   );
 }
