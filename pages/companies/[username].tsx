@@ -109,7 +109,6 @@ export default function Company() {
         <Map
           center={initMap.center}
           zoom={initMap.zoom}
-          cardClassName={styles.company_officeMap}
           mapContainerClassName={styles.map}
           locations={company.locations}
         />

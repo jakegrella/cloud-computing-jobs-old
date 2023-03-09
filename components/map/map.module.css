@@ -1,5 +1,8 @@
-.map {
-  width: 100%;
+.mapContainer {
+  height: 100%;
+}
+
+.mapContainer > div {
   height: 100%;
   border-radius: 10px;
 }

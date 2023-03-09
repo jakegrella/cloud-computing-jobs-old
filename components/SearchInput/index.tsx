@@ -67,8 +67,8 @@ export function SearchInput() {
         });
       }
 
-      router.push(`/locations/${encodedLocation}`);
       setSearchInputValue("");
+      setSearchInputActive(false);
     } catch (err) {
       // TODO: give error message as tip under input
       console.error(err.message || "An error occurred");
