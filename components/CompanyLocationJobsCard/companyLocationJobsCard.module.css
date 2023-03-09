@@ -20,6 +20,7 @@
 
 .jobCard_header_logo {
   margin-right: 0.5rem;
+  border-radius: 5px;
 }
 
 .jobCard_quickInfo {
