@@ -111,7 +111,7 @@ export default function JobsByLocation() {
           />
 
           <Card unpadded className={styles.home_content_jobList}>
-            {homeMapLocations.length ? (
+            {!!homeMapLocations.length ? (
               [...homeMapLocationsWithJobs, ...homeMapLocationsWithoutJobs].map(
                 (l) => <ListItem key={l.id} location={l} />
               )

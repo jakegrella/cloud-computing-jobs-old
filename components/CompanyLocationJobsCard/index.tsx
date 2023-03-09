@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Clock, GlobeHemisphereWest, Money } from "phosphor-react";
 import { IJob, ILocation } from "../../types";
 import { relativeDate, formatPay } from "../../utils";
@@ -23,9 +22,9 @@ export function CompanyLocationJobsCard({ location }: { location: ILocation }) {
       </div>
       {location.jobs.map((job: IJob) => (
         <div key={job.id}>
-          <Link href={`/jobs/${job.id}`}>
+          <a href={job.posting} target="_blank" rel="noopener noreferrer">
             <h3>{job.title}</h3>
-          </Link>
+          </a>
           <div className={styles.jobCard_quickInfo}>
             <div className={styles.jobCard_quickInfo_item}>
               <Clock className={styles.jobCard_quickInfo_item_icon} />

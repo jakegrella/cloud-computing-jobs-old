@@ -110,7 +110,6 @@ export default function Home() {
             );
             setHomeMapLocationsWithoutJobs(mappableLocationsWithoutJobs);
           } catch (err) {
-            console.log("hit error");
             console.error(err.message);
           }
         }
@@ -132,9 +131,19 @@ export default function Home() {
           <SearchInput />
 
           <div className={styles.jobsContainer}>
-            {homeMapLocationsWithJobs.map((location: ILocation) => (
-              <CompanyLocationJobsCard key={location.id} location={location} />
-            ))}
+            {homeMapLocationsWithJobs.length ? (
+              homeMapLocationsWithJobs.map((location: ILocation) => (
+                <CompanyLocationJobsCard
+                  key={location.id}
+                  location={location}
+                />
+              ))
+            ) : (
+              <p className={styles.noneFound}>
+                No companies found in mapped region. Try searching in a larger
+                area or changing filters.
+              </p>
+            )}
           </div>
         </div>
         <div className={styles.mapContainer}>

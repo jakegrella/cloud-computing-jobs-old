@@ -8,8 +8,6 @@ export function Header() {
   return (
     <header className={styles.header}>
       <Logo />
-      <MenuIcon />
-      {isMenuVisible && <Menu />}
     </header>
   );
 }
