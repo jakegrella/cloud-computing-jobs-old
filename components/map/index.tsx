@@ -12,7 +12,6 @@ import { ILocation } from "../../types";
 
 let boundsChangedTimeout: NodeJS.Timeout;
 interface IMapProps extends GoogleMapProps {
-  cardClassName?: string;
   locations?: ILocation[];
   showMarkerInfoOverlay?: boolean;
 }
@@ -20,14 +19,12 @@ interface IMapProps extends GoogleMapProps {
 export function Map({
   center,
   zoom,
-  cardClassName,
-  // mapContainerClassName,
   locations,
   showMarkerInfoOverlay = false,
 }: IMapProps) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
   });
 
   const [map, setMap, setMapBounds] = useStore((state) => [
@@ -60,10 +57,9 @@ export function Map({
   }
 
   return (
-    <Card unpadded className={cardClassName}>
+    <div className={styles.mapContainer}>
       {isLoaded && (
         <GoogleMap
-          mapContainerClassName={styles.map}
           center={center} // init
           zoom={zoom} // init
           onLoad={(e) => setMap(e)}
@@ -97,16 +93,16 @@ export function Map({
                 clickable={showMarkerInfoOverlay ? true : false}
                 icon={{
                   path: "M0 4C-2.25 4-4 2.25-4 0-4-2.25-2.25-4 0-4 2.25-4 4-2.25 4 0 4 2.25 2.25 4 0 4Z",
-                  fillColor: location.jobs?.length ? "red" : "gray",
+                  fillColor: location.jobs?.length ? "#0190FF" : "gray",
                   fillOpacity: 1,
                   scale: 1.25,
-                  strokeColor: location.jobs?.length ? "red" : "gray",
+                  strokeColor: location.jobs?.length ? "#0190FF" : "gray",
                   strokeWeight: 2,
                 }}
               />
             ))}
         </GoogleMap>
       )}
-    </Card>
+    </div>
   );
 }

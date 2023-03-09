@@ -1,6 +1,7 @@
 export * from "./button";
 export * from "./card";
 export * from "./CompanyJobCard";
+export * from "./CompanyLocationJobsCard";
 export * from "./head";
 export * from "./header";
 export * from "./input";
