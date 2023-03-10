@@ -48,7 +48,7 @@ export const useStore = create<IState>((set) => ({
   setMap: (map) => set(() => ({ map })),
   mapBounds: undefined,
   setMapBounds: (mapBounds) => set(() => ({ mapBounds })),
-  homePageView: "map",
+  homePageView: "both",
   setHomePageView: (homePageView) => set(() => ({ homePageView })),
   stripeState: {
     clientSecret: "",
