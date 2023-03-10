@@ -44,6 +44,7 @@
 .buttonGroup button {
   background: none;
   border: none;
+  color: var(--white);
   height: 2rem;
   width: 50%;
   margin: 0.25rem;
@@ -81,7 +82,8 @@
   .dataContainer {
     margin-right: 0;
     width: 100%;
-    min-width: none;
+    /* min-width: none; */
+    min-width: min-content;
   }
 
   .mapContainer {
