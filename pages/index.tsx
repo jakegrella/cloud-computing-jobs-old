@@ -18,6 +18,27 @@ import styles from "./index.module.css";
 
 let timeout: NodeJS.Timeout;
 
+function ViewButtonGroup() {
+  const [homePageView, setHomePageView] = useStore((state) => [
+    state.homePageView,
+    state.setHomePageView,
+  ]);
+
+  function handleClick({ target }) {
+    setHomePageView(target.innerHTML.toLowerCase());
+  }
+
+  return (
+    <div className={styles.buttonGroup}>
+      <div
+        className={`${styles.buttonBackground} ${styles[homePageView]}`}
+      ></div>
+      <button onClick={handleClick}>Map</button>
+      <button onClick={handleClick}>List</button>
+    </div>
+  );
+}
+
 export default function Home() {
   const [
     initHomeMap,
@@ -29,6 +50,7 @@ export default function Home() {
     setHomeMapLocationsWithoutJobs,
     setJobs,
     homePageView,
+    setHomePageView,
     mapBounds,
   ] = useStore((state) => [
     state.initHomeMap,
@@ -40,6 +62,7 @@ export default function Home() {
     state.setHomeMapLocationsWithoutJobs,
     state.setJobs,
     state.homePageView,
+    state.setHomePageView,
     state.mapBounds,
   ]);
   const [newJobs, setNewJobs] = useState([]);
@@ -71,7 +94,6 @@ export default function Home() {
 
   // on update to map region
   useEffect(() => {
-    console.log("mapBounds", mapBounds);
     if (mapBounds !== undefined) {
       // use timeout to prevent multiple fetches
       clearTimeout(timeout);
@@ -87,7 +109,6 @@ export default function Home() {
           // fetch jobs in current map region
           try {
             const mappableLocations = await fetchMappableLocations(bounds);
-            console.log("mappableLocations", mappableLocations);
             // set state for all mappable locations
             setHomeMapLocations(mappableLocations);
 
@@ -101,7 +122,6 @@ export default function Home() {
             mappableLocationsWithJobs.forEach((location) =>
               mappableJobs.push(...location.jobs)
             );
-            console.log("mappableJobs", mappableJobs);
             setJobs(mappableJobs);
 
             // filter for only locations without jobs
@@ -130,7 +150,15 @@ export default function Home() {
         <div className={styles.dataContainer}>
           <SearchInput />
 
-          <div className={styles.jobsContainer}>
+          {width <= 768 && <ViewButtonGroup />}
+
+          <div
+            className={styles.jobsContainer}
+            style={{
+              display:
+                width > 768 || homePageView === "list" ? "inherit" : "none",
+            }}
+          >
             {homeMapLocationsWithJobs.length ? (
               homeMapLocationsWithJobs.map((location: ILocation) => (
                 <CompanyLocationJobsCard
@@ -146,7 +174,13 @@ export default function Home() {
             )}
           </div>
         </div>
-        <div className={styles.mapContainer}>
+
+        <div
+          className={styles.mapContainer}
+          style={{
+            display: width > 768 || homePageView !== "list" ? "unset" : "none",
+          }}
+        >
           <Map
             center={initHomeMap.center}
             zoom={initHomeMap.zoom}
