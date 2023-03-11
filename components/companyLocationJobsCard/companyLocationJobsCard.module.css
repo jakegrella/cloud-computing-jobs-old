@@ -1,0 +1,39 @@
+.jobCard {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: var(--gray);
+  border-radius: var(--border-radius);
+}
+
+.jobCard_header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.jobCard_header_company {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.jobCard_header_logo {
+  margin-right: 0.5rem;
+  border-radius: 5px;
+}
+
+.jobCard_quickInfo {
+  display: flex;
+}
+
+.jobCard_quickInfo_item {
+  display: flex;
+  align-items: center;
+  margin-right: 0.75rem;
+}
+
+.jobCard_quickInfo_item_icon {
+  margin-right: 0.25rem;
+  color: var(--light-gray);
+}
