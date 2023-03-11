@@ -1,0 +1,15 @@
+.banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  background: var(--gray);
+}
+
+.buttons > button {
+  margin-left: 1rem;
+}

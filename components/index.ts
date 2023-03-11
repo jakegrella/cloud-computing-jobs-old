@@ -1,6 +1,7 @@
 export * from "./button";
 export * from "./card";
 export * from "./companyLocationJobsCard";
+export * from "./cookieBanner";
 export * from "./head";
 export * from "./header";
 export * from "./input";
@@ -8,6 +9,4 @@ export * from "./listItem";
 export * from "./loadingIcon";
 export * from "./logo";
 export * from "./map";
-export * from "./menu";
-export * from "./menuIcon";
 export * from "./searchInput";

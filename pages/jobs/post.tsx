@@ -10,8 +10,8 @@ import {
   fetchSimilarCompanies,
 } from "../../utils/httpRequests";
 import { ICompany, ILocation } from "../../types";
-import styles from "./jobs-post.module.css";
 import { formatLocation } from "../../utils/formatLocation";
+import styles from "./post.module.css";
 
 export default function PostAJob() {
   const [

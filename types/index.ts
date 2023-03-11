@@ -15,8 +15,6 @@ export interface IState {
   setStripeState: (stripe: IStripeState) => void;
   previewJob: IJob;
   setPreviewJob: (previewJob: IJob) => void;
-  isMenuVisible: boolean;
-  setIsMenuVisible: (isVisible: boolean) => void;
   jobs: IJob[];
   setJobs: (jobs: IJob[]) => void;
   map: any;
