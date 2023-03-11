@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { CaretDown, CaretUp } from "phosphor-react";
 import { Button, Card, Head } from "../../components";
 import {
   formatEquity,
@@ -13,8 +15,6 @@ import {
 import { fetchJob } from "../../utils/httpRequests";
 import { IJob } from "../../types";
 import styles from "./job.module.css";
-import Image from "next/image";
-import { CaretDown, CaretUp } from "phosphor-react";
 
 export default function Job() {
   const router = useRouter();

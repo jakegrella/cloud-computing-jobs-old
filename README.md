@@ -4,13 +4,9 @@ Cloud Computing Jobs aims to be the best job board for cloud-focused software en
 
 ## About The Repo
 
-This repository contains all code related to cloudcomputingjobs.com: the frontend, API, and database configuration.
+This repository includes the code for the website frontend, API, and database schema.
 
 ## UI
-
-The UI is the point of contact for our users. The UI is being developed mobile-first, and accessibility is kept top of mind. The app is deployed using Vercel because of how quickly and easily it allows for changes to be pushed.
-
-The site was styled dark-mode-first™️, but work is being done to develop a light mode as well to match user display preference.
 
 Technology:
 
@@ -42,9 +38,7 @@ Technology:
 
 ## Backend
 
-Backend code lives in the `/prisma` directory. Prisma is an ORM tool that affords a great developer experience, especially for creating a database schema.
-
-This project utilizes a MySQL database.
+Backend code lives in the `/prisma` directory.
 
 Technology:
 

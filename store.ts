@@ -40,8 +40,6 @@ export const useStore = create<IState>((set) => ({
     locations: [],
   },
   setPreviewJob: (previewJob) => set(() => ({ previewJob })),
-  isMenuVisible: false,
-  setIsMenuVisible: (isMenuVisible) => set(() => ({ isMenuVisible })),
   jobs: [],
   setJobs: (jobs) => set(() => ({ jobs })),
   map: undefined,

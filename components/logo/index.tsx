@@ -3,14 +3,12 @@ import { useStore } from "../../store";
 import styles from "./logo.module.css";
 
 export function Logo() {
-  const [setIsMenuVisible, setJobs, setHomeMapLocations] = useStore((state) => [
-    state.setIsMenuVisible,
+  const [setJobs, setHomeMapLocations] = useStore((state) => [
     state.setJobs,
     state.setHomeMapLocations,
   ]);
 
   function handleLogoClick() {
-    setIsMenuVisible(false);
     setJobs([]);
     setHomeMapLocations([]);
   }

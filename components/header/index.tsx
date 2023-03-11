@@ -1,13 +1,16 @@
-import { Logo, Menu, MenuIcon } from "../../components";
-import { useStore } from "../../store";
+import Link from "next/link";
+import { Button, Logo } from "../../components";
 import styles from "./header.module.css";
 
 export function Header() {
-  const isMenuVisible = useStore((state) => state.isMenuVisible);
+  function handlePostAJobButtonClick() {}
 
   return (
     <header className={styles.header}>
       <Logo />
+      <Button onClick={handlePostAJobButtonClick}>
+        <Link href="/jobs/post">Post a Job — $99</Link>
+      </Button>
     </header>
   );
 }
