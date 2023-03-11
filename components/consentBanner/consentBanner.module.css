@@ -13,3 +13,9 @@
 .buttons > button {
   margin-left: 1rem;
 }
+
+.x {
+  position: absolute;
+  right: 0.25rem;
+  top: 0.25rem;
+}
