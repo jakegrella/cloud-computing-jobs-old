@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  CompanyJobCard,
-  CompanyLocationJobsCard,
-  Head,
-  Map,
-  SearchInput,
-} from "../components";
+import { CompanyLocationJobsCard, Head, Map, SearchInput } from "../components";
 import { useStore } from "../store";
 import { IJob, ILocation } from "../types";
 import { useWindowDimensions } from "../utils/hooks";

@@ -3,8 +3,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Payment } from "../payment";
 import { Button } from "../../button";
 import { Card } from "../../card";
-import styles from "../../../pages/jobs/jobs-post.module.css";
 import { useStore } from "../../../store";
+import styles from "../../../pages/jobs/post.module.css";
 
 export function CheckoutForm() {
   const stripeState = useStore((state) => state.stripeState);
@@ -17,7 +17,7 @@ export function CheckoutForm() {
       <Card>
         <div className="payment_title">
           <h2>Payment</h2>
-          <h2>Total: $50.00</h2>
+          <h2>Total: 99.00</h2>
         </div>
         <Card>
           {stripeState.clientSecret && (
