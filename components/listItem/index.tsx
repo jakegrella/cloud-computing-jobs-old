@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ListItemHeader } from "./list-item-header";
-import styles from "./list-item.module.css";
+import { ListItemHeader } from "./listItemHeader";
+import styles from "./listItem.module.css";
 
 export function ListItem({
   job = undefined,

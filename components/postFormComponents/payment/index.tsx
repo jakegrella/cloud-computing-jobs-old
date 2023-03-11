@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { Button } from "../../button";
 import { useStore } from "../../../store";
 import { addJob } from "../../../utils/httpRequests";
-import { LoadingIcon } from "../../loading-icon";
+import { LoadingIcon } from "../../loadingIcon";
 
 export function Payment() {
   const stripe = useStripe();

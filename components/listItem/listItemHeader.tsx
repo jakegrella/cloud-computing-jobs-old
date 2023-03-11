@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./list-item.module.css";
+import styles from "./listItem.module.css";
 
 interface IListItemHeaderProps {
   imageSrc: string;

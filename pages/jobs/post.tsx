@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { Button, Card, Input } from "../../components";
 import { validateForm } from "../../utils/postFormHelpers/validateForm";
-import { CheckoutForm } from "../../components/postFormComponents/checkout-form";
-import { NewLocationSection } from "../../components/postFormComponents/new-location-section";
+import { CheckoutForm } from "../../components/postFormComponents/checkoutForm";
+import { NewLocationSection } from "../../components/postFormComponents/newLocationSection";
 import { useStore } from "../../store";
 import {
   createPaymentIntent,

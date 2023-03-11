@@ -1,5 +1,5 @@
 import { useStore } from "../../store";
-import styles from "./menu-icon.module.css";
+import styles from "./menuIcon.module.css";
 
 export function MenuIcon() {
   const isMenuVisible = useStore((state) => state.isMenuVisible);
