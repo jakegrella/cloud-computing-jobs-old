@@ -1,39 +1,36 @@
-.jobCard {
+.company-location-card {
   padding: 1rem;
   margin-bottom: 1rem;
   background: var(--gray);
   border-radius: var(--border-radius);
 }
 
-.jobCard_header {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.5rem;
-}
-
-.jobCard_header_company {
+.company-location-card__header {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  margin-bottom: 0.5rem;
 }
 
-.jobCard_header_logo {
+.company-location-card__header__company-logo {
   margin-right: 0.5rem;
   border-radius: 5px;
 }
 
-.jobCard_quickInfo {
+.company-location-card__job {
+  margin-top: 0.5rem;
+}
+
+.company-location-card__job__info {
   display: flex;
 }
 
-.jobCard_quickInfo_item {
+.company-location-card__job__info__item {
   display: flex;
   align-items: center;
   margin-right: 0.75rem;
 }
 
-.jobCard_quickInfo_item_icon {
+.company-location-card__job__info__item svg {
   margin-right: 0.25rem;
   color: var(--light-gray);
 }
