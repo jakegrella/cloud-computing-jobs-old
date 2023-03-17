@@ -1,6 +1,6 @@
+import { useEffect, useState } from "react";
 import { hasCookie, setCookie } from "cookies-next";
 import { X } from "phosphor-react";
-import { useEffect, useState } from "react";
 import { Button } from "../button";
 import styles from "./consentBanner.module.css";
 

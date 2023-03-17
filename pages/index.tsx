@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CompanyLocationJobsCard, Head, Map, SearchInput } from "../components";
+import { CompanyLocationCard, Head, Map, SearchInput } from "../components";
 import { useStore } from "../store";
 import { IJob, ILocation } from "../types";
 import { useWindowDimensions } from "../utils/hooks";
@@ -155,15 +155,13 @@ export default function Home() {
           >
             {homeMapLocationsWithJobs.length ? (
               homeMapLocationsWithJobs.map((location: ILocation) => (
-                <CompanyLocationJobsCard
-                  key={location.id}
-                  location={location}
-                />
+                <CompanyLocationCard key={location.id} location={location} />
               ))
             ) : (
-              <p className={styles.noneFound}>
-                No companies found in mapped region. Try searching in a larger
-                area or changing filters.
+              <p>
+                No companies found in mapped region.
+                <br />
+                Try searching in a larger area or changing filters.
               </p>
             )}
           </div>
