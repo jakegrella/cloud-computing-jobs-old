@@ -158,9 +158,10 @@ export default function Home() {
                 <CompanyLocationCard key={location.id} location={location} />
               ))
             ) : (
-              <p className={styles.noneFound}>
-                No companies found in mapped region. Try searching in a larger
-                area or changing filters.
+              <p>
+                No companies found in mapped region.
+                <br />
+                Try searching in a larger area or changing filters.
               </p>
             )}
           </div>
