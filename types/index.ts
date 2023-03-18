@@ -70,6 +70,7 @@ export interface IJob {
   company?: ICompany;
   companyId?: number; // used by prisma for relation
   locations?: ILocation[];
+  workplaceType: "in-office" | "hybrid" | "remote" | string;
 }
 
 export interface ILocation {
