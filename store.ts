@@ -38,6 +38,7 @@ export const useStore = create<IState>((set) => ({
       overview: "",
     },
     locations: [],
+    workplaceType: "",
   },
   setPreviewJob: (previewJob) => set(() => ({ previewJob })),
   jobs: [],
