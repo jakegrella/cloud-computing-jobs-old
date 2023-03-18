@@ -59,7 +59,6 @@ export default function Home() {
     state.setHomePageView,
     state.mapBounds,
   ]);
-  const [newJobs, setNewJobs] = useState([]);
 
   const { width } = useWindowDimensions();
 

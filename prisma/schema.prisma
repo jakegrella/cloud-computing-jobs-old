@@ -13,7 +13,7 @@ model Job {
   posting           String
   open              Boolean    @default(true)
   published         Boolean    @default(false)
-  datePublished     DateTime?  // needs to be stored in UTC
+  datePublished     DateTime?  // YYYY-MM-DD 00:00:00, use UTC time
   description       String     @db.Text
   responsibilities  String     @db.Text
   qualifications    String     @db.Text
@@ -27,6 +27,7 @@ model Job {
   company           Company    @relation(fields: [companyId], references: [id])
   companyId         Int
   locations         Location[]
+  workplaceType     String      @default("in-office")
 }
 
 model Company {

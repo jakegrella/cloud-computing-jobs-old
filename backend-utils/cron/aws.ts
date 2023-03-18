@@ -125,6 +125,7 @@ export async function aws(jobs: IAWSJob[]) {
           companyId: 0,
         },
       ],
+      workplaceType: "in-office",
     };
 
     return formattedJob;
