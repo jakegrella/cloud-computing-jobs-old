@@ -33,11 +33,16 @@ async function locationSetup(locations: ILocation[]) {
 export async function addJob(job: IJob) {
   return prisma.job.create({
     data: {
+      published: job.published,
+      datePublished: job.published ? new Date().toISOString() : null,
       title: job.title,
       posting: job.posting,
-      description: job.description,
-      responsibilities: job.responsibilities,
-      qualifications: job.qualifications,
+      // description: job.description,
+      description: "",
+      // responsibilities: job.responsibilities,
+      responsibilities: "",
+      // qualifications: job.qualifications,
+      qualifications: "",
       type: job.type,
       experience: job.experience,
       payRangeMin: job.payRangeMin,
