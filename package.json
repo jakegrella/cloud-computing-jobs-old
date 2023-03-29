@@ -10,13 +10,17 @@
     "start": "next start"
   },
   "dependencies": {
+    "@magic-ext/oauth": "^8.0.0",
+    "@magic-sdk/admin": "^1.9.2",
     "@next/font": "^13.1.6",
     "@react-google-maps/api": "^2.17.0",
     "@stripe/react-stripe-js": "^1.15.0",
     "@stripe/stripe-js": "^1.44.1",
+    "bcrypt": "^5.1.0",
     "cookies-next": "^2.1.1",
     "jose": "^4.11.2",
     "jsonwebtoken": "^8.5.1",
+    "magic-sdk": "^14.0.0",
     "next": "13.0.0",
     "node-geocoder": "^4.2.0",
     "oauth-1.0a": "^2.2.6",
