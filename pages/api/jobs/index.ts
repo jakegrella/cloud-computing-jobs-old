@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { addJob, getAllJobs, tweet } from "../../../backend-utils";
+import { addJob, getAllJobs } from "../../../backend-utils";
 // import { inProd } from "../../../utils";
 import { initApiResponse } from "../../../utils/initApiResponse";
 
