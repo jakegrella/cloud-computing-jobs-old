@@ -30,13 +30,3 @@
 .listItem_header_image {
   margin-right: 0.5rem;
 }
-
-@media (prefers-color-scheme: light) {
-  .listItem:hover {
-    background: var(--light-gray);
-  }
-
-  .listItem hr {
-    background: var(--light-gray);
-  }
-}

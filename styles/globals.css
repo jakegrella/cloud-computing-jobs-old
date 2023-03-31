@@ -86,23 +86,3 @@ main {
   justify-content: flex-start;
   align-items: flex-start;
 }
-
-@media (prefers-color-scheme: light) {
-  html,
-  body {
-    color-scheme: light;
-    color: var(--black);
-    background: var(--light-gray);
-  }
-
-  h3 {
-    color: var(--gray);
-  }
-
-  select,
-  option,
-  textarea {
-    background: var(--white);
-    border: 1px solid var(--light-gray);
-  }
-}
