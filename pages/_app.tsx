@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { Poppins } from "@next/font/google";
+import { Inter } from "next/font/google";
 import { ConsentBanner, Header } from "../components";
 import "../styles/reset.css";
 import "../styles/globals.css";
@@ -8,7 +8,7 @@ import styles from "../styles/_app.module.css";
 import Script from "next/script";
 import { getCookie } from "cookies-next";
 
-const poppins = Poppins({ weight: "400", subsets: ["latin"] });
+const poppins = Inter({ weight: "400", subsets: ["latin"] });
 
 export default function App({ Component, pageProps }: AppProps) {
   const consent = getCookie("localConsent");
