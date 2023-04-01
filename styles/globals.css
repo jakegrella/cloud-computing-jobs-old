@@ -16,22 +16,26 @@ body {
 }
 
 h1 {
+  font-family: var(--chivo-font);
   font-size: var(--h1-size);
   font-weight: var(--h1-weight);
   margin-bottom: 0.5rem;
 }
 
 h2 {
+  font-family: var(--chivo-font);
   font-size: var(--h2-size);
   font-weight: var(--h2-weight);
 }
 
 h3 {
+  font-family: var(--inter-font);
   font-size: var(--h3-size);
   font-weight: var(--h3-weight);
 }
 
 h4 {
+  font-family: var(--chivo-font);
   font-size: var(--h4-size);
   font-weight: var(--h4-weight);
   color: var(--light-gray);

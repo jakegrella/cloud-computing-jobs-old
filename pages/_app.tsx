@@ -1,26 +1,37 @@
 import type { AppProps } from "next/app";
+import { Chivo, Inter } from "next/font/google";
 import Head from "next/head";
-import { Inter } from "next/font/google";
+import Script from "next/script";
+import { getCookie } from "cookies-next";
 import { ConsentBanner, Header } from "../components";
 import "../styles/reset.css";
 import "../styles/globals.css";
 import styles from "../styles/_app.module.css";
-import Script from "next/script";
-import { getCookie } from "cookies-next";
 
-const poppins = Inter({ weight: "400", subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  preload: false,
+  variable: "--inter-font",
+});
+
+const chivo = Chivo({
+  subsets: ["latin"],
+  preload: false,
+  variable: "--chivo-font",
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   const consent = getCookie("localConsent");
 
-  // acts as a layout
   return (
-    <div className={`${styles.container} ${poppins.className}`}>
+    <div className={`${styles.container} ${chivo.variable} ${inter.variable}`}>
       <Head>
         <meta name="author" content="Cloud Computing Jobs" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       {/* Google Tag Manager */}
+
       <Script id="google-tag-manager" strategy="afterInteractive">
         {`window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
