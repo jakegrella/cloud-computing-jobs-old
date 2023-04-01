@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import { IState } from "./types";
 
 export const useStore = create<IState>((set) => ({
