@@ -1,14 +1,18 @@
-.searchInput {
-  display: inline-flex;
+.search {
+  position: relative;
+}
+
+.search__form {
+  display: flex;
+  flex-flow: row nowrap;
   background: var(--gray);
   border-radius: var(--border-radius);
   padding: 0;
   height: 3rem;
   width: 100%;
-  position: relative;
 }
 
-.searchInput_input {
+.search__form__input {
   background: var(--gray);
   border: none;
   flex-grow: 2;
@@ -16,31 +20,31 @@
   z-index: 2;
 }
 
-.searchInput_button {
+.search__form__button {
   background: var(--gray);
   border: none;
   z-index: 2;
   padding: 0 0.5rem;
 }
 
-.searchInput_searchSuggestions {
+.search__searchSuggestions {
   background-color: var(--gray);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   margin-top: 2rem;
-  padding: 1rem 0.25rem 0.25rem 0.5rem;
+  padding: 1rem 0.25rem 0.5rem 0.5rem;
   list-style-type: none;
   z-index: 1;
   border-radius: var(--border-radius);
 }
 
-.searchInput_searchSuggestions > li {
-  padding: 0.125rem 0;
+.search__searchSuggestions > li {
+  padding: 0.25rem 0;
 }
 
-.fakeLink:hover {
+.search__searchSuggestions__item:hover {
   text-decoration: underline;
   cursor: pointer;
 }

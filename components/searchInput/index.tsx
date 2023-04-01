@@ -86,35 +86,41 @@ export function SearchInput() {
   }
 
   return (
-    <form
-      className={styles.searchInput}
-      onSubmit={handleSearch}
-      onFocus={() => setSearchInputActive(true)}
-      onBlur={handleFormBlur}
-    >
-      <input
-        className={styles.searchInput_input}
-        name="searchInput"
-        value={searchInputValue}
-        placeholder="Enter a neighborhood, city, or ZIP code"
-        autoComplete="off"
-        onChange={(event) => setSearchInputValue(event.target.value)}
-      />
+    <div className={styles.search}>
+      <form
+        className={styles.search__form}
+        onSubmit={handleSearch}
+        onFocus={() => setSearchInputActive(true)}
+        onBlur={handleFormBlur}
+      >
+        <input
+          className={styles.search__form__input}
+          name="searchInput"
+          value={searchInputValue}
+          placeholder="Enter a neighborhood, city, or ZIP code"
+          autoComplete="off"
+          onChange={(event) => setSearchInputValue(event.target.value)}
+        />
+
+        <button type="submit" className={styles.search__form__button}>
+          <MagnifyingGlass />
+        </button>
+      </form>
       {!!searchSuggestions.length && searchInputActive && (
-        <ul className={styles.searchInput_searchSuggestions}>
+        <ul className={styles.search__searchSuggestions}>
           {searchSuggestions.map((searchSuggestion) => (
             <li key={searchSuggestion} tabIndex={0}>
               {/* add tabIndex to help with form onBlur*/}
-              <p onClick={handleSuggestionClick} className={styles.fakeLink}>
+              <p
+                onClick={handleSuggestionClick}
+                className={styles.search__searchSuggestions__item}
+              >
                 {searchSuggestion}
               </p>
             </li>
           ))}
         </ul>
       )}
-      <button type="submit" className={styles.searchInput_button}>
-        <MagnifyingGlass />
-      </button>
-    </form>
+    </div>
   );
 }

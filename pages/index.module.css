@@ -15,6 +15,7 @@
 
 .jobsContainer {
   margin-top: 1rem;
+  min-height: 10rem;
 }
 
 .mapContainer {
