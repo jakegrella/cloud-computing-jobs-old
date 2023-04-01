@@ -36,7 +36,7 @@
   background: var(--gray);
   padding: 0 0.25rem;
   margin: 1rem 0;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   border: none;
   z-index: 0;
 }
@@ -57,7 +57,7 @@
   height: 2.25rem;
   width: 49%;
   background: var(--primary);
-  border-radius: 9px;
+  border-radius: 3px;
   z-index: 1;
   transition: left 0.15s;
   top: 0.25rem;

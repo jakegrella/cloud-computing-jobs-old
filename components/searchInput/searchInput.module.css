@@ -1,7 +1,7 @@
 .searchInput {
   display: inline-flex;
   background: var(--gray);
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   padding: 0;
   height: 3rem;
   width: 100%;

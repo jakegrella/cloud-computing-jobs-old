@@ -4,7 +4,7 @@
 
 .mapContainer > div {
   height: 100%;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
 
 .activeMarkerPreviewContainer {

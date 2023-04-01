@@ -68,7 +68,7 @@ option,
 textarea {
   background: var(--gray);
   border: 1px solid var(--gray);
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   height: 100%;
   width: 100%;
   font-size: 0.875rem;
