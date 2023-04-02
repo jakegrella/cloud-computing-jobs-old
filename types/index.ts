@@ -11,22 +11,12 @@ export interface IState {
   setHomeMapLocationsWithoutJobs: (
     homeMapLocationsWithoutJobs: ILocation[]
   ) => void;
-  stripeState: IStripeState;
-  setStripeState: (stripe: IStripeState) => void;
-  previewJob: IJob;
-  setPreviewJob: (previewJob: IJob) => void;
-  jobs: IJob[];
-  setJobs: (jobs: IJob[]) => void;
   map: any;
   setMap: (map: any) => void;
   mapBounds: any;
   setMapBounds: (mapBounds: any) => void;
   homePageView: "map" | "list" | "both";
   setHomePageView: (homePageView: "map" | "list" | "both") => void;
-  showPaymentForm: boolean;
-  setShowPaymentForm: (showPaymentForm: boolean) => void;
-  companyLocationOptions: any[];
-  setCompanyLocationOptions: (companyLocationOptions) => void;
 }
 
 export interface ICompany {
@@ -99,12 +89,6 @@ export interface IMapMarker {
 interface IInitMap {
   center: { lat: number; lng: number };
   zoom: number;
-}
-
-interface IStripeState {
-  clientSecret: string;
-  isLoading: boolean;
-  message: string | null;
 }
 
 export interface IMapBounds {

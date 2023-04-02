@@ -11,7 +11,9 @@ export default function Support() {
         <h1>Support</h1>
         <p>
           If you need assistance, please reach out to me at{" "}
-          <a href="mailto:jake@jakegrella.com">jake@jakegrella.com</a>
+          <a href="mailto:business@cloudcomputingjobs.com">
+            business@cloudcomputingjobs.com
+          </a>
         </p>
       </main>
     </div>

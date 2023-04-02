@@ -7,9 +7,3 @@
   filter: brightness(0) invert(75%); /* gray */
   background: none;
 }
-
-@media (prefers-color-scheme: light) {
-  .logo {
-    filter: brightness(1) invert(0); /* black */
-  }
-}

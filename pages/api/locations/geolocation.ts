@@ -10,6 +10,7 @@ export default async function handler(
       .status(200)
       .json(await simpleGeo(decodeURIComponent(req.query.search as string)));
   } catch (err) {
-    res.status(500).json({ message: err.message || "An error occurred" });
+    const status = err.message === "Location not found" ? 404 : 500;
+    res.status(status).json({ message: err.message || "An error occurred" });
   }
 }

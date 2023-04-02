@@ -13,7 +13,7 @@
 
 .company-location-card__header__company-logo {
   margin-right: 0.5rem;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
 }
 
 .company-location-card__job {

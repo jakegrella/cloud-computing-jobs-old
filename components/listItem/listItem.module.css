@@ -1,7 +1,7 @@
 .listItem {
   width: 100%;
   padding: 0.75rem 0.75rem 0 0.75rem;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
 
 .listItem:hover {
@@ -29,14 +29,4 @@
 
 .listItem_header_image {
   margin-right: 0.5rem;
-}
-
-@media (prefers-color-scheme: light) {
-  .listItem:hover {
-    background: var(--light-gray);
-  }
-
-  .listItem hr {
-    background: var(--light-gray);
-  }
 }
