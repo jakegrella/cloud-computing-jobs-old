@@ -17,10 +17,7 @@ export async function middleware(req: NextRequest, res: NextResponse) {
   if (
     req.method === "GET" || // GET requests do not need auth
     req.nextUrl.pathname === "/api/token" || // /token is different auth
-    (req.method === "POST" && req.nextUrl.pathname === "/api/jobs") ||
-    (req.method === "POST" &&
-      req.nextUrl.pathname === "/api/payment/create-payment-intent")
-    // routes to add a job do not need auth right now
+    (req.method === "POST" && req.nextUrl.pathname === "/api/jobs")
   ) {
     return NextResponse.next();
   }

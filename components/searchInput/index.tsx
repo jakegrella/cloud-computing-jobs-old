@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MagnifyingGlass } from "phosphor-react";
 import { useStore } from "../../store";
 import styles from "./searchInput.module.css";
@@ -23,6 +23,8 @@ export function SearchInput() {
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
 
   const router = useRouter();
+
+  const searchInput = useRef(null);
 
   // update search suggestions
   useEffect(() => {
@@ -51,16 +53,40 @@ export function SearchInput() {
       event.target.elements.searchInput.value ||
       "San Francisco";
 
+    // NEED TO REFACTOR
     try {
+      // try to search using user inputted location
+      // if fail, retry once more with first result of search suggestions
       const encodedLocation = encodeURIComponent(location).trim().toLowerCase();
 
       const res = await (
         await fetch(`/api/locations/geolocation?search=${encodedLocation}`)
       ).json();
 
-      if (!res.lat || !res.lng)
+      if ((!res.lat || !res.lng) && !searchSuggestions.length) {
+        // no res and no suggestions
         throw new Error(res.message || "An error occurred");
-      else {
+      } else if ((!res.lat || !res.lng) && !!searchSuggestions.length) {
+        // no res but yes suggestions
+        const newEncodedLocation = encodeURIComponent(searchSuggestions[0])
+          .trim()
+          .toLowerCase();
+
+        const res = await (
+          await fetch(`/api/locations/geolocation?search=${newEncodedLocation}`)
+        ).json();
+
+        if (!res.lat || !res.lng) {
+          // no res
+          // throw new Error(res.message || "An error occurred");
+          throw new Error(res.message || "An error occurred");
+        } else {
+          setInitHomeMap({
+            center: { lat: res.lat, lng: res.lng },
+            zoom: 12,
+          });
+        }
+      } else {
         setInitHomeMap({
           center: { lat: res.lat, lng: res.lng },
           zoom: 12,
@@ -69,10 +95,15 @@ export function SearchInput() {
 
       setSearchInputValue("");
       setSearchInputActive(false);
+      searchInput.current.blur(); // remove focus
     } catch (err) {
       // TODO: give error message as tip under input
       console.error(err.message || "An error occurred");
     }
+  }
+
+  function handleSearchInputChange(event) {
+    setSearchInputValue(event.target.value);
   }
 
   async function handleSuggestionClick(event) {
@@ -81,8 +112,9 @@ export function SearchInput() {
   }
 
   function handleFormBlur(event) {
-    if (!event.currentTarget.contains(event.relatedTarget))
+    if (!event.currentTarget.contains(event.relatedTarget)) {
       setSearchInputActive(false);
+    }
   }
 
   return (
@@ -95,17 +127,19 @@ export function SearchInput() {
       >
         <input
           className={styles.search__form__input}
+          ref={searchInput}
           name="searchInput"
           value={searchInputValue}
           placeholder="Enter a neighborhood, city, or ZIP code"
           autoComplete="off"
-          onChange={(event) => setSearchInputValue(event.target.value)}
+          onChange={handleSearchInputChange}
         />
 
         <button type="submit" className={styles.search__form__button}>
           <MagnifyingGlass />
         </button>
       </form>
+
       {!!searchSuggestions.length && searchInputActive && (
         <ul className={styles.search__searchSuggestions}>
           {searchSuggestions.map((searchSuggestion) => (
