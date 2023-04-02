@@ -13,7 +13,6 @@ export default function JobsByLocation() {
     setInitHomeMap,
     mapBounds,
     homePageView,
-    setJobs,
     homeMapLocations,
     setHomeMapLocations,
     homeMapLocationsWithJobs,
@@ -25,7 +24,6 @@ export default function JobsByLocation() {
     state.setInitHomeMap,
     state.mapBounds,
     state.homePageView,
-    state.setJobs,
     state.homeMapLocations,
     state.setHomeMapLocations,
     state.homeMapLocationsWithJobs,
@@ -60,7 +58,6 @@ export default function JobsByLocation() {
           // fetch jobs in current map region
           try {
             const mappableLocations = await fetchMappableLocations(bounds);
-            console.log("mappableLocations", mappableLocations);
             // set state for all mappable locations
             setHomeMapLocations(mappableLocations);
 
@@ -74,8 +71,6 @@ export default function JobsByLocation() {
             mappableLocationsWithJobs.forEach((location) =>
               mappableJobs.push(...location.jobs)
             );
-            console.log("mappableJobs", mappableJobs);
-            setJobs(mappableJobs);
 
             // filter for only locations without jobs
             const mappableLocationsWithoutJobs = mappableLocations.filter(
@@ -83,7 +78,6 @@ export default function JobsByLocation() {
             );
             setHomeMapLocationsWithoutJobs(mappableLocationsWithoutJobs);
           } catch (err) {
-            console.log("hit error");
             console.error(err.message);
           }
         }

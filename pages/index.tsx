@@ -42,7 +42,6 @@ export default function Home() {
     homeMapLocationsWithJobs,
     setHomeMapLocationsWithJobs,
     setHomeMapLocationsWithoutJobs,
-    setJobs,
     homePageView,
     setHomePageView,
     mapBounds,
@@ -54,7 +53,6 @@ export default function Home() {
     state.homeMapLocationsWithJobs,
     state.setHomeMapLocationsWithJobs,
     state.setHomeMapLocationsWithoutJobs,
-    state.setJobs,
     state.homePageView,
     state.setHomePageView,
     state.mapBounds,
@@ -115,7 +113,6 @@ export default function Home() {
             mappableLocationsWithJobs.forEach((location) =>
               mappableJobs.push(...location.jobs)
             );
-            setJobs(mappableJobs);
 
             // filter for only locations without jobs
             const mappableLocationsWithoutJobs = mappableLocations.filter(

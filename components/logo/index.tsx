@@ -3,13 +3,11 @@ import { useStore } from "../../store";
 import styles from "./logo.module.css";
 
 export function Logo() {
-  const [setJobs, setHomeMapLocations] = useStore((state) => [
-    state.setJobs,
+  const [setHomeMapLocations] = useStore((state) => [
     state.setHomeMapLocations,
   ]);
 
   function handleLogoClick() {
-    setJobs([]);
     setHomeMapLocations([]);
   }
 

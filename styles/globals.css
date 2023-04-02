@@ -16,22 +16,26 @@ body {
 }
 
 h1 {
+  font-family: var(--chivo-font);
   font-size: var(--h1-size);
   font-weight: var(--h1-weight);
   margin-bottom: 0.5rem;
 }
 
 h2 {
+  font-family: var(--chivo-font);
   font-size: var(--h2-size);
   font-weight: var(--h2-weight);
 }
 
 h3 {
+  font-family: var(--inter-font);
   font-size: var(--h3-size);
   font-weight: var(--h3-weight);
 }
 
 h4 {
+  font-family: var(--chivo-font);
   font-size: var(--h4-size);
   font-weight: var(--h4-weight);
   color: var(--light-gray);
@@ -68,7 +72,7 @@ option,
 textarea {
   background: var(--gray);
   border: 1px solid var(--gray);
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   height: 100%;
   width: 100%;
   font-size: 0.875rem;
@@ -85,24 +89,4 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-}
-
-@media (prefers-color-scheme: light) {
-  html,
-  body {
-    color-scheme: light;
-    color: var(--black);
-    background: var(--light-gray);
-  }
-
-  h3 {
-    color: var(--gray);
-  }
-
-  select,
-  option,
-  textarea {
-    background: var(--white);
-    border: 1px solid var(--light-gray);
-  }
 }

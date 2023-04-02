@@ -14,7 +14,7 @@ export async function geolocation(loc: string) {
   try {
     const options = {
       provider: "google",
-      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_GEOLOCATION_API_KEY,
+      apiKey: process.env.GOOGLE_MAPS_API_KEY,
     };
 
     const geocoder = NodeGeocoder(options);
@@ -41,7 +41,7 @@ export async function simpleGeo(loc: string) {
   try {
     const options = {
       provider: "google",
-      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_GEOLOCATION_API_KEY,
+      apiKey: process.env.GOOGLE_MAPS_API_KEY,
     };
 
     const geocoder = NodeGeocoder(options);
