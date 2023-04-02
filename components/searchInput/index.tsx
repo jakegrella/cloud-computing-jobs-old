@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { MagnifyingGlass } from "phosphor-react";
 import { useStore } from "../../store";
@@ -21,8 +20,6 @@ export function SearchInput() {
   const [searchInputValue, setSearchInputValue] = useState<string>("");
   const [searchInputActive, setSearchInputActive] = useState<boolean>(false);
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
-
-  const router = useRouter();
 
   const searchInput = useRef(null);
 
@@ -53,32 +50,34 @@ export function SearchInput() {
       event.target.elements.searchInput.value ||
       "San Francisco";
 
-    // NEED TO REFACTOR
+    function encodeLocation(location: string) {
+      return encodeURIComponent(location).trim().toLowerCase();
+    }
+
+    async function fetchSearchedLocation(location: string) {
+      const res = await (
+        await fetch(
+          `/api/locations/geolocation?search=${encodeLocation(location)}`
+        )
+      ).json();
+
+      return res;
+    }
+
     try {
       // try to search using user inputted location
       // if fail, retry once more with first result of search suggestions
-      const encodedLocation = encodeURIComponent(location).trim().toLowerCase();
-
-      const res = await (
-        await fetch(`/api/locations/geolocation?search=${encodedLocation}`)
-      ).json();
+      const res = await fetchSearchedLocation(location);
 
       if ((!res.lat || !res.lng) && !searchSuggestions.length) {
         // no res and no suggestions
         throw new Error(res.message || "An error occurred");
       } else if ((!res.lat || !res.lng) && !!searchSuggestions.length) {
         // no res but yes suggestions
-        const newEncodedLocation = encodeURIComponent(searchSuggestions[0])
-          .trim()
-          .toLowerCase();
-
-        const res = await (
-          await fetch(`/api/locations/geolocation?search=${newEncodedLocation}`)
-        ).json();
+        const res = await fetchSearchedLocation(searchSuggestions[0]);
 
         if (!res.lat || !res.lng) {
           // no res
-          // throw new Error(res.message || "An error occurred");
           throw new Error(res.message || "An error occurred");
         } else {
           setInitHomeMap({
@@ -135,26 +134,26 @@ export function SearchInput() {
           onChange={handleSearchInputChange}
         />
 
+        {!!searchSuggestions.length && searchInputActive && (
+          <ul className={styles.search__searchSuggestions}>
+            {searchSuggestions.map((searchSuggestion) => (
+              <li key={searchSuggestion} tabIndex={0}>
+                {/* add tabIndex to help with form onBlur*/}
+                <p
+                  onClick={handleSuggestionClick}
+                  className={styles.search__searchSuggestions__item}
+                >
+                  {searchSuggestion}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+
         <button type="submit" className={styles.search__form__button}>
           <MagnifyingGlass />
         </button>
       </form>
-
-      {!!searchSuggestions.length && searchInputActive && (
-        <ul className={styles.search__searchSuggestions}>
-          {searchSuggestions.map((searchSuggestion) => (
-            <li key={searchSuggestion} tabIndex={0}>
-              {/* add tabIndex to help with form onBlur*/}
-              <p
-                onClick={handleSuggestionClick}
-                className={styles.search__searchSuggestions__item}
-              >
-                {searchSuggestion}
-              </p>
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 }
