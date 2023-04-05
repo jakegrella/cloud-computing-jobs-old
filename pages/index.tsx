@@ -155,7 +155,7 @@ export default function Home() {
               ))
             ) : (
               <p>
-                No companies found in mapped region.
+                No companies in mapped region.
                 <br />
                 Try searching in a larger area or changing filters.
               </p>
