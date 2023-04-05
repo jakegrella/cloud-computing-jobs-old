@@ -83,8 +83,8 @@
   .dataContainer {
     margin-right: 0;
     width: 100%;
-    /* min-width: none; */
     min-width: min-content;
+    overflow-y: visible;
   }
 
   .mapContainer {
