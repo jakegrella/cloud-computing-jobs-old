@@ -7,8 +7,8 @@ import {
 import { useState } from "react";
 import { Card, ListItem } from "../../components";
 import { useStore } from "../../store";
-import styles from "./map.module.css";
 import { ILocation } from "../../types";
+import styles from "./map.module.css";
 
 let boundsChangedTimeout: NodeJS.Timeout;
 interface IMapProps extends GoogleMapProps {
