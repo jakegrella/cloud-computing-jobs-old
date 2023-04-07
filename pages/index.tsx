@@ -90,10 +90,10 @@ export default function Home() {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         const bounds = {
-          latMin: mapBounds.south,
-          latMax: mapBounds.north,
-          lngMin: mapBounds.west,
-          lngMax: mapBounds.east,
+          latMin: mapBounds.getSouth().toString(),
+          latMax: mapBounds.getNorth().toString(),
+          lngMin: mapBounds.getWest().toString(),
+          lngMax: mapBounds.getEast().toString(),
         };
 
         async function getMappableLocations() {
@@ -169,15 +169,11 @@ export default function Home() {
             display: width > 768 || homePageView !== "list" ? "unset" : "none",
           }}
         >
-          {/* <Map
+          <Map
             center={initHomeMap.center}
             zoom={initHomeMap.zoom}
-            locations={homeMapLocationsWithJobs} // could do homeMapLocations
-            showMarkerInfoOverlay={
-              width < 768 && homePageView === "map" ? true : false
-            }
-          /> */}
-          <Map center={initHomeMap.center} zoom={initHomeMap.zoom} />
+            locations={homeMapLocationsWithJobs}
+          />
         </div>
       </main>
     </div>

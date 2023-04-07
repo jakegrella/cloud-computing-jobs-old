@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import mapboxgl from "mapbox-gl";
 
 export interface IState {
   initHomeMap: IInitMap;
@@ -13,8 +14,8 @@ export interface IState {
   ) => void;
   map: any;
   setMap: (map: any) => void;
-  mapBounds: any;
-  setMapBounds: (mapBounds: any) => void;
+  mapBounds: mapboxgl.LngLatBounds;
+  setMapBounds: (mapBounds: mapboxgl.LngLatBounds) => void;
   homePageView: "map" | "list" | "both";
   setHomePageView: (homePageView: "map" | "list" | "both") => void;
 }
