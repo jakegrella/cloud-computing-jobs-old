@@ -28,16 +28,16 @@
 }
 
 .search__searchSuggestions {
-  background-color: var(--gray);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 1;
   margin-top: 2rem;
   padding: 1rem 0.25rem 0.5rem 0.5rem;
   list-style-type: none;
-  z-index: 1;
   border-radius: var(--border-radius);
+  background-color: var(--gray);
 }
 
 .search__searchSuggestions > li {
