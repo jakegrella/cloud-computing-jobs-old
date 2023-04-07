@@ -95,14 +95,14 @@ export default function JobsByLocation() {
       />
       <main className={styles.home}>
         <div className={`${styles.home_content} ${styles[homePageView]}`}>
-          <Map
+          {/* <Map
             center={initHomeMap.center}
             zoom={initHomeMap.zoom}
             locations={homeMapLocations}
             showMarkerInfoOverlay={
               width < 768 && homePageView === "map" ? true : false
             }
-          />
+          /> */}
 
           <Card unpadded className={styles.home_content_jobList}>
             {!!homeMapLocations.length ? (

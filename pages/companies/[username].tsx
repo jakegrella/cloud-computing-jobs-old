@@ -106,12 +106,12 @@ export default function Company() {
           </div>
         </Card>
 
-        <Map
+        {/* <Map
           center={initMap.center}
           zoom={initMap.zoom}
           mapContainerClassName={styles.map}
           locations={company.locations}
-        />
+        /> */}
       </main>
     </div>
   );
