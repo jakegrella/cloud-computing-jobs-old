@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CompanyLocationCard, Head, Map, SearchInput } from "../components";
 import { useStore } from "../store";
 import { IJob, ILocation } from "../types";
@@ -169,14 +169,15 @@ export default function Home() {
             display: width > 768 || homePageView !== "list" ? "unset" : "none",
           }}
         >
-          <Map
+          {/* <Map
             center={initHomeMap.center}
             zoom={initHomeMap.zoom}
             locations={homeMapLocationsWithJobs} // could do homeMapLocations
             showMarkerInfoOverlay={
               width < 768 && homePageView === "map" ? true : false
             }
-          />
+          /> */}
+          <Map center={initHomeMap.center} zoom={initHomeMap.zoom} />
         </div>
       </main>
     </div>
