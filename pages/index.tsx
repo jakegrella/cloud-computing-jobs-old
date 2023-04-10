@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CompanyLocationCard, Head, Map, SearchInput } from "../components";
 import { useStore } from "../store";
 import { IJob, ILocation } from "../types";
@@ -90,10 +90,10 @@ export default function Home() {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         const bounds = {
-          latMin: mapBounds.south,
-          latMax: mapBounds.north,
-          lngMin: mapBounds.west,
-          lngMax: mapBounds.east,
+          latMin: mapBounds.getSouth().toString(),
+          latMax: mapBounds.getNorth().toString(),
+          lngMin: mapBounds.getWest().toString(),
+          lngMax: mapBounds.getEast().toString(),
         };
 
         async function getMappableLocations() {
@@ -172,10 +172,7 @@ export default function Home() {
           <Map
             center={initHomeMap.center}
             zoom={initHomeMap.zoom}
-            locations={homeMapLocationsWithJobs} // could do homeMapLocations
-            showMarkerInfoOverlay={
-              width < 768 && homePageView === "map" ? true : false
-            }
+            locations={homeMapLocationsWithJobs}
           />
         </div>
       </main>
