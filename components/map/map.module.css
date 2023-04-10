@@ -13,3 +13,15 @@
   width: 100%;
   padding: 0 4rem;
 }
+
+/* marker */
+
+/* popup */
+
+.popup {
+  color: var(--primary);
+}
+
+.popup > div {
+  border: none;
+}

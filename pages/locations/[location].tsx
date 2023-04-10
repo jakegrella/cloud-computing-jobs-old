@@ -41,51 +41,51 @@ export default function JobsByLocation() {
   }, []);
 
   // on update to map region
-  useEffect(() => {
-    console.log("mapBounds", mapBounds);
-    if (mapBounds !== undefined) {
-      // use timeout to prevent multiple fetches
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        const bounds = {
-          latMin: mapBounds.south,
-          latMax: mapBounds.north,
-          lngMin: mapBounds.west,
-          lngMax: mapBounds.east,
-        };
+  // useEffect(() => {
+  //   console.log("mapBounds", mapBounds);
+  //   if (mapBounds !== undefined) {
+  //     // use timeout to prevent multiple fetches
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(() => {
+  //       const bounds = {
+  //         latMin: mapBounds.south,
+  //         latMax: mapBounds.north,
+  //         lngMin: mapBounds.west,
+  //         lngMax: mapBounds.east,
+  //       };
 
-        async function getMappableLocations() {
-          // fetch jobs in current map region
-          try {
-            const mappableLocations = await fetchMappableLocations(bounds);
-            // set state for all mappable locations
-            setHomeMapLocations(mappableLocations);
+  //       async function getMappableLocations() {
+  //         // fetch jobs in current map region
+  //         try {
+  //           const mappableLocations = await fetchMappableLocations(bounds);
+  //           // set state for all mappable locations
+  //           setHomeMapLocations(mappableLocations);
 
-            // filter for only locations with jobs
-            const mappableLocationsWithJobs = mappableLocations.filter(
-              (location) => location.jobs.length
-            );
-            setHomeMapLocationsWithJobs(mappableLocationsWithJobs);
-            // extract and update jobs
-            let mappableJobs = [];
-            mappableLocationsWithJobs.forEach((location) =>
-              mappableJobs.push(...location.jobs)
-            );
+  //           // filter for only locations with jobs
+  //           const mappableLocationsWithJobs = mappableLocations.filter(
+  //             (location) => location.jobs.length
+  //           );
+  //           setHomeMapLocationsWithJobs(mappableLocationsWithJobs);
+  //           // extract and update jobs
+  //           let mappableJobs = [];
+  //           mappableLocationsWithJobs.forEach((location) =>
+  //             mappableJobs.push(...location.jobs)
+  //           );
 
-            // filter for only locations without jobs
-            const mappableLocationsWithoutJobs = mappableLocations.filter(
-              (location) => !location.jobs.length
-            );
-            setHomeMapLocationsWithoutJobs(mappableLocationsWithoutJobs);
-          } catch (err) {
-            console.error(err.message);
-          }
-        }
-        getMappableLocations();
-      }, 500);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapBounds]);
+  //           // filter for only locations without jobs
+  //           const mappableLocationsWithoutJobs = mappableLocations.filter(
+  //             (location) => !location.jobs.length
+  //           );
+  //           setHomeMapLocationsWithoutJobs(mappableLocationsWithoutJobs);
+  //         } catch (err) {
+  //           console.error(err.message);
+  //         }
+  //       }
+  //       getMappableLocations();
+  //     }, 500);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [mapBounds]);
 
   return (
     <div>
@@ -95,14 +95,14 @@ export default function JobsByLocation() {
       />
       <main className={styles.home}>
         <div className={`${styles.home_content} ${styles[homePageView]}`}>
-          <Map
+          {/* <Map
             center={initHomeMap.center}
             zoom={initHomeMap.zoom}
             locations={homeMapLocations}
             showMarkerInfoOverlay={
               width < 768 && homePageView === "map" ? true : false
             }
-          />
+          /> */}
 
           <Card unpadded className={styles.home_content_jobList}>
             {!!homeMapLocations.length ? (
