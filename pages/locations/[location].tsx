@@ -15,10 +15,6 @@ export default function JobsByLocation() {
     homePageView,
     homeMapLocations,
     setHomeMapLocations,
-    homeMapLocationsWithJobs,
-    setHomeMapLocationsWithJobs,
-    homeMapLocationsWithoutJobs,
-    setHomeMapLocationsWithoutJobs,
   ] = useStore((state) => [
     state.initHomeMap,
     state.setInitHomeMap,
@@ -26,10 +22,6 @@ export default function JobsByLocation() {
     state.homePageView,
     state.homeMapLocations,
     state.setHomeMapLocations,
-    state.homeMapLocationsWithJobs,
-    state.setHomeMapLocationsWithJobs,
-    state.homeMapLocationsWithoutJobs,
-    state.setHomeMapLocationsWithoutJobs,
   ]);
 
   const { width } = useWindowDimensions();
@@ -39,53 +31,6 @@ export default function JobsByLocation() {
   useEffect(() => {
     console.log("page load mapBounds", mapBounds);
   }, []);
-
-  // on update to map region
-  // useEffect(() => {
-  //   console.log("mapBounds", mapBounds);
-  //   if (mapBounds !== undefined) {
-  //     // use timeout to prevent multiple fetches
-  //     clearTimeout(timeout);
-  //     timeout = setTimeout(() => {
-  //       const bounds = {
-  //         latMin: mapBounds.south,
-  //         latMax: mapBounds.north,
-  //         lngMin: mapBounds.west,
-  //         lngMax: mapBounds.east,
-  //       };
-
-  //       async function getMappableLocations() {
-  //         // fetch jobs in current map region
-  //         try {
-  //           const mappableLocations = await fetchMappableLocations(bounds);
-  //           // set state for all mappable locations
-  //           setHomeMapLocations(mappableLocations);
-
-  //           // filter for only locations with jobs
-  //           const mappableLocationsWithJobs = mappableLocations.filter(
-  //             (location) => location.jobs.length
-  //           );
-  //           setHomeMapLocationsWithJobs(mappableLocationsWithJobs);
-  //           // extract and update jobs
-  //           let mappableJobs = [];
-  //           mappableLocationsWithJobs.forEach((location) =>
-  //             mappableJobs.push(...location.jobs)
-  //           );
-
-  //           // filter for only locations without jobs
-  //           const mappableLocationsWithoutJobs = mappableLocations.filter(
-  //             (location) => !location.jobs.length
-  //           );
-  //           setHomeMapLocationsWithoutJobs(mappableLocationsWithoutJobs);
-  //         } catch (err) {
-  //           console.error(err.message);
-  //         }
-  //       }
-  //       getMappableLocations();
-  //     }, 500);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [mapBounds]);
 
   return (
     <div>
@@ -105,10 +50,8 @@ export default function JobsByLocation() {
           /> */}
 
           <Card unpadded className={styles.home_content_jobList}>
-            {!!homeMapLocations.length ? (
-              [...homeMapLocationsWithJobs, ...homeMapLocationsWithoutJobs].map(
-                (l) => <ListItem key={l.id} location={l} />
-              )
+            {homeMapLocations.length ? (
+              homeMapLocations.map((l) => <ListItem key={l.id} location={l} />)
             ) : (
               <p className={styles.noneFound}>
                 No companies found in mapped region. Try searching in a larger

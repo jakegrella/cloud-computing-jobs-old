@@ -6,12 +6,6 @@ export interface IState {
   setInitHomeMap: (initMap: IInitMap) => void;
   homeMapLocations: ILocation[];
   setHomeMapLocations: (homeMapLocations: ILocation[]) => void;
-  homeMapLocationsWithJobs: ILocation[];
-  setHomeMapLocationsWithJobs: (homeMapLocationsWithJobs: ILocation[]) => void;
-  homeMapLocationsWithoutJobs: ILocation[];
-  setHomeMapLocationsWithoutJobs: (
-    homeMapLocationsWithoutJobs: ILocation[]
-  ) => void;
   map: any;
   setMap: (map: any) => void;
   mapBounds: mapboxgl.LngLatBounds;
