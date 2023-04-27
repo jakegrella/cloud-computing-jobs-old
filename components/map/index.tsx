@@ -26,7 +26,6 @@ function locationArraysEqual(a: ILocation[], b: ILocation[]) {
 }
 
 export function Map({ center, locations, zoom }: MapProps) {
-  console.log("Map props locations:", locations);
   const [mapBounds, setMapBounds] = useStore((state) => [
     state.mapBounds,
     state.setMapBounds,
@@ -151,14 +150,6 @@ export function Map({ center, locations, zoom }: MapProps) {
     // set new locations to stored locations
     setStoredLocations(locations);
   }, [locations]);
-
-  useEffect(() => {
-    console.log("mapBounds changed");
-    console.log(
-      "locationArraysEqual:",
-      locationArraysEqual(locations, storedLocations)
-    );
-  }, [mapBounds]);
 
   return (
     <div

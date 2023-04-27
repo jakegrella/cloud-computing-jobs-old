@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { CompanyLocationCard, Head, Map, SearchInput } from "../components";
 import { useStore } from "../store";
-import { IJob, ILocation } from "../types";
+import { ILocation } from "../types";
 import { useWindowDimensions } from "../utils/hooks";
-import { fetchJobs, fetchMappableLocations } from "../utils/httpRequests";
+import { fetchMappableLocations } from "../utils/httpRequests";
 import styles from "@/styles/home.module.css";
 
 // on page load
