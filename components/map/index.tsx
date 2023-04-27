@@ -26,10 +26,7 @@ function locationArraysEqual(a: ILocation[], b: ILocation[]) {
 }
 
 export function Map({ center, locations, zoom }: MapProps) {
-  const [mapBounds, setMapBounds] = useStore((state) => [
-    state.mapBounds,
-    state.setMapBounds,
-  ]);
+  const setMapBounds = useStore((state) => state.setMapBounds);
 
   const [storedLocations, setStoredLocations] = useState<ILocation[]>([]);
   const [markers, setMarkers] = useState<
