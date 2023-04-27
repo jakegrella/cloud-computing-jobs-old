@@ -9,12 +9,6 @@ export const useStore = create<IState>((set) => ({
   setInitHomeMap: (initHomeMap) => set(() => ({ initHomeMap })),
   homeMapLocations: [],
   setHomeMapLocations: (homeMapLocations) => set(() => ({ homeMapLocations })),
-  homeMapLocationsWithJobs: [],
-  setHomeMapLocationsWithJobs: (homeMapLocationsWithJobs) =>
-    set(() => ({ homeMapLocationsWithJobs })),
-  homeMapLocationsWithoutJobs: [],
-  setHomeMapLocationsWithoutJobs: (homeMapLocationsWithoutJobs) =>
-    set(() => ({ homeMapLocationsWithoutJobs })),
   map: undefined,
   setMap: (map) => set(() => ({ map })),
   mapBounds: undefined,

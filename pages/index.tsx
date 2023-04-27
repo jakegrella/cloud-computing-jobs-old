@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { CompanyLocationCard, Head, Map, SearchInput } from "../components";
 import { useStore } from "../store";
-import { IJob, ILocation } from "../types";
+import { ILocation } from "../types";
 import { useWindowDimensions } from "../utils/hooks";
-import { fetchJobs, fetchMappableLocations } from "../utils/httpRequests";
-import styles from "./index.module.css";
+import { fetchMappableLocations } from "../utils/httpRequests";
+import styles from "@/styles/home.module.css";
 
 // on page load
 // -> retrieve and handle user location
@@ -39,9 +39,6 @@ export default function Home() {
     setInitHomeMap,
     homeMapLocations,
     setHomeMapLocations,
-    homeMapLocationsWithJobs,
-    setHomeMapLocationsWithJobs,
-    setHomeMapLocationsWithoutJobs,
     homePageView,
     setHomePageView,
     mapBounds,
@@ -50,9 +47,6 @@ export default function Home() {
     state.setInitHomeMap,
     state.homeMapLocations,
     state.setHomeMapLocations,
-    state.homeMapLocationsWithJobs,
-    state.setHomeMapLocationsWithJobs,
-    state.setHomeMapLocationsWithoutJobs,
     state.homePageView,
     state.setHomePageView,
     state.mapBounds,
@@ -100,25 +94,14 @@ export default function Home() {
           // fetch jobs in current map region
           try {
             const mappableLocations = await fetchMappableLocations(bounds);
-            // set state for all mappable locations
-            setHomeMapLocations(mappableLocations);
 
             // filter for only locations with jobs
             const mappableLocationsWithJobs = mappableLocations.filter(
               (location) => location.jobs.length
             );
-            setHomeMapLocationsWithJobs(mappableLocationsWithJobs);
-            // extract and update jobs
-            let mappableJobs = [];
-            mappableLocationsWithJobs.forEach((location) =>
-              mappableJobs.push(...location.jobs)
-            );
 
-            // filter for only locations without jobs
-            const mappableLocationsWithoutJobs = mappableLocations.filter(
-              (location) => !location.jobs.length
-            );
-            setHomeMapLocationsWithoutJobs(mappableLocationsWithoutJobs);
+            // set state for mappable locations with jobs
+            setHomeMapLocations(mappableLocationsWithJobs);
           } catch (err) {
             console.error(err.message);
           }
@@ -149,8 +132,8 @@ export default function Home() {
                 width > 768 || homePageView === "list" ? "inherit" : "none",
             }}
           >
-            {homeMapLocationsWithJobs.length ? (
-              homeMapLocationsWithJobs.map((location: ILocation) => (
+            {homeMapLocations.length ? (
+              homeMapLocations.map((location: ILocation) => (
                 <CompanyLocationCard key={location.id} location={location} />
               ))
             ) : (
@@ -172,7 +155,7 @@ export default function Home() {
           <Map
             center={initHomeMap.center}
             zoom={initHomeMap.zoom}
-            locations={homeMapLocationsWithJobs}
+            locations={homeMapLocations}
           />
         </div>
       </main>

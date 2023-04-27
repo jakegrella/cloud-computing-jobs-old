@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Card, Head, Map } from "../../components";
-import { companyMetaDescription, jobsPlurality } from "../../utils";
-import { fetchCompany } from "../../utils/httpRequests";
-import { ICompany } from "../../types";
 import { TwitterLogo } from "phosphor-react";
-import styles from "./company.module.css";
+import { Card, Head } from "@/components";
+import { companyMetaDescription, jobsPlurality } from "@/utils";
+import { fetchCompany } from "@/utils/httpRequests";
+import { ICompany } from "@/types";
+import styles from "@/styles/company.module.css";
 
 export default function Company() {
   const router = useRouter();
-  const { username } = router.query;
+  const { companyUsername: username } = router.query;
 
   const [company, setCompany] = useState<ICompany | undefined>(undefined);
   const [hq, setHq] = useState<string>("");
@@ -35,11 +35,6 @@ export default function Company() {
     }
     init();
   }, [username]);
-
-  const initMap = {
-    center: { lat: 39.8283, lng: -98.5795 }, // geographic center of us
-    zoom: 3,
-  };
 
   return !company ? (
     <div>
