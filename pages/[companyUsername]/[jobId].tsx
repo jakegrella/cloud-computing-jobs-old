@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { CaretDown, CaretUp } from "phosphor-react";
-import { Button, Card, Head } from "../../components";
+import { Button, Card, Head } from "@/components";
 import {
   formatEquity,
   formatLocation,
@@ -11,14 +11,14 @@ import {
   jobMetaDescription,
   metaKeywords,
   relativeDate,
-} from "../../utils";
-import { fetchJob } from "../../utils/httpRequests";
-import { IJob } from "../../types";
-import styles from "./job.module.css";
+} from "@/utils";
+import { fetchJob } from "@/utils/httpRequests";
+import { IJob } from "@/types";
+import styles from "@/styles/job.module.css";
 
 export default function Job() {
   const router = useRouter();
-  const { id } = router.query;
+  const { jobId: id } = router.query;
 
   const [job, setJob] = useState<IJob | undefined>(undefined);
   const [showAllLocations, setShowAllLocations] = useState<boolean>(false);

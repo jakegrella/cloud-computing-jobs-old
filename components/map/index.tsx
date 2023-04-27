@@ -14,7 +14,7 @@ interface MapProps {
 }
 
 function locationArraysEqual(a: ILocation[], b: ILocation[]) {
-  if (!a.length && !b.length) return true;
+  if (!a.length && !b.length) return true; // empty arrays =  no locations
   if (a.length !== b.length) return false;
 
   // create new arrays of sorted location ids
@@ -26,7 +26,11 @@ function locationArraysEqual(a: ILocation[], b: ILocation[]) {
 }
 
 export function Map({ center, locations, zoom }: MapProps) {
-  const [setMapBounds] = useStore((state) => [state.setMapBounds]);
+  console.log("Map props locations:", locations);
+  const [mapBounds, setMapBounds] = useStore((state) => [
+    state.mapBounds,
+    state.setMapBounds,
+  ]);
 
   const [storedLocations, setStoredLocations] = useState<ILocation[]>([]);
   const [markers, setMarkers] = useState<
@@ -147,6 +151,14 @@ export function Map({ center, locations, zoom }: MapProps) {
     // set new locations to stored locations
     setStoredLocations(locations);
   }, [locations]);
+
+  useEffect(() => {
+    console.log("mapBounds changed");
+    console.log(
+      "locationArraysEqual:",
+      locationArraysEqual(locations, storedLocations)
+    );
+  }, [mapBounds]);
 
   return (
     <div

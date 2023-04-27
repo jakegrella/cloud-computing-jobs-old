@@ -4,7 +4,7 @@ import { useStore } from "../store";
 import { IJob, ILocation } from "../types";
 import { useWindowDimensions } from "../utils/hooks";
 import { fetchJobs, fetchMappableLocations } from "../utils/httpRequests";
-import styles from "./index.module.css";
+import styles from "@/styles/home.module.css";
 
 // on page load
 // -> retrieve and handle user location
