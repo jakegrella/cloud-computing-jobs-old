@@ -4,7 +4,7 @@ name: Test Cron
 
 on:
   schedule:
-    - cron: "* * 1 * *" # every minute daily
+    - cron: "* * * * *" # every minute daily
     # - cron: "55 6 * * *" # desired: 11:55pm pacific daily = 6:55am utc
 
 jobs:
