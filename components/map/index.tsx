@@ -26,7 +26,10 @@ function locationArraysEqual(a: ILocation[], b: ILocation[]) {
 }
 
 export function Map({ center, locations, zoom }: MapProps) {
-  const setMapBounds = useStore((state) => state.setMapBounds);
+  const [homeMap, setMapBounds] = useStore((state) => [
+    state.homeMap,
+    state.setMapBounds,
+  ]);
 
   const [storedLocations, setStoredLocations] = useState<ILocation[]>([]);
   const [markers, setMarkers] = useState<
@@ -56,6 +59,11 @@ export function Map({ center, locations, zoom }: MapProps) {
       zoom,
     });
   }, []);
+
+  // update center on search
+  useEffect(() => {
+    map.current.setCenter({ lng: homeMap.center.lng, lat: homeMap.center.lat });
+  }, [homeMap]);
 
   // on interaction
   useEffect(() => {

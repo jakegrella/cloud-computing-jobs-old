@@ -2,8 +2,8 @@ import { Prisma } from "@prisma/client";
 import mapboxgl from "mapbox-gl";
 
 export interface IState {
-  initHomeMap: IInitMap;
-  setInitHomeMap: (initMap: IInitMap) => void;
+  homeMap: IInitMap;
+  setHomeMap: (initMap: IInitMap) => void;
   homeMapLocations: ILocation[];
   setHomeMapLocations: (homeMapLocations: ILocation[]) => void;
   map: any;

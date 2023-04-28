@@ -2,11 +2,11 @@ import { create } from "zustand";
 import { IState } from "./types";
 
 export const useStore = create<IState>((set) => ({
-  initHomeMap: {
+  homeMap: {
     center: { lat: 34.0, lng: -118.24235 }, // los angeles
     zoom: 12,
   },
-  setInitHomeMap: (initHomeMap) => set(() => ({ initHomeMap })),
+  setHomeMap: (homeMap) => set(() => ({ homeMap })),
   homeMapLocations: [],
   setHomeMapLocations: (homeMapLocations) => set(() => ({ homeMapLocations })),
   map: undefined,

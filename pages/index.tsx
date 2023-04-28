@@ -35,16 +35,16 @@ function ViewButtonGroup() {
 
 export default function Home() {
   const [
-    initHomeMap,
-    setInitHomeMap,
+    homeMap,
+    setHomeMap,
     homeMapLocations,
     setHomeMapLocations,
     homePageView,
     setHomePageView,
     mapBounds,
   ] = useStore((state) => [
-    state.initHomeMap,
-    state.setInitHomeMap,
+    state.homeMap,
+    state.setHomeMap,
     state.homeMapLocations,
     state.setHomeMapLocations,
     state.homePageView,
@@ -61,14 +61,14 @@ export default function Home() {
   //     (position) => {
   //       const { latitude, longitude } = position.coords;
   //       // set map center to user location
-  //       setInitHomeMap({
+  //       setHomeMap({
   //         center: { lat: latitude, lng: longitude },
   //         zoom: 12,
   //       });
   //     },
   //     () => {
   //       // set map center to NYC
-  //       setInitHomeMap({
+  //       setHomeMap({
   //         center: { lat: 40.741895, lng: -73.989308 },
   //         zoom: 12,
   //       });
@@ -153,8 +153,8 @@ export default function Home() {
           }}
         >
           <Map
-            center={initHomeMap.center}
-            zoom={initHomeMap.zoom}
+            center={homeMap.center}
+            zoom={homeMap.zoom}
             locations={homeMapLocations}
           />
         </div>
