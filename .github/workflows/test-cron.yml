@@ -1,0 +1,31 @@
+name: Test Cron
+
+# env:
+
+on:
+  schedule:
+    - cron: "* * * * *" # every minute daily
+    # - cron: "55 6 * * *" # desired: 11:55pm pacific daily = 6:55am utc
+
+jobs:
+  Add-AWS-Jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get AWS Jobs
+        id: jobs
+        run: |
+          response = $(curl https://amazon.jobs/en/search.json?category%5B%5D=systems-quality-security-engineering&category%5B%5D=software-development&category%5B%5D=solutions-architect&normalized_country_code%5B%5D=USA&facets%5B%5D=normalized_country_code&facets%5B%5D=normalized_state_name&facets%5B%5D=normalized_city_name&facets%5B%5D=location&facets%5B%5D=business_category&facets%5B%5D=category&facets%5B%5D=schedule_type_id&facets%5B%5D=employee_class&facets%5B%5D=normalized_location&facets%5B%5D=job_function_id&facets%5B%5D=is_manager&facets%5B%5D=is_intern&result_limit=10&sort=recent&base_query=cloud%20engineer)
+          echo "$response"
+
+      # - name: Send AWS Jobs to CCJ API
+      #   run: |
+      #     curl
+
+# hit external api -> return 10 latest jobs
+# send jobs to CCJ API
+# check job id against db to determine if we've already stored it
+# add each "new" job
+
+# add external id to db
+
+# url: https://amazon.jobs/en/search.json?category%5B%5D=systems-quality-security-engineering&category%5B%5D=software-development&category%5B%5D=solutions-architect&normalized_country_code%5B%5D=USA&facets%5B%5D=normalized_country_code&facets%5B%5D=normalized_state_name&facets%5B%5D=normalized_city_name&facets%5B%5D=location&facets%5B%5D=business_category&facets%5B%5D=category&facets%5B%5D=schedule_type_id&facets%5B%5D=employee_class&facets%5B%5D=normalized_location&facets%5B%5D=job_function_id&facets%5B%5D=is_manager&facets%5B%5D=is_intern&result_limit=10&sort=recent&base_query=cloud%20engineer

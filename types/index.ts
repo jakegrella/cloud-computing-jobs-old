@@ -2,16 +2,10 @@ import { Prisma } from "@prisma/client";
 import mapboxgl from "mapbox-gl";
 
 export interface IState {
-  initHomeMap: IInitMap;
-  setInitHomeMap: (initMap: IInitMap) => void;
+  homeMap: IInitMap;
+  setHomeMap: (initMap: IInitMap) => void;
   homeMapLocations: ILocation[];
   setHomeMapLocations: (homeMapLocations: ILocation[]) => void;
-  homeMapLocationsWithJobs: ILocation[];
-  setHomeMapLocationsWithJobs: (homeMapLocationsWithJobs: ILocation[]) => void;
-  homeMapLocationsWithoutJobs: ILocation[];
-  setHomeMapLocationsWithoutJobs: (
-    homeMapLocationsWithoutJobs: ILocation[]
-  ) => void;
   map: any;
   setMap: (map: any) => void;
   mapBounds: mapboxgl.LngLatBounds;

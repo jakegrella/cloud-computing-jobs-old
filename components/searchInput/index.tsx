@@ -15,7 +15,7 @@ async function fetchSearchSuggestions(searchInputValue: string) {
 let timeout: NodeJS.Timeout;
 
 export function SearchInput() {
-  const [setInitHomeMap] = useStore((state) => [state.setInitHomeMap]);
+  const [setHomeMap] = useStore((state) => [state.setHomeMap]);
 
   const [searchInputValue, setSearchInputValue] = useState<string>("");
   const [searchInputActive, setSearchInputActive] = useState<boolean>(false);
@@ -60,6 +60,7 @@ export function SearchInput() {
           `/api/locations/geolocation?search=${encodeLocation(location)}`
         )
       ).json();
+      console.log("fetch search location res", res);
 
       return res;
     }
@@ -80,13 +81,13 @@ export function SearchInput() {
           // no res
           throw new Error(res.message || "An error occurred");
         } else {
-          setInitHomeMap({
+          setHomeMap({
             center: { lat: res.lat, lng: res.lng },
             zoom: 12,
           });
         }
       } else {
-        setInitHomeMap({
+        setHomeMap({
           center: { lat: res.lat, lng: res.lng },
           zoom: 12,
         });
