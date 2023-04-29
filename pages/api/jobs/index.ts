@@ -14,7 +14,7 @@ export default async function handler(
         response = { status: 200, data: await getAllJobs() };
         break;
       case "POST":
-        console.log("hit that shit");
+        console.log("hit");
         // response = { status: 201, data: await addJob(req.body) };
         break;
       default:
