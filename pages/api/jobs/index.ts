@@ -14,7 +14,8 @@ export default async function handler(
         response = { status: 200, data: await getAllJobs() };
         break;
       case "POST":
-        response = { status: 201, data: await addJob(req.body) };
+        console.log("hit that shit");
+        // response = { status: 201, data: await addJob(req.body) };
         break;
       default:
         response = { status: 405, message: "Method Not Allowed" };

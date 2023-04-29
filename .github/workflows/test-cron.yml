@@ -17,7 +17,7 @@ jobs:
         id: post-data
       - name: Post Jobs Data
         run: |
-          curl -X POST -H "Content-Type: application/json" -d "$JOBS_DATA" https://localhost:3000/api/jobs
+          curl -X POST -H "Content-Type: application/json" -d "$JOBS_DATA" https://cloudcomputingjobs.com/api/jobs
 
 # hit external api -> return 10 latest jobs
 # send jobs to CCJ API
