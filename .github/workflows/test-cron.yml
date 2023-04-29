@@ -4,8 +4,8 @@ name: Test Cron
 
 on:
   schedule:
-    - cron: "* * * * *" # every 5minutes daily
-    # - cron: "55 6 * * *" # desired: 11:55pm pacific daily = 6:55am utc
+    # - cron: "* * * * *" # every 5minutes daily
+    - cron: "55 6 * * *" # desired: 11:55pm pacific daily = 6:55am utc
 
 jobs:
   Add-AWS-Jobs:
